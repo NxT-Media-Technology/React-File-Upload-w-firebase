@@ -11,5 +11,5 @@ Ik kan mensen hier aan toevoegen indien nodig aangezien de gekoppelde firebase
 aan mijn account zit
 
 # Geolocation
-npm i google-maps-react
-npm install --save google-maps-react
+1. npm i google-maps-react
+2. npm install --save google-maps-react
