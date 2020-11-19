@@ -1,0 +1,538 @@
+body,html{
+    height: 100%;
+     margin:0;
+   }
+
+body {
+	margin: 0 auto;
+	color: #0b54a0;
+	position: relative;
+	background-image: url("../images/wave.png");
+	background-size:cover;
+	background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+.overlay {
+	position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+.overlay-content {
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+	background-color: white;
+	color: #0b54a0;
+	padding: 2% 1%;
+	border-radius: 20px;
+	text-align: center;
+}
+.overlay img {
+	max-width: 40%;
+}
+
+.overlay-form label[name="switch"] {
+  margin-bottom: 3%;
+}
+
+.overlay-button {
+	text-align: center;
+	background-color: #0b54a0;
+	border-radius: 10px;
+	padding: 15px;
+	font-size: 1.2rem;
+	font-weight: bold;
+  margin: 10% 0;
+}
+
+.closeBtn {
+	text-align:center;
+	margin: 0 auto;
+	width:60%
+}
+
+.overlay-content a {
+	text-decoration: none;
+	color:white;
+}
+
+.overlay-text {
+	font-size:1.8rem;
+  text-align: center;
+  margin: 0;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.overlay-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 1.2rem;
+  text-align: left;
+  width: 80%;
+  margin: auto;
+  height: 100%;
+}
+
+.overlay-form input{
+  border: 1px solid #707070;
+  border-radius: 5px;
+  padding:10px 20px;
+  margin:5% 0;
+}
+
+.disabled {
+  pointer-events: none;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.logo {
+	width: 90%;
+}
+.app {
+	font-family: 'Poppins', sans-serif;
+}
+
+.alert{
+	font-size:1.5rem;
+	margin: 0 auto;
+	width:80%;
+	margin-top:2vh;
+	background-color:#fff;
+	padding:3vh;
+}
+
+.success {
+	color:green;
+}
+
+.error {
+	color: red;
+}
+
+.section {
+	background-color: white;
+	box-shadow: 1px 3px 3px rgba(1,1,1,0.5);
+}
+
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+.hidden {
+	display: none;
+}
+
+.red-text {
+	color:red;
+}
+
+.green-text {
+	color:green;
+}
+
+.center {
+	text-align: center;
+}
+
+.sweep-btn:hover {
+	cursor: pointer;
+}
+
+.glowing-border {
+	border-bottom: 2px solid green;
+	outline:none;
+    border-color:green;
+    box-shadow:0 0 6px green;
+}
+
+.glowing-border-blue {
+	border-bottom: 2px solid #0b54a0;
+	outline:none;
+    border-color:#0b54a0;
+    box-shadow:0 0 3px #0b54a0;
+}
+
+.infoIcon {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+}
+
+.react-switch-bg {
+	background-color:#00539F;
+}
+.hidden {
+	display: none;
+}
+.uploadfile>input {
+  display: none;
+}
+
+progress {
+
+  margin: 50% auto;
+  height: 30px;
+  text-align: center;
+}
+
+
+
+
+
+/*
+  ##Device = Laptops, Desktops
+*/
+
+@media (min-width: 1025px) {
+	.app {
+		padding: 1px 5%;
+	}
+
+	.logo {
+		width: 20%;
+		padding: 20px;
+	}
+
+	.sections {
+		display: flex;
+		justify-content: space-around;
+
+	}
+
+	#turtle-img {
+		width: 120%;
+		transform: translate(-10%, 5%);
+    position: absolute;
+    bottom: 0;
+    height: 23vh;
+
+	}
+
+  #section1 {
+    position: relative;
+    padding-bottom: 25vh;
+  }
+
+	.section-title {
+		margin: 0;
+		font-size: 1.1rem;
+	}
+
+	p {
+		font-size: 1.1rem;
+	}
+
+  	.section {
+	  	width: 30%;
+		height: auto;
+		margin: 0 20px 0 20px;
+		padding: 20px 20px 0 20px;
+		border-radius: 5px;
+		overflow:hidden
+    }
+
+  	.open-img {
+		max-width: 60%;
+		height: 30%;
+		border: 2px dashed rgba(1,1,1,0.2);
+		border-radius: 5px;
+		margin-top: 7%;
+		padding:20% 20%;
+    cursor: pointer;
+    }
+
+    .preview-img {
+  		width: 400px;
+  		height: 300px;
+  		border-radius: 3px;
+  	}
+
+	.map {
+		padding-bottom: 50vh;
+		position: relative;
+	}
+
+	.sweep-btn {
+	 	 text-align: center;
+	 	 color:#0b54a0;
+	 	 background-color: rgba(255,255,255,1);
+	 	 border: none;
+	 	 border-radius: 5px;
+	 	 padding: 15px;
+	 	 font-size: 1.2rem;
+	 	 width: 65%;
+	 	 font-weight: bold;
+    }
+
+  	.sweep-section {
+	 	text-align: center;
+	 	margin: 2% 0;
+  	}
+
+	.img-component {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+    position: relative;
+	}
+	.img-component :nth-child(2) {
+		order:4;
+		opacity: 0.5;
+		font-size: 12px;
+	}
+}
+
+
+
+
+
+/*
+  ##Device = Tablets, Ipads (portrait)
+*/
+
+@media (min-width: 481px) and (max-width: 1024px)  {
+
+	* {
+		margin:0;
+		padding: 0;
+	}
+	#root  {
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.overlay img {
+		max-width: 30%;
+	}
+	.infoIcon {
+	 display: block;
+	}
+
+	.overlay-content {
+	  width: 80%;
+	}
+
+	.map {
+	 padding-bottom: 50vh;
+	 position: relative;
+	}
+
+	.app {
+		background-image: url("../images/wave.png");
+		background-repeat: no-repeat;
+		background-size:cover;
+		padding:0 10%;
+		overflow-x: hidden;
+	}
+
+	.logo {
+		 width: 90%;
+		 margin: 7% 0;
+	 }
+
+	 .sections {
+		 display: flex;
+		 flex-wrap: wrap;
+		 justify-content: center;
+		 flex-direction: column;
+	 }
+	.sections :nth-child(2) {
+		order:1;
+	}
+	 .section {
+		 margin-bottom: 5%;
+		 padding: 5% 7%;
+		 border-radius: 5px;
+	 }
+
+	#section2 {
+		padding-bottom: 10%;
+	}
+
+	#section1 {
+	   max-width: 85%;
+	}
+	#section1 img {
+		 max-width: 85%;
+	}
+
+	 p {
+		 padding:3% 0;
+	 }
+
+	 .sweep-btn {
+		 text-align: center;
+		 color:#0b54a0;
+		 background-color: rgba(255,255,255,1);
+		 border: none;
+		 border-radius: 5px;
+		 padding: 15px;
+		 font-size: 1.2rem;
+		 width: 65%;
+		 font-weight: bold;
+ 	}
+
+ 	.sweep-section {
+		 text-align: center;
+		 max-width: 100%;
+		 margin-bottom: 25%;
+ 	}
+
+  progress {
+    margin: 20vh auto;
+		height: 30px;
+		text-align: center;
+	}
+	 .img-component {
+		 display: flex;
+		 flex-direction: column;
+		 justify-content: space-between;
+		 padding-bottom: 2%;
+     position: relative;
+	 }
+	 .img-component :nth-child(2) {
+		 order:3;
+		 opacity: 0.5;
+		 font-size: 14px;
+	 }
+	 .open-img {
+		 max-width: 60%;
+		 height: 30vh;
+		 border: 2px dashed rgba(1,1,1,0.2);
+		 border-radius: 5px;
+		 margin-top: 3%;
+		 padding:10% 20%;
+	 }
+}
+
+
+
+
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px)
+{
+	 * {
+		 margin:0;
+		 padding: 0;
+	 }
+	 #root  {
+		 overflow: hidden;
+		 width: 100%;
+	 }
+	 .infoIcon {
+	 	display: block;
+	 }
+
+	 	.overlay-content {
+	 	  width: 80%;
+			padding:10% 5%;
+	 	}
+
+	 .map {
+	 	padding-bottom: 50vh;
+		position: relative;
+	 }
+
+    .app {
+			position: relative;
+			padding:0 10%;
+		}
+		.logo {
+			width: 90%;
+			margin: 7% 0;
+		}
+
+		.sections {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			flex-direction: column;
+		}
+		.sections :nth-child(2) {
+				order:1;
+			}
+		.section {
+			margin-bottom: 10%;
+			padding: 5% 7%;
+			border-radius: 5px;
+		}
+
+ 	 #section2 {
+ 		 padding-bottom: 10%;
+ 	 }
+
+	 #section1 {
+		 max-width: 85%;
+	 }
+	 #section1 img {
+		 display: none;
+	 }
+
+		p {
+			padding:3% 0;
+		}
+
+		.sweep-btn {
+		text-align: center;
+		color:#0b54a0;
+		background-color: rgba(255,255,255,1);
+		border: none;
+		border-radius: 5px;
+		padding: 15px;
+		font-size: 1.2rem;
+		width: 65%;
+		font-weight: bold;
+	}
+	.sweep-section {
+		text-align: center;
+		max-width: 100%;
+		margin-bottom: 15%;
+	}
+
+	.img-component {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+    position: relative;
+	}
+
+	.img-component :nth-child(2) {
+		order:4;
+		opacity: 0.5;
+		font-size: 14px;
+	}
+
+	.open-img {
+		max-width: 60%;
+		height: 30%;
+		border: 2px dashed rgba(1,1,1,0.2);
+		border-radius: 5px;
+		margin-top: 7%;
+		padding:10% 20%;
+	}
+}
