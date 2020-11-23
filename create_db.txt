@@ -1,1 +1,0 @@
-CREATE TABLE `react_crud`.`location_data` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NULL DEFAULT NULL , `phonenumber` VARCHAR(15) NULL DEFAULT NULL , `coordinates` INT NOT NULL , `img_url` VARCHAR(255) NOT NULL , `img_description` TEXT NOT NULL , `created_at` DATE NOT NULL , `is_deleted` DATE NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

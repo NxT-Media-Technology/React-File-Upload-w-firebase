@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router,Route,Link,Switch } from "react-router-dom";
+import { BrowserRouter as Router,Route,Link,Switch,Redirect } from "react-router-dom";
 import App from './App';
 import Adminpanel from './Adminpanel.js';
 import * as serviceWorker from './serviceWorker';
@@ -8,9 +8,7 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <Router>
   	<Switch>
-  	 	<Route path="/app">
-    		<App />
-    	</Route>
+      <Route exact path="/" component={App}/>
     	<Route path="/adminpanel">
     		<Adminpanel />
     	</Route>

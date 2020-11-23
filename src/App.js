@@ -17,6 +17,7 @@ class App extends Component {
   	super(props)
   	this.state={
   		url: '',
+      img_name:'',
       latLong: null,
       displayMessage: false,
       showOverlay: false,
@@ -42,8 +43,8 @@ class App extends Component {
     }
   }
 
-  urlChanged = (value) => {
-  	this.setState({url:value});
+  urlChanged = (value, imgName) => {
+  	this.setState({url:value, img_name: imgName});
   }
 
   coordsChanged = (value) => {
@@ -78,7 +79,7 @@ class App extends Component {
             </g>
           </svg>
         </div>
-        {this.state.showOverlay ? (<SentOverlay lat={this.state.latLong} url={this.state.url} onClose={this.hideOverlay} />) : null}
+        {this.state.showOverlay ? (<SentOverlay lat={this.state.latLong} url={this.state.url} imgName={this.state.img_name} onClose={this.hideOverlay} />) : null}
         <div className='sections'>
           <Information />
           <section className='section' id='section2'>

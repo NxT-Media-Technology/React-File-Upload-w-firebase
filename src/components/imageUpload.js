@@ -37,7 +37,8 @@ class ImageUpload extends Component {
               this.setState({url});
               placeholderImg.classList.remove('hidden');
               this.setState({showProgressBar: false});
-              this.props.onUrlChange(url);
+              const img_name = image.name;
+              this.props.onUrlChange(url, img_name);
             })
           });
           this.setState({showRemoveBtn:true, showProgressBar: true});

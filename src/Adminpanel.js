@@ -1,70 +1,62 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import SweepItem from './components/sweepItem.js'
 
+
+import './styles/adminpanel.scss';
 
 class Adminpanel extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			data: [],
+			filteredData: [],
 			isLoaded: false,
-			errorMsg: '',
-
+			statusMsg: '',
 		}
+		this.updateStatus = this.updateStatus.bind(this);
 	}
 
 	componentDidMount() {
+		//VRAAG ALLE DATA IN DB ZONDER DELETED ROWS
 		Axios.post("http://localhost:3001/getdata")
 	    .then((response) => {
 	    	if (response.status == 200) {
-	    		this.setState({data:response.data, isLoaded:true})
+	    		this.setState({data:response.data, isLoaded:true, totalItems: response.data.length})
 	      		console.log(response);
 	    	} else {
-	    		this.setState({errorMsg: response})
+	    		this.setState({statusMsg: response})
 	    	}    	
 		})
+	}
+
+	updateStatus = (msg, key) => {
+		//UPDATE STATUS BIJ DELETE
+		this.setState({statusMsg: msg})
 	}
 
 	render() {
 		return (
 			<div id='admin-panel'>
-				<h1>Adminpanel</h1>
+
+				<h1 className='upper-title'>Adminpanel</h1>
+
+				<p className='status-msg'>{this.state.statusMsg}</p>
+
+				{this.state.data.length == 0 ? <p className='status-msg'>No data records</p> : ''}
+
 				<div className="data-section">
+
 					{this.state.isLoaded ? this.state.data.map((item, index) => (
-						<div className="data-content">	
-							<div>
-								<h2>ID</h2>
-								<p>{item.id}</p>
-							</div>
-							<div>
-								<h2>Name</h2>
-								{item.name == '' ? <p>Anonymous</p> : <p>{item.name}</p>}
-							</div>
-							<div>
-								<h2>Phonenumber</h2>
-								{item.phonenumber == '' ? <p>Anonymous</p> : <p>{item.phonenumber}</p>}
-							</div>
-							<div>
-								<h2>Coordinates</h2>
-								<p>{item.coordinates}</p>
-							</div>
-							<div>
-								<h2>Image</h2>
-								<p>{item.img_url}</p>
-							</div>
-							<div>
-								<h2>Image description</h2>
-								{item.description == '' ? <p>No description</p> : <p>{item.description}</p>}
-							</div>
-							<div>
-								<h2>Created at</h2>
-								<p>{item.created_at}</p>
-							</div>
-						</div>
-						))
+						<SweepItem updateStatus={this.updateStatus} key={item.id} item={item} />
+					))
 					: <p>Loading data...</p>}
-						
+
 				</div>	 
+
+				<div className="pagination">
+					
+				</div>
 			</div>
 		);
 	}

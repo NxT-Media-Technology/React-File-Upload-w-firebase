@@ -1,0 +1,104 @@
+#admin-panel {
+	$sweep-blue: #00529E;
+
+	.upper-title{
+		text-align: center;
+	}
+
+	.status-msg {
+		text-align: center;
+	}
+
+	.data-section {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.data-box {
+		box-shadow: 0 4px 8px 0 $sweep-blue, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		width: 50vw;
+		margin: 10px 0 10px 0;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		.action-btns {
+			width: 25%;
+			margin: 0 auto;
+ 			display: flex;
+			justify-content: center;
+			justify-content: space-around;
+
+			button {
+				padding: 5px;
+				border: none;
+				color: white;
+				border-radius: 3px;
+				opacity: 0.8;
+			}
+
+			button:nth-child(2) {
+				background-color: red;
+			}
+
+			button:nth-child(1) {
+				background-color: $sweep-blue;
+			}
+		}
+
+		.sweep-date {
+			text-align: center;
+		}
+
+		.box-header {
+			display: flex;
+			justify-content: center;
+			h3 {
+				margin: 0;
+			}
+
+			#bell-img {
+				width: 23px;
+				height: 20px;
+				margin-right: 5px;
+			}
+		}
+
+		.data-box-details {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+			transform: translateX(13%);
+
+			.small-icon {
+				margin-right: 10px;
+			}
+
+			.small-icon:nth-child(1) {
+				width: 20px;
+				height: 20px;
+			}
+
+			.small-icon:nth-child(3) {
+				width: 20px;
+				height: 20px;
+			}
+
+			.small-icon:nth-child(5) {
+				width: 17px;
+				height: 20px;
+			}
+
+			.sweep-img {
+				width: 45%;
+				height: 45%;
+				margin-left: 30px;
+			}
+			
+		}			
+	}
+}
+

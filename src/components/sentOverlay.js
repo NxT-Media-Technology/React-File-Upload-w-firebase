@@ -17,6 +17,7 @@ class SentOverlay extends Component
       message: '',
       messageType: '',
       url: props.url,
+      img_name: props.imgName,
       latLong: props.lat,
       displayform: true
     }
@@ -64,7 +65,8 @@ class SentOverlay extends Component
       coordinates: this.state.latLong,
       anonymous: this.state.checked,
       name: this.state.name,
-      number: this.state.number
+      number: this.state.number,
+      imgName: this.state.img_name
     })
     .then((response) => {
       console.log(response);
