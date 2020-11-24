@@ -33,8 +33,8 @@ app.post("/post", (req,res)=> {
     const dateTime = new Date();
 
     if (anonymous) {
-        name = "";
-        number = "";
+        name = "Anonymous";
+        phonenumber = "Anonymous";
     }
 
     // if url length && coords are defined: 
@@ -54,6 +54,34 @@ app.post("/post", (req,res)=> {
     else{
         res.send('Missing coordinates or image input!');
     }
+
+    //IMPORT MAIL FROM TXTFILE
+
+    //SEND MAIL
+    var nodemailer = require('nodemailer');
+    const transporter = nodemailer.createTransport({
+    port: 465,               
+    host: "smtp.gmail.com",
+       auth: {
+            user: 'sweepit.clean51@gmail.com',
+            pass: 'cleansweep123',
+         },
+    secure: true,
+    requireTLS: true,
+    });
+
+    const mailData = {
+        from: 'sweepit.clean51@gmail.com',  //SENDER ADDRESS
+        to: 'simons.reno@gmail.com',        //RECEIVERS
+        subject: 'Cleansweep new report',
+        text: '',
+        html: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>mail</title>\n\t<style>img{width:50%}</style>\n</head>\n<body>\n\t<h1>New sweep reported!</h1>\n\t<p>Name:" + name + "</p>\n\t<p>Phonenumber: "+ phonenumber + "</p>\n\t<p>Coordinates: "+ coords + "</p>\n\t<p>Date: "+ dateTime + "</p>\n\t<img src=" + url + ">\n</body>\n</html>",
+    };
+
+    transporter.sendMail(mailData, function (err, info) {
+       if(err)
+         return console.log(err)
+    });
 });
 
 
