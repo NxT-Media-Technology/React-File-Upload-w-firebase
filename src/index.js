@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router,Route,Link,Switch,Redirect } from "react-router-dom";
 import App from './App';
 import Adminpanel from './Adminpanel.js';
+import DeleteByMail from './components/deleteByMail.js';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -11,6 +12,9 @@ ReactDOM.render(
       <Route exact path="/" component={App}/>
     	<Route path="/adminpanel">
     		<Adminpanel />
+    	</Route>
+    	<Route path="/remove">
+    		<DeleteByMail />
     	</Route>
     </Switch>
   </Router>,

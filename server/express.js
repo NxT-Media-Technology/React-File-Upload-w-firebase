@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { getNodeText } = require('@testing-library/react');
+const crypto = require("crypto");
 
 // Zorg dat deze gegevens kloppen! 
 const db = mysql.createPool({
@@ -31,6 +32,7 @@ app.post("/post", (req,res)=> {
     const coords = req.body.coordinates;
     const anonymous = req.body.anonymous;
     const dateTime = new Date();
+    const deleteId = crypto.randomBytes(16).toString("hex");
 
     if (anonymous) {
         name = "Anonymous";
@@ -39,8 +41,8 @@ app.post("/post", (req,res)=> {
 
     // if url length && coords are defined: 
     if((url !== null) && (coords !== null)){
-        const sqlInsert = "INSERT INTO location_data (name, phonenumber, coordinates, img_url, img_name, img_description, created_at) VALUES (?,?,?,?,?,?,?)";
-        db.query(sqlInsert, [name, phonenumber, coords, url, imgName, img_description, dateTime], (err, result) => {
+        const sqlInsert = "INSERT INTO location_data (delete_id, name, phonenumber, coordinates, img_url, img_name, img_description, created_at) VALUES (?,?,?,?,?,?,?,?)";
+        db.query(sqlInsert, [deleteId, name, phonenumber, coords, url, imgName, img_description, dateTime], (err, result) => {
 
             if(err){
                 console.log(err);
@@ -75,7 +77,7 @@ app.post("/post", (req,res)=> {
         to: 'simons.reno@gmail.com',        //RECEIVERS
         subject: 'Cleansweep new report',
         text: '',
-        html: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>mail</title>\n\t<style>img{width:50%}</style>\n</head>\n<body>\n\t<h1>New sweep reported!</h1>\n\t<p>Name:" + name + "</p>\n\t<p>Phonenumber: "+ phonenumber + "</p>\n\t<p>Coordinates: "+ coords + "</p>\n\t<p>Date: "+ dateTime + "</p>\n\t<img src=" + url + ">\n</body>\n</html>",
+        html: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>mail</title>\n\t<style>img{width:50%;height:50%}a{background-color:#44c767;border-radius:10px;border:1px solid #18ab29;display:inline-block;cursor:pointer;color:#ffffff;font-family:Arial;font-size:17px;padding:10px 15px;text-decoration:none;}</style>\n</head>\n<body>\n\t<h1>New sweep reported!</h1>\n\t<p>Name:" + name + "</p>\n\t<p>Phonenumber: "+ phonenumber + "</p>\n\t<p>Coordinates: "+ coords + "</p>\n\t<p>Date: "+ dateTime + "</p>\n\t<img src=" + url + ">\n\t<p>\n\t<a href='http://localhost:3000/remove?uuid=" + deleteId + "'>Clear this report</a>\n\t</p>\n\t</body>\n</html>",
     };
 
     transporter.sendMail(mailData, function (err, info) {
@@ -103,6 +105,21 @@ app.post('/deleteRecord', (req, res) => {
     db.query(sqlSoftDelete, id, (err,result) => {
         if (err) {
             res.send(err)
+        } else {
+            res.send('Item deleted succesfully!')
+            console.log('softdeleted')
+        }
+    })
+});
+
+app.post('/remove', (req, res) => {
+    const uuid = req.body.uuid;
+    console.log(uuid.length)
+
+    const sqlSoftDeleteMail = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`delete_id` = ?";
+    db.query(sqlSoftDeleteMail, uuid, (err,result) => {
+        if (err) {
+            res.send("Oops.. Something went wrong!")
         } else {
             res.send('Item deleted succesfully!')
             console.log('softdeleted')
