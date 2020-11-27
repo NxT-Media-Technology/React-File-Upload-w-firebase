@@ -12,9 +12,10 @@ class sweepItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			itemData: this.props.item,
+			
+			itemData: this.props.post,
 			itemClicked: false,
-			url: this.props.item.img_url,
+			url: this.props.post.img_url,
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.renderDetails = this.renderDetails.bind(this);
@@ -71,6 +72,7 @@ class sweepItem extends Component {
 
 		return (
 
+	
 			<div id={itemData.id}>
 				<div className="data-box">
 					<div className="box-header">
@@ -90,6 +92,7 @@ class sweepItem extends Component {
 					</div>
 				</div>
 			</div>
+		
 		);
 	}
 }
