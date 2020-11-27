@@ -19,7 +19,7 @@ const Pagination = (props) => {
             <ul className="pagination">
                 {pageNumbers.map(number => (
                     <li key={number} className="page-item">
-
+                    {/* paginate functie wordt aangeroepen in admin panel */}
                         <a onClick={() => paginate(number)} className='page-link'>
                             {number}
                         </a>

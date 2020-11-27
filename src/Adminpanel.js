@@ -62,7 +62,7 @@ class Adminpanel extends Component {
 
 				{this.state.posts.length == 0 ? <p className='status-msg'>No data records</p> : ''}
 
-				<div className="data-section">
+				<div className="items">
 					{/*   loop door sweepItems:	 */}
 					{this.state.isLoaded ? currentPosts.map((post, index) => (
 						<SweepItem post={post} updateStatus={this.updateStatus} key={post.id} />

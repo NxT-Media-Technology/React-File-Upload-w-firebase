@@ -51,6 +51,9 @@ class App extends Component {
 	 this.setState({latLong: value});
   }
 
+  showOverlay() {
+      $(".overlay").removeClass('hidden');
+  }
 
   showOverlay() {
     this.setState({showOverlay: true});

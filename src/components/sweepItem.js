@@ -18,9 +18,9 @@ class sweepItem extends Component {
 			url: this.props.post.img_url,
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
-		this.renderDetails = this.renderDetails.bind(this);
 		this.deleteRecord = this.deleteRecord.bind(this);
 	}
+	
 
 	deleteRecord(record_id) {
 		//DATABASE SOFTDELETE
@@ -43,56 +43,51 @@ class sweepItem extends Component {
 		}
 	}
 	   
-	renderDetails() {
-		const data = this.state.itemData
-		//RENDER EXTRA DETAILS
-		return <div className="data-box-details">
-					<div className="sweep-text">
-						<img src={PersonImg} className='small-icon'/>
-						{data.name == '' ? 'Anonymous' : data.name}
-						<p></p>
-						<img src={PhoneImg} className='small-icon'/>
-						{data.phonenumber == '' ? 'Anonymous' : data.phonenumber}
-						<p></p>
-						<img src={LocImg} className='small-icon'/>
-						{data.coordinates}
-					</div>
-					<div className="sweep-img">
-						<img className='sweep-img' src={data.img_url} alt="Sweep picture"/>
-					</div>
-		       	</div>	   	   		 
-	}
 
 	render() {
+
 		//SHORTCUT
 		const itemData = this.state.itemData
 		//DYNAMISCHE SHOW HIDE BTNS
 		const showBtn = <button className='show-hide-details' onClick={this.toggleDetails}>Show details</button>
 		const hideBtn = <button className='show-hide-details' onClick={this.toggleDetails}>Hide details</button>
-
+		const data = this.state.itemData;
 		return (
-
-	
-			<div id={itemData.id}>
-				<div className="data-box">
-					<div className="box-header">
-					    <img id='bell-img' src={BellImg} alt="Bell"/>
-						<h3>{itemData.id}</h3>
+			
+				<div className="item">
+						<div className="item-header">
+							<h3>Id: {itemData.id}</h3>
+							<h3>{itemData.created_at}</h3>
+						</div>	
+						<div className="item-details">
+					<div className="item-details-cover" >
+						<img className='item-details-img' src={data.img_url} alt="Sweep picture"/>
+						<div className="item-details-buttons">
+							<div>button</div>
+							<div>button</div>
+						</div>
 					</div>
-
-					<div className="sweep-date">
-						<h3>{itemData.created_at}</h3>
+					<div className="item-details-info">
+						<h3>Data</h3>
+						<div className="item-details-info-sec">
+							<img src={PersonImg} className='small-icon'/>
+							<span>{data.name == '' ? 'Anonymous' : data.name}</span>
+						</div>						
+						<div className="item-details-info-sec">
+							<img src={PhoneImg} className='small-icon'/>
+							<span>{data.phonenumber == '' ? 'Anonymous' : data.phonenumber}</span>
+						</div>
+							<div className="item-details-info-sec">
+							<img src={LocImg} className='small-icon'/>
+							<span>{data.coordinates}</span>
+						</div>
 					</div>
-	
-					{this.state.itemClicked ? this.renderDetails() : ''}
-
-					<div className="action-btns">
-						{this.state.itemClicked ? hideBtn : showBtn}
-						<button id='delete-record' onClick={() => this.deleteRecord(itemData.id)}>Delete Record</button>
-					</div>
+		       	</div>	   	 
+						{/* <div className="action-btns">
+							{this.state.itemClicked ? hideBtn : showBtn}
+							<button id='delete-record' onClick={() => this.deleteRecord(itemData.id)}>Delete Record</button>
+						</div> */}
 				</div>
-			</div>
-		
 		);
 	}
 }
