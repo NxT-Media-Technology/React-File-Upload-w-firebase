@@ -42,7 +42,6 @@ class Adminpanel extends Component {
 		this.setState({statusMsg: msg})
 	}
 
-
 	render() {
 	
 		/* PAGINATION */ 
@@ -50,34 +49,30 @@ class Adminpanel extends Component {
 	const indexOfFirstPost = indexofLastPost - this.state.postsPerPage;
 	const currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
 
-
-	console.log(this.state.postsPerPage)
-	console.log(this.state.posts.length)
+	// change page 
+	const paginate = (pageNumber) => {
+		this.setState({currentPage: pageNumber})
+	};
 	
-
-
 		return (
 			<div id='admin-panel'>
 
 				<h1 className='upper-title'>Adminpanel</h1>
-
 				<p className='status-msg'>{this.state.statusMsg}</p>
 
 				{this.state.posts.length == 0 ? <p className='status-msg'>No data records</p> : ''}
 
 				<div className="data-section">
-
 					{/*   loop door sweepItems:	 */}
 					{this.state.isLoaded ? currentPosts.map((post, index) => (
 						<SweepItem post={post} updateStatus={this.updateStatus} key={post.id} />
 					))
-					: <p>Loading data...</p>}
+					: <p>Loading data...</p>} 	{/* <-- Als er geen posts zijn  */}
 
 				</div>
 
 				<div className="pagination">
-				<Pagination PostsPerPage = {this.state.postsPerPage}  totalPosts = {this.state.posts.length}     />	 
-				sakldfasdfal;sdfklj
+				<Pagination postsPerPage={this.state.postsPerPage}  totalPosts={this.state.posts.length} paginate={paginate}    />	 
 				</div>
 			</div>
 		);
