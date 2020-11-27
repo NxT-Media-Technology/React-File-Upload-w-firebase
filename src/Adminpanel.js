@@ -3,7 +3,10 @@ import Axios from 'axios';
 import SweepItem from './components/sweepItem.js';
 import Pagination from './components/pagination.js';
 
-
+import PersonImg from './images/person.png';
+import LogoIcon from './images/OCS-Icon.png';
+import ListIcon from './includes/list-view-icon.svg';
+import BoxIcon from './includes/box-view-icon.svg';
 
 
 import './styles/adminpanel.scss';
@@ -56,8 +59,25 @@ class Adminpanel extends Component {
 	
 		return (
 			<div id='admin-panel'>
-
-				<h1 className='upper-title'>Adminpanel</h1>
+				<div class="admin-header">
+					<img src={LogoIcon} className="logo-icon"/>
+					<h1 className='upper-title'>Pending cleanup</h1>
+					<img src={PersonImg} className='small-icon' />
+				</div>
+				<div class="admin-filters">
+					<div class="admin-filter-views">
+						<a href="#"><img class="activefilter" src={BoxIcon} /></a>
+						<a href="#"><img src={ListIcon} /></a>
+					</div>
+					<div class="admin-filter-options">
+						<label>Sort by:</label>
+						<select>
+							<option>test1</option>
+							<option>test2</option>
+							<option>test3</option>
+						</select>
+					</div>
+				</div>
 				<p className='status-msg'>{this.state.statusMsg}</p>
 
 				{this.state.posts.length == 0 ? <p className='status-msg'>No data records</p> : ''}

@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import {storage} from '../firebase';
-import $ from "jquery";
+import $, { data } from "jquery";
 
-import BellImg from './../images/bell.png';
 import PhoneImg from './../images/phone.png';
 import LocImg from './../images/pin.png';
 import PersonImg from './../images/person.png';
+import IconSweep from './../includes/sweep-icon.svg';
+import IconDelete from './../includes/delete-icon.svg';
 
-class sweepItem extends Component {
+import GeoLocator from './geoLocator.js';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+
+class sweepItem extends Component {	
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -18,7 +22,7 @@ class sweepItem extends Component {
 			url: this.props.post.img_url,
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
-		this.deleteRecord = this.deleteRecord.bind(this);
+		this.showDetails = this.showDetails.bind(this);
 	}
 	
 
@@ -42,29 +46,51 @@ class sweepItem extends Component {
 			this.setState({itemClicked: false})
 		}
 	}
-	   
+	
+	showDetails() {
+
+		const data = this.state.itemData;
+		var cord = (data.coordinates).split(",");
+		var cordlat= cord[0];
+		var cordlng= cord[1];
+		return <div className="item-expand">
+					<div className="item-location">
+						<h3>Location:</h3>
+							<span>coordinates: {this.state.itemData.coordinates}</span>
+							<div className="map">
+								<Map google={this.props.google} style={{ width:"100%", height:"100%" }} zoom={18} center={{
+									lat: cordlat,
+									lng: cordlng
+								}}>
+									<Marker position={{ lat: cordlat, lng: cordlng }} />
+								</Map>
+							</div>
+						<div className="item-buttons">
+							<a href=""><div id="button-green" className="button">Cleaned</div></a>
+							<a href=""><div id="button-red" className="button">Not Found</div></a>
+						</div>
+					</div>
+				</div>
+		
+	}
+	
 
 	render() {
-
-		//SHORTCUT
-		const itemData = this.state.itemData
 		//DYNAMISCHE SHOW HIDE BTNS
-		const showBtn = <button className='show-hide-details' onClick={this.toggleDetails}>Show details</button>
-		const hideBtn = <button className='show-hide-details' onClick={this.toggleDetails}>Hide details</button>
 		const data = this.state.itemData;
-		return (
-			
-				<div className="item">
+
+		return (			
+			<div className="item" onClick={this.toggleDetails}>
 						<div className="item-header">
-							<h3>Id: {itemData.id}</h3>
-							<h3>{itemData.created_at}</h3>
+							<h3>Id: {data.id}</h3>
+							<h3>{data.created_at}</h3>
 						</div>	
 						<div className="item-details">
 					<div className="item-details-cover" >
 						<img className='item-details-img' src={data.img_url} alt="Sweep picture"/>
-						<div className="item-details-buttons">
-							<div>button</div>
-							<div>button</div>
+						<div className="item-details-buttons" >
+							<a href="#"><img src={IconSweep} alt="icon-sweep"></img></a>
+							<a href="#"><img src={IconDelete} alt="icon-sweep"></img></a>
 						</div>
 					</div>
 					<div className="item-details-info">
@@ -83,13 +109,12 @@ class sweepItem extends Component {
 						</div>
 					</div>
 		       	</div>	   	 
-						{/* <div className="action-btns">
-							{this.state.itemClicked ? hideBtn : showBtn}
-							<button id='delete-record' onClick={() => this.deleteRecord(itemData.id)}>Delete Record</button>
-						</div> */}
+						{this.state.itemClicked ? this.showDetails() : null}
 				</div>
 		);
 	}
 }
 
-export default sweepItem
+export default  GoogleApiWrapper({
+	apiKey: 'AIzaSyCYkd1L-4JF4J8R9EtakgQ5j2wr6GIEYkQ'
+})(sweepItem);
