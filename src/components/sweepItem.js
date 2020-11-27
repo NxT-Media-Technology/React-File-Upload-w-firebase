@@ -46,7 +46,7 @@ class sweepItem extends Component {
 			this.setState({itemClicked: false})
 		}
 	}
-	
+
 	showDetails() {
 
 		const data = this.state.itemData;
@@ -65,7 +65,7 @@ class sweepItem extends Component {
 									<Marker position={{ lat: cordlat, lng: cordlng }} />
 								</Map>
 							</div>
-						<div className="item-buttons">
+						<div className="item-buttons" >
 							<a href=""><div id="button-green" className="button">Cleaned</div></a>
 							<a href=""><div id="button-red" className="button">Not Found</div></a>
 						</div>
@@ -79,6 +79,11 @@ class sweepItem extends Component {
 		//DYNAMISCHE SHOW HIDE BTNS
 		const data = this.state.itemData;
 
+		const buttonHandler = ()=> {
+			console.log("test");
+			return false;
+		}
+
 		return (			
 			<div className="item" onClick={this.toggleDetails}>
 						<div className="item-header">
@@ -89,8 +94,8 @@ class sweepItem extends Component {
 					<div className="item-details-cover" >
 						<img className='item-details-img' src={data.img_url} alt="Sweep picture"/>
 						<div className="item-details-buttons" >
-							<a href="#"><img src={IconSweep} alt="icon-sweep"></img></a>
-							<a href="#"><img src={IconDelete} alt="icon-sweep"></img></a>
+							<a href="#" onClick={()=> buttonHandler()}><img src={IconSweep} alt="icon-sweep"></img></a>
+							<a href="#" onClick={()=> buttonHandler()}><img src={IconDelete} alt="icon-sweep"></img></a>
 						</div>
 					</div>
 					<div className="item-details-info">

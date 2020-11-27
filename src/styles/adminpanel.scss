@@ -92,6 +92,7 @@ html {
 		position: relative;
 		background-color: white;
 		margin: 1% 0;
+		z-index: 1;
 
 				.item-details-buttons 
 				{
@@ -116,8 +117,10 @@ html {
 				
 				.item-expand {
 					margin:5%;
+					z-index: 2;
 					
 					.item-location {
+						padding-bottom: 5%;
 						h3 {
 							margin:0;
 						}
@@ -128,25 +131,23 @@ html {
 							margin: 2% 0;
 						}
 						.item-buttons{
-							display: block;
 							display: flex;
 							flex-direction: row;
-							justify-content: space-around;
+							justify-content: space-between;
 							align-items: center;
 							width: 80%;
 							font-size: 18px;																
 							margin: 5% auto;
 							a {
 								text-decoration: none;
-								color: black;
 							}
 						}
 						.button {
 							border-radius: 5px;
-							padding:2% 3vw;	
+							padding:5% 5vw;	
 							text-align: center;	
 							margin: auto;	
-							width: 100%;		
+							max-width: 50%;		
 						}
 						
 						#button-red {
