@@ -23,7 +23,7 @@ body {
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
 }
 .overlay-content {
@@ -257,9 +257,21 @@ progress {
 		border: 2px dashed rgba(1,1,1,0.2);
 		border-radius: 5px;
 		margin-top: 7%;
-		padding:20% 20%;
+		padding:15% 20%;
     cursor: pointer;
-    }
+	}
+	
+	.description {
+		border-radius: 5px;
+		line-height: 1.2em;
+		color: black;
+		border: 2px solid rgba(0,0,0,0.3);
+		width: 90%;
+		margin: 5% 0;
+		padding: 3% 5%;
+		resize: none;
+	}
+
 
     .preview-img {
   		width: 400px;
@@ -319,6 +331,18 @@ progress {
 	#root  {
 		overflow: hidden;
 		width: 100%;
+	}
+	.description {
+		
+		border-radius: 5px;
+		line-height: 1.2em;
+		color: black;
+		border: 2px solid rgba(0,0,0,0.3);
+		width: 90%;
+		margin: 5% 0;
+		padding: 3% 5%;
+		resize: none;
+		margin-bottom: 10%;
 	}
 
 	.overlay img {

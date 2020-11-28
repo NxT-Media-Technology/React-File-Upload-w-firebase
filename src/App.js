@@ -6,6 +6,7 @@ import $ from "jquery";
 
 import Information from './components/information.js';
 import SentOverlay from './components/sentOverlay.js';
+import ImageDescription from './components/imageDescription.js';
 import Adminpanel from './Adminpanel.js';
 
 import './styles/style.css';
@@ -19,6 +20,7 @@ class App extends Component {
   		url: '',
       img_name:'',
       latLong: null,
+      description: null,
       displayMessage: false,
       showOverlay: false,
       message: '',
@@ -50,11 +52,14 @@ class App extends Component {
   coordsChanged = (value) => {
 	 this.setState({latLong: value});
   }
-
-  showOverlay() {
-      $(".overlay").removeClass('hidden');
+  descChanged = (value) => {
+    this.setState({description: value});
   }
-
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
   showOverlay() {
     this.setState({showOverlay: true});
   }
@@ -89,6 +94,7 @@ class App extends Component {
           <section className='section' id='section3'>
           <h1 className='section-title'>Add Documents</h1>
             <ImageUpload imageUrl={this.state.url} onUrlChange={this.urlChanged}/>
+            <ImageDescription description ={this.state.description} onDescChange={this.descChanged}/>
           </section>
         </div>
         <div className='sweep-section'>

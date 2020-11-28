@@ -6,6 +6,7 @@ import Adminpanel from './Adminpanel.js';
 import DeleteByMail from './components/deleteByMail.js';
 import * as serviceWorker from './serviceWorker';
 
+
 ReactDOM.render(
   <Router>
   	<Switch>
@@ -16,6 +17,9 @@ ReactDOM.render(
     	<Route path="/remove">
     		<DeleteByMail />
     	</Route>
+		<Route>
+
+		</Route>
     </Switch>
   </Router>,
   document.getElementById('root')

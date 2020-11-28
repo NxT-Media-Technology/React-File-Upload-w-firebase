@@ -18,6 +18,7 @@ class SentOverlay extends Component
       messageType: '',
       url: props.url,
       img_name: props.imgName,
+      description: props.description,
       latLong: props.lat,
       displayform: true
     }
@@ -62,6 +63,7 @@ class SentOverlay extends Component
       console.log(this);
       Axios.post("http://localhost:3001/post", {
       img_url: this.state.url,
+      img_description:this.state.description,
       coordinates: this.state.latLong,
       anonymous: this.state.checked,
       name: this.state.name,

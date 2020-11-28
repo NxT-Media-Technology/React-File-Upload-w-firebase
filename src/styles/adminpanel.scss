@@ -9,10 +9,46 @@ html {
 }
 #admin-panel 
 {
+
 	background-color: $bg;
 	$sweep-blue: #00529E;
 	font-family: "poppins", sans-serif;
 	height: 100%;
+
+	.overlay {
+		img {
+			margin: auto;
+			min-width: 50%;
+			min-height: 80%;
+
+		}
+		.overlay-buttons {
+			display: flex;
+			flex-direction: row;	
+			margin: auto;
+			justify-content: space-around;
+			width: 80%;
+
+		}
+		.button {
+					border-radius: 5px;
+					padding:5% 0;	
+					text-align: center;	
+					margin: auto;
+					width: 15vw;
+					font-size: 1.8rem;
+				}
+				
+				.button-red {
+					background-color: $red;
+					color: white;
+				}
+				.button-green {
+					color: white;
+					background-color: $green;				
+				}
+
+	}
 
 	.admin-header {
 		background-color: white;
@@ -44,6 +80,9 @@ html {
 		padding-bottom: 1%;
 		align-items: center;
 		
+		.activefilter path{
+			fill:$blue;
+		}
 		
 		.admin-filter-views {
 			display: flex;
@@ -67,6 +106,8 @@ html {
 				margin-left: 3%;
 				padding: 3% 15%;
 				border-radius: 5px;
+				font-family: "poppins", sans-serif;
+				font-size: 1rem;
 			}
 		}
 	}
@@ -79,18 +120,76 @@ html {
 		text-align: center;
 	}
 
-	.items {
+	//different displays
+
+	.list-view {
+		margin: auto;	
 		display: flex;
+		flex-direction: column;
 		flex-wrap: wrap;
-		justify-content: center;
+		justify-content: space-around;
+		width: 70vw;
+		.item {
+			margin-bottom:4%;
+
+		}
+		.item-details-info{
+			margin: 3% auto;
+			margin-left: 5%;
+		}
+		.item-details-cover 
+			{
+				position: relative;
+				
+				.item-details-img 
+				{
+					max-width: 30vw;
+					max-height: 30vw;
+					object-fit: fill;
+				}					
+			}
 	}
+
+	.block-view {	
+		margin: auto;	
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		width: 90vw;
+		.item {
+			width: 40vw;
+			margin: 4%;
+		}
+		.item-details 
+		{
+			display: flex;		
+			.item-details-info {
+				margin: 3% auto;
+				margin-left: 3%;
+			}	
+			
+			.item-details-cover 
+			{
+				position: relative;
+				
+				.item-details-img 
+				{
+					max-width: 20vw;
+					display: block;
+					max-height: 25vh;
+					object-fit: fill;	
+				}					
+			}
+		}
+	}
+	
 
 	.item {
 		box-shadow: 0 1px 3px 0 black, 0 2px 5px 0 rgba(0, 0, 0, 0.19);
-		width: 60vw;
 		border-radius: 5px;		
 		position: relative;
-		background-color: white;
+		background-color: rgba(255, 255, 255, 0.7);
 		margin: 1% 0;
 		z-index: 1;
 
@@ -118,9 +217,16 @@ html {
 				.item-expand {
 					margin:5%;
 					z-index: 2;
-					
+					.item-details-info-mobile {
+					display: none;
+					margin: 15% 0;
+					.small-icon {
+						margin-right: 10px;
+						width: 20px;
+						height: 20px;
+					}
+				}
 					.item-location {
-						padding-bottom: 5%;
 						h3 {
 							margin:0;
 						}
@@ -133,31 +239,40 @@ html {
 						.item-buttons{
 							display: flex;
 							flex-direction: row;
-							justify-content: space-between;
+							justify-content: space-around;
 							align-items: center;
-							width: 80%;
 							font-size: 18px;																
 							margin: 5% auto;
 							a {
-								text-decoration: none;
+								text-decoration: none;							
+								white-space: nowrap;
 							}
 						}
 						.button {
 							border-radius: 5px;
-							padding:5% 5vw;	
+							padding:5% 0;	
 							text-align: center;	
-							margin: auto;	
-							max-width: 50%;		
+							margin: auto;
+							width: 15vw;	
 						}
 						
-						#button-red {
+						.button-red {
 							background-color: $red;
 							color: white;
 						}
-						#button-green {
+						.button-green {
 							color: white;
 							background-color: $green;
 						}
+					}
+					.item-shrink {
+						width: 100%;
+						padding-bottom: 3%;
+						padding-top: 2%;
+						text-align: center;
+						border-top: 2px solid rgba(0, 0, 0, 0.19);
+						cursor: pointer;
+						margin-bottom: 20%;
 					}
 				}
 
@@ -184,8 +299,6 @@ html {
 						}
 					}
 					.item-details-info {
-						margin: 3% auto;
-						margin-left: 5%;
 						font-size: 16px;
 						h3 {
 							margin-bottom:10%;
@@ -207,7 +320,7 @@ html {
 		width: 60%;
 		margin:auto;
 		margin-top: 3%;
-		margin-bottom: 5%;
+		margin-bottom: 8%;
 		a {
 			text-decoration: none;
 			color:$blue;
@@ -222,5 +335,150 @@ html {
 			margin: 0 5%;
 		}
 	}
+
+	.navbar {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		z-index: 3;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		background-color: white;
+		height: 10%;
+		
+		.nav-item {
+			display: flex;			
+			align-items: center;
+			flex-direction: column;
+			justify-content: center;	
+			label {
+				color:grey;
+			} 
+		}
+		
+		.activenav {
+			background-color: white;
+			border-radius: 10px;
+			display: inline-flex;
+		}
+		.activenav svg path{
+			fill:$blue;
+		}		
+		.activenav label {
+			color:$blue;			
+		}
+	}
+	
+	//navbackground for the active circle
+	.navbarbg {
+		position: fixed;
+		z-index: 3;
+		bottom: 9%;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+		margin:auto;
+		.hidden img{
+			display: none;
+		}
+		.nav-item {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			background-color: none;
+			&:nth-child(2) {
+				padding: 0 7vw;
+			}
+			label {
+				display: none;
+			} 			
+		}
+		.activenav {
+		}
+		svg{
+			display: none;
+		}		
+		label {
+			display: none;			
+		}
+	}
+	
+	@media (min-width: 480px) {
+		.item-details-info-mobile {
+						display: hidden;
+					}
+	}
+	@media (min-width: 320px) and (max-width: 480px)
+	{
+		.admin-filter-views a{
+			display: none;
+		}
+		.list-view {
+		margin: auto;	
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		width: 90vw;
+		.item {
+			margin-bottom:4%;
+		}
+		.item-details-info{
+			display: none;
+		}
+		.item-details-buttons {
+			right:0;
+		}
+		.item-details-cover 
+			{
+				position: relative;
+				width: 90vw;
+				.item-details-img 
+				{
+					min-width: 90vw;
+					min-height: 20vh;
+				}					
+			}
+
+		.item {
+			.item-expand {
+				.item-details-info-mobile {
+					display: block;
+					margin: 15% 0;
+					.small-icon {
+						margin-right: 10px;
+						width: 20px;
+						height: 20px;
+					}
+				}
+				.item-location{
+					.button {
+						width: 30vw;
+					}
+				}
+			}
+		}
+	}
+	.navbar{
+		padding:2% 0;
+	}
+	.navbarbg {
+		width: 100vw;
+		height: 7%;
+		.nav-item {	
+			width: 100%;
+			&:nth-child(2) {
+				padding: 0 7%;
+			}
+			label {
+				display: none;
+			} 
+		}
+	}
+}
+
 }
 
