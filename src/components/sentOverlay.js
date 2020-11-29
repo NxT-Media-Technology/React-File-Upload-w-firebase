@@ -37,7 +37,7 @@ class SentOverlay extends Component
   handleChange = (e) => {
     this.setState({
     [e.target.name]: e.target.value
-    })
+    });
   }
 
   handleCheckboxChange = (checked) => {
@@ -71,7 +71,6 @@ class SentOverlay extends Component
       imgName: this.state.img_name
     })
     .then((response) => {
-      console.log(response);
       this.setState({ displayMessage: true, message: response});
 
       // toon enkel bij geslaagde queries:
@@ -91,9 +90,10 @@ class SentOverlay extends Component
 
   render() {
     return (
-      <div className="overlay completed-overlay">
+      <div className="overlay completed-overlay">        
         <div className="overlay-content">
         <p className="overlay-text">Thank you for helping this cause.</p>
+        {console.log("the description is " + this.state.description)}
           <form class="overlay-form">
             <label>Name</label>
             <input onChange={this.handleChange} className={(this.state.disabled) ? "disabled" : ""}  type="text" name="name" value={this.state.name}/>

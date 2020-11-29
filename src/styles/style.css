@@ -481,7 +481,17 @@ progress {
 	 	padding-bottom: 50vh;
 		position: relative;
 	 }
-
+	 .description {
+		 
+		border-radius: 5px;
+		line-height: 1.2em;
+		color: black;
+		border: 2px solid rgba(0,0,0,0.3);
+		width: 90%;
+		margin: 5% 0;
+		padding: 3% 5%;
+		resize: none;
+	 }
     .app {
 			position: relative;
 			padding:0 10%;

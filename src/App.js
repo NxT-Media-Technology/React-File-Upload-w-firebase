@@ -6,7 +6,7 @@ import $ from "jquery";
 
 import Information from './components/information.js';
 import SentOverlay from './components/sentOverlay.js';
-import ImageDescription from './components/imageDescription.js';
+// import ImageDescription from './components/imageDescription.js';
 import Adminpanel from './Adminpanel.js';
 
 import './styles/style.css';
@@ -20,7 +20,7 @@ class App extends Component {
   		url: '',
       img_name:'',
       latLong: null,
-      description: null,
+      description: "",
       displayMessage: false,
       showOverlay: false,
       message: '',
@@ -58,7 +58,8 @@ class App extends Component {
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
+    console.log(this.state.description);
   }
   showOverlay() {
     this.setState({showOverlay: true});
@@ -84,7 +85,7 @@ class App extends Component {
             </g>
           </svg>
         </div>
-        {this.state.showOverlay ? (<SentOverlay lat={this.state.latLong} url={this.state.url} imgName={this.state.img_name} onClose={this.hideOverlay} />) : null}
+        {this.state.showOverlay ? (<SentOverlay lat={this.state.latLong} description={this.state.description} url={this.state.url} imgName={this.state.img_name} onClose={this.hideOverlay} />) : null}
         <div className='sections'>
           <Information />
           <section className='section' id='section2'>
@@ -94,7 +95,9 @@ class App extends Component {
           <section className='section' id='section3'>
           <h1 className='section-title'>Add Documents</h1>
             <ImageUpload imageUrl={this.state.url} onUrlChange={this.urlChanged}/>
-            <ImageDescription description ={this.state.description} onDescChange={this.descChanged}/>
+            {/* <ImageDescription description ={this.state.description} onDescChange={this.descChanged}/> */}
+            <h1 className='section-title'>Add Description</h1>
+            <textarea class="description" value={this.state.description} onChange={this.handleChange} name="description"></textarea>
           </section>
         </div>
         <div className='sweep-section'>

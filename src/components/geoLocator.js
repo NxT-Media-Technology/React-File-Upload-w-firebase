@@ -46,19 +46,16 @@ class GeoLocator extends Component {
   handleChange = (checked) => {
     if(checked == false)
     {
-      console.log("hello!");
       this.setState({
         latitude: null,
         longitude: null,
         checked
       })
-      console.log(this.state.latitude);
       const latLong = null;
       this.props.onLatLongChange(latLong);
     }
     else
     {
-        console.log(checked);
         navigator.geolocation.getCurrentPosition(this.getCoordinates);
         this.setState({
           checked,

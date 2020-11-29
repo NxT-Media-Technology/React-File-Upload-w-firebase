@@ -4,13 +4,9 @@ $red:#E34747;
 $green:#73C167;
 
 html {
-	background-color: $bg;
-	
 }
 #admin-panel 
 {
-
-	background-color: $bg;
 	$sweep-blue: #00529E;
 	font-family: "poppins", sans-serif;
 	height: 100%;
@@ -140,6 +136,7 @@ html {
 		.item-details-cover 
 			{
 				position: relative;
+				height: 30%;
 				
 				.item-details-img 
 				{
@@ -189,7 +186,7 @@ html {
 		box-shadow: 0 1px 3px 0 black, 0 2px 5px 0 rgba(0, 0, 0, 0.19);
 		border-radius: 5px;		
 		position: relative;
-		background-color: rgba(255, 255, 255, 0.7);
+		background-color: rgba(255, 255, 255, 1);
 		margin: 1% 0;
 		z-index: 1;
 

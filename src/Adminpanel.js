@@ -40,7 +40,8 @@ class Adminpanel extends Component {
 	    .then((response) => {
 	    	if (response.status == 200) {
 	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
-	      		console.log(response);
+				  // console.log(this.state.posts.filter(post => post.is_deleted == "0"));
+				
 	    	} else {
 	    		this.setState({statusMsg: response})
 	    	}    	
@@ -49,8 +50,32 @@ class Adminpanel extends Component {
 
 	updateNav(status) {
 		this.setState({activeNav: status});
+		this.filterData();
 	}
 	
+	filterData() {
+		const activeFilter = this.state.activeNav;
+		switch (activeFilter) 
+		{
+			case "pending":
+				this.setState({
+					filteredData: this.state.posts.filter(post => post.is_deleted == "0")
+				});
+				break;
+			case "notfound":
+				this.setState({
+					filteredData: this.state.posts.filter(post => post.is_deleted == "0")
+				});
+				break;
+			case "clean":
+				this.setState({
+					filteredData: this.state.posts.filter(post => post.is_deleted == "1")
+				});
+				break;
+		}
+					console.log(this.state.filteredData);
+	}
+
 	updateView(status) {
 		if(status == "block") {
 			const block = $("#block");
@@ -117,12 +142,12 @@ class Adminpanel extends Component {
 
 				{this.state.posts.length == 0 ? <p className='status-msg'>No data records</p> : ''}
 
-				<div className={this.state.activeView == "block" ? "block-view" : "list-view"}>
+				<div className={this.state.activeView == "block" ? "block- view" : "list-view"}>
 					{/*   loop door sweepItems:	 */}
 					{this.state.isLoaded ? currentPosts.map((post, index) => (
 						<SweepItem post={post} updateStatus={this.updateStatus} key={post.id} />
 					))
-					: <p>Loading data...</p>} 	{/* <-- Als er geen posts zijn  */}
+					: <h1 className="center">Loading data...</h1>} 	{/* <-- Als er geen posts zijn  */}
 
 				</div>
 				{this.state.warning ? <WarningOverlay action={this.state.action}/> : null }

@@ -33,7 +33,7 @@ app.post("/post", (req,res)=> {
 
     let name = req.body.name;
     let phonenumber = req.body.number;
-    let img_description = "";
+    let img_description = req.body.img_description;
 
     const softDelete = 0
     const url = req.body.img_url;
@@ -129,7 +129,7 @@ app.post("/login", (req, res) => {
 
 app.post("/getdata", (req, res) => {
 
-    const sqlSelectAll = "SELECT * FROM location_data WHERE is_deleted = 0 ";
+    const sqlSelectAll = "SELECT * FROM location_data";
     db.query(sqlSelectAll, (err,result) => {
         if (err) {
             res.send(err)
