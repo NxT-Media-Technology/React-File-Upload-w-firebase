@@ -41,6 +41,7 @@ class Adminpanel extends Component {
 	    	if (response.status == 200) {
 	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
 				  // console.log(this.state.posts.filter(post => post.is_deleted == "0"));
+				  this.filterData();
 				
 	    	} else {
 	    		this.setState({statusMsg: response})
@@ -51,6 +52,7 @@ class Adminpanel extends Component {
 	updateNav(status) {
 		this.setState({activeNav: status});
 		this.filterData();
+		console.log(this.state.activeNav);
 	}
 	
 	filterData() {
@@ -67,9 +69,9 @@ class Adminpanel extends Component {
 					filteredData: this.state.posts.filter(post => post.is_deleted == "0")
 				});
 				break;
-			case "clean":
-				this.setState({
-					filteredData: this.state.posts.filter(post => post.is_deleted == "1")
+				case "clean":
+					this.setState({
+						filteredData: this.state.posts.filter(post => post.is_deleted == "1")
 				});
 				break;
 		}
@@ -102,7 +104,7 @@ class Adminpanel extends Component {
 		/* PAGINATION */ 
 	const indexofLastPost = this.state.currentPage * this.state.postsPerPage;
 	const indexOfFirstPost = indexofLastPost - this.state.postsPerPage;
-	const currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
+	const currentPosts = this.state.filteredData.slice(indexOfFirstPost, indexofLastPost);
 
 	// change page 
 	const paginate = (pageNumber) => {
@@ -142,7 +144,7 @@ class Adminpanel extends Component {
 
 				{this.state.posts.length == 0 ? <p className='status-msg'>No data records</p> : ''}
 
-				<div className={this.state.activeView == "block" ? "block- view" : "list-view"}>
+				<div className={this.state.activeView == "block" ? "block-view": "list-view"}>
 					{/*   loop door sweepItems:	 */}
 					{this.state.isLoaded ? currentPosts.map((post, index) => (
 						<SweepItem post={post} updateStatus={this.updateStatus} key={post.id} />
@@ -152,17 +154,7 @@ class Adminpanel extends Component {
 				</div>
 				{this.state.warning ? <WarningOverlay action={this.state.action}/> : null }
 
-				<div className="navbarbg">
-					<div className={this.state.activeNav == "pending" ? "activenav nav-item" : "nav-item hidden"} onClick={() => this.updateNav("pending")}>
-						<img className="activenav" src={Border}/>
-					</div>
-					<div className={this.state.activeNav == "clean" ? "activenav nav-item" : "nav-item hidden"} onClick={() => this.updateNav("clean")}>						
-						<img className="activenav" src={Border}/>
-					</div>
-					<div className={this.state.activeNav == "notfound" ? "activenav nav-item" : "nav-item hidden"} onClick={() => this.updateNav("notfound")}>						
-						<img className="activenav" src={Border}/>
-					</div>
-				</div>
+				
 				<div className="navbar">
 					<div className={this.state.activeNav== "pending" ? "activenav nav-item" :"nav-item"} onClick= {()=>this.updateNav("pending")}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24.715" height="37.073" viewBox="0 0 24.715 37.073">
@@ -186,6 +178,18 @@ class Adminpanel extends Component {
 							<path id="iconmonstr-x-mark-1" d="M12,10.094,7.842,5.99l4.1-4.141L10.094,0,5.988,4.159,1.833.058,0,1.891,4.16,6.01l-4.1,4.156L1.89,12,6.009,7.841l4.142,4.1Z" transform="translate(9.11 9.239)" fill="#bcbec5" />
 						</svg>
 						<label>Not found</label>
+					</div>
+				</div>
+				{/* background of active navitem in navbar */}
+				<div className="navbarbg">
+					<div className={this.state.activeNav == "pending" ? "activenav nav-item" : "nav-item hidden"}>
+						<img className="activenav" src={Border}/>
+					</div>
+					<div className={this.state.activeNav == "clean" ? "activenav nav-item" : "nav-item hidden"} >						
+						<img className="activenav" src={Border}/>
+					</div>
+					<div className={this.state.activeNav == "notfound" ? "activenav nav-item" : "nav-item hidden"}>						
+						<img className="activenav" src={Border}/>
 					</div>
 				</div>
 				<div className="pagination">

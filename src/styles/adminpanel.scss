@@ -190,6 +190,17 @@ html {
 		margin: 1% 0;
 		z-index: 1;
 
+		.header-green{
+			background-color: green;
+			
+		}
+		.header-red {
+			background-color: red;
+			
+		}
+		.header-blue {
+			background-color: $blue;
+		}
 				.item-details-buttons 
 				{
 					display: flex;
@@ -204,7 +215,6 @@ html {
 					display: flex;
 					justify-content: space-between;
 					color: white;
-					background-color: #00529E;
 					padding: 10px 20px;
 					h3 {
 						margin: 0;

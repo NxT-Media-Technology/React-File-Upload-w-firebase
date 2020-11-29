@@ -20,7 +20,8 @@ class sweepItem extends Component {
 			
 			itemData: this.props.post,
 			itemClicked: false,
-			url: this.props.post.img_url,
+			url: this.props.post.img_url,			
+			headerColor:"header-blue",
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.showDetails = this.showDetails.bind(this);
@@ -98,11 +99,10 @@ class sweepItem extends Component {
 
 	render() {
 		//DYNAMISCHE SHOW HIDE BTNS
-		const data = this.state.itemData;
-
+		const data = this.state.itemData;	
 		return (			
 			<div className="item">
-						<div className="item-header" onClick={this.toggleDetails}>
+						<div className={this.state.headerColor + " item-header"} onClick={this.toggleDetails}>
 							<h3>Id: {data.id}</h3>
 							<h3>{data.created_at}</h3>
 						</div>	
