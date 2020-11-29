@@ -50,6 +50,7 @@ class Adminpanel extends Component {
 	updateNav(status) {
 		this.setState({activeNav: status});
 	}
+	
 	updateView(status) {
 		if(status == "block") {
 			const block = $("#block");

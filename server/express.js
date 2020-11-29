@@ -5,7 +5,21 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { getNodeText } = require('@testing-library/react');
-const crypto = require("crypto");
+const crypto = require('crypto');
+
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+app.use(cookieParser());
+app.use(session({
+    secret: 'test',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors({ origin: true }));
 
 // Zorg dat deze gegevens kloppen! 
 const db = mysql.createPool({
@@ -14,11 +28,6 @@ const db = mysql.createPool({
     password: '',
     database: 'react_crud',
 })
-
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors({ origin: true }));
 
 app.post("/post", (req,res)=> {
 
@@ -48,6 +57,7 @@ app.post("/post", (req,res)=> {
                 console.log(err);
                 // if there are any connection issues: 
                 res.send('Error connecting to the database - data could not be send!');
+                return;
             }
             console.log('Record has been stored succesfully!');
             res.send('Your submission has been added to the database!');
@@ -86,6 +96,36 @@ app.post("/post", (req,res)=> {
     });
 });
 
+app.post("/login", (req, res) => {
+    var session = require('express-session')
+
+    let user_name = req.body.username;
+    let user_password = req.body.password;
+
+    if (user_name && user_password){
+        const sqlGetUser = "SELECT id, username, password FROM users WHERE username = ?";
+        //CHECK OF USER BESTAAT
+        db.query(sqlGetUser, user_name, (err,result) => {
+            if (err) {
+                console.log(err)
+                res.send('Invalid credentials: user not found')
+            } else {
+                console.log(result)
+                if (result.length > 0) {
+                    if (user_name == result[0].username && user_password == result[0].password) {
+                        res.send('Login succes! Redirecting...')
+                        req.session.username = user.username;
+                        res.render('/')
+                    } else {
+                        res.send('Invalid credentials: Invalid password')
+                    }
+                } else {
+                    res.send('Invalid credentials: Username not found')
+                }
+            }
+        });
+    }
+});
 
 app.post("/getdata", (req, res) => {
 

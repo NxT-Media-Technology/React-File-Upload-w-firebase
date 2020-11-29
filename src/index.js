@@ -2,18 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router,Route,Link,Switch,Redirect } from "react-router-dom";
 import App from './App';
+import LoginPage from './components/login.js';
 import Adminpanel from './Adminpanel.js';
 import DeleteByMail from './components/deleteByMail.js';
 import * as serviceWorker from './serviceWorker';
 
+const loggedIn = true;
 
 ReactDOM.render(
   <Router>
   	<Switch>
       <Route exact path="/" component={App}/>
-    	<Route path="/adminpanel">
-    		<Adminpanel />
-    	</Route>
+      <Route exact path="/adminpanel" render={() => (
+        loggedIn ? (
+          <Adminpanel />
+        ) : (
+          <Redirect to="/adminpanel" component={LoginPage}/>
+        )
+      )}/>
+
     	<Route path="/remove">
     		<DeleteByMail />
     	</Route>
