@@ -12,18 +12,13 @@ html {
 	height: 100%;
 
 	.overlay {
-		img {
-			margin: auto;
-			min-width: 50%;
-			min-height: 80%;
 
-		}
 		.overlay-buttons {
 			display: flex;
 			flex-direction: row;	
 			margin: auto;
 			justify-content: space-around;
-			width: 80%;
+			width: 100%;
 
 		}
 		.button {
@@ -31,8 +26,8 @@ html {
 					padding:5% 0;	
 					text-align: center;	
 					margin: auto;
-					width: 15vw;
-					font-size: 1.8rem;
+					width: 5vw;
+					font-size: 1.3rem;
 				}
 				
 				.button-red {
@@ -137,7 +132,7 @@ html {
 			{
 				position: relative;
 				height: 30%;
-				
+
 				.item-details-img 
 				{
 					max-width: 30vw;

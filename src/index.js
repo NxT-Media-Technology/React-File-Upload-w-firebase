@@ -13,13 +13,12 @@ ReactDOM.render(
   <Router>
   	<Switch>
       <Route exact path="/" component={App}/>
-      <Route exact path="/adminpanel" render={() => (
-        loggedIn ? (
-          <Adminpanel />
-        ) : (
-          <Redirect to="/adminpanel" component={LoginPage}/>
-        )
-      )}/>
+      <Route exact path="/adminpanel">
+        <Adminpanel />
+      </Route>
+      <Route exact path="/login">
+        <LoginPage />
+      </Route>
 
     	<Route path="/remove">
     		<DeleteByMail />
