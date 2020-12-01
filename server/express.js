@@ -9,6 +9,7 @@ const crypto = require('crypto');
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const { param } = require('jquery');
 
 app.use(cookieParser());
 app.use(session({
@@ -139,6 +140,68 @@ app.post("/getdata", (req, res) => {
     });
 });
 
+
+
+// Get posts by datetime:
+app.post('/getPostsByDate', (req, res) => {
+
+    const dateFilterType = req.body.dateFilter;
+    const currentNavItem = req.body.currentNavItem;
+    let selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
+    let newDate = new Date();
+    let currentYear = newDate.getFullYear();
+    // getMonth() is zero index based: (therefore +1)
+    let currentMonth = newDate.getMonth()+1; 
+    let yearAndMonth = currentYear + "-" + currentMonth;
+    // console.log(currentYear, currentMonth, newDate);
+
+    let params = [0,0];
+    console.log(currentNavItem)
+
+    // 0 = pending | 1 = Clean | 2 = Not found
+    switch(currentNavItem){
+            case 0:
+                params = [0,0];
+            break;
+            case 1:
+                params = [1,0];
+            break;
+            case 2:
+                params = [0,1];
+            break;
+            default:
+                params = [0,0];
+      }
+
+    switch(dateFilterType) {
+        case 'Oldest':
+            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at ASC";
+            break;
+        case 'Latest':
+            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at DESC";
+            break;
+        case 'This-month':
+            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = ' " + params[0] + "' AND `not_found` = '" + params[1] + "' AND created_at LIKE '%" + yearAndMonth + "%'";
+            break;
+        default:
+            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0' ORDER BY created_at ASC";
+       
+      }
+
+        console.log(selectStmt)
+
+    db.query(selectStmt, (err,result) => {
+        if (err) {
+            res.send("Oops.. Something went wrong!")
+        } else {
+            console.log('success!');
+            res.send(result);
+        }
+    })
+});
+
+
+
 app.post("/getcleaneddata", (req, res) => {
     console.log('getcleaneddata')
     const sqlSelectCleaned = "SELECT * FROM location_data WHERE `is_deleted` = '1'";
@@ -190,6 +253,11 @@ app.post('/notfoundrecord', (req, res) => {
     })
 });
 
+
+
+
+
+
 //REMOVE FROM EMAIL
 app.post('/remove', (req, res) => {
     const uuid = req.body.uuid;
@@ -204,6 +272,11 @@ app.post('/remove', (req, res) => {
         }
     })
 });
+
+
+
+
+
 
 // Run the server on port 3001 (ONLY listens on 3001)
 app.listen(3001, () => {

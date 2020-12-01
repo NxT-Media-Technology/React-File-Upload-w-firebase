@@ -9,6 +9,7 @@ import LogoIcon from './images/OCS-Icon.png';
 import Border from './includes/border-header.svg';
 
 
+
 import './styles/adminpanel.scss';
 
 class Adminpanel extends Component {
@@ -18,6 +19,7 @@ class Adminpanel extends Component {
 			posts: [],
 			filteredData: [],
 			currentPage: 1,
+			dateFilter: "latest",
 			postsPerPage: 6,		
 			isLoaded: false,
 			statusMsg: '',
@@ -27,6 +29,8 @@ class Adminpanel extends Component {
 		this.updateStatus = this.updateStatus.bind(this);
 		this.updateNav = this.updateNav.bind(this);
 		this.updateView = this.updateView.bind(this);
+		this.updateFilter = this.updateFilter.bind(this);
+
 	}
 
 	// haalt alle pending data op wanneer component aangeroepen wordt: 
@@ -75,6 +79,41 @@ class Adminpanel extends Component {
 		})
 	}
 
+	// @info: Returns posts by given date period. 
+	getPostsByDate(date_filter) {
+
+		let navItem = 0; 
+
+		console.log(this.state.activeNav)
+
+		switch(this.state.activeNav){
+			case 'Pending':
+				navItem = 0;
+			break;
+			case 'Clean':
+				navItem = 1;
+			break;
+			case 'Not Found':
+				navItem = 2;
+			break;
+			default:
+				navItem = 0;
+		}	
+
+		Axios.post("http://localhost:3001/getPostsByDate",{
+			dateFilter: date_filter,
+			currentNavItem: navItem
+		})
+	    .then((response) => {
+			console.log(response.data)
+	    	if (response.status == 200) {
+	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})	
+	    	} else {
+	    		this.setState({statusMsg: response})
+	    	}    	
+		})
+	}
+
 	updateNav(status) {
 		this.setState({activeNav: status, statusMsg: ''});
 		$('.upper-title').html(status)
@@ -102,17 +141,41 @@ class Adminpanel extends Component {
 		this.setState({statusMsg: msg})
 	}
 
+
+
+	// update select filter:
+	updateFilter = (event) => {
+		console.log(event.target.value);
+		this.setState({dateFilter: event.target.value});
+		this.getPostsByDate(event.target.value); 
+
+	};
+
 	render() {
+
+
+		console.log(this.state.posts);
 	
 		/* PAGINATION */ 
 	const indexofLastPost = this.state.currentPage * this.state.postsPerPage;
 	const indexOfFirstPost = indexofLastPost - this.state.postsPerPage;
-	const currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
+	let currentPosts = '';
+
+		if(this.state.posts){
+			currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
+		}
 
 	// change page 
 	const paginate = (pageNumber) => {
 		this.setState({currentPage: pageNumber})
+
+	// End of pagination settings. 
 	};
+
+
+
+	  console.log(this.state.dateFilter);
+
 	
 		return (
 			<div id='admin-panel'>
@@ -136,10 +199,12 @@ class Adminpanel extends Component {
 					</div>
 					<div class="admin-filter-options">
 						<label>Sort by:</label>
-						<select>
-							<option>test1</option>
-							<option>test2</option>
-							<option>test3</option>
+
+
+						<select onChange={this.updateFilter} value={this.state.dateFilter}>
+							<option onChange={this.updateFilter} value="Latest">Latest</option>
+							<option onChange={this.updateFilter} value="Oldest">Oldest</option>
+							<option onChange={this.updateFilter} value="This-month">This-month</option>
 						</select>
 					</div>
 				</div>
