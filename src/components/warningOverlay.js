@@ -14,6 +14,7 @@ class warningOverlay extends Component {
         }
     }
 
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -21,12 +22,23 @@ class warningOverlay extends Component {
     }
 
 
+    // submitData() {
+    //     console.log(this);
+    //     Axios.post("http://localhost:3001/", {
+    //         //something
+    //     })
+    //         .then((response) => {
+    //         });
+    // }
+
     render() {
         return (
             <div className="overlay completed-overlay">
                 <div className="overlay-content">
+                    <img src={Logo}/>
+                    <br />
                     <div className="overlay-text">
-                        Are you sure that you want to send this report to
+                        Are you sure that you want to send this application to
                         <span> {this.state.itemAction}?</span>
                     </div>
                     <div class="overlay-buttons">

@@ -21,7 +21,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({ origin: true }));
 
-
 // Zorg dat deze gegevens kloppen! 
 const db = mysql.createPool({
     host: 'localhost',
@@ -98,6 +97,8 @@ app.post("/post", (req,res)=> {
 });
 
 app.post("/login", (req, res) => {
+    var session = require('express-session')
+
     let user_name = req.body.username;
     let user_password = req.body.password;
 
@@ -113,9 +114,8 @@ app.post("/login", (req, res) => {
                 if (result.length > 0) {
                     if (user_name == result[0].username && user_password == result[0].password) {
                         res.send('Login succes! Redirecting...')
-                        req.session.username = result[0].username;
-                        console.log(req.session.username)
-                        //res.render('adminpage');
+                        req.session.username = user.username;
+                        res.render('/')
                     } else {
                         res.send('Invalid credentials: Invalid password')
                     }
@@ -128,9 +128,9 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/getdata", (req, res) => {
-    console.log('getpendingdata')
-    const sqlSelectAllPending = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
-    db.query(sqlSelectAllPending, (err,result) => {
+
+    const sqlSelectAll = "SELECT * FROM location_data";
+    db.query(sqlSelectAll, (err,result) => {
         if (err) {
             res.send(err)
         } else {
@@ -139,31 +139,6 @@ app.post("/getdata", (req, res) => {
     });
 });
 
-app.post("/getcleaneddata", (req, res) => {
-    console.log('getcleaneddata')
-    const sqlSelectCleaned = "SELECT * FROM location_data WHERE `is_deleted` = '1'";
-    db.query(sqlSelectCleaned, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send(result)
-        }
-    });
-});
-
-app.post("/getnotfounddata", (req, res) => {
-    console.log('getnotfounddata')
-    const sqlSelectCleanedNotFound = "SELECT * FROM location_data WHERE `not_found` = '1'";
-    db.query(sqlSelectCleanedNotFound, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send(result)
-        }
-    });
-});
-
-//REMOVE FROM ADMINPANEL
 app.post('/deleteRecord', (req, res) => {
     const id = req.body.id
     const sqlSoftDelete = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`id` = ?";
@@ -177,22 +152,9 @@ app.post('/deleteRecord', (req, res) => {
     })
 });
 
-app.post('/notfoundrecord', (req, res) => {
-    const id = req.body.id
-    const sqlSoftDelete = "UPDATE `location_data` SET `not_found` = '1' WHERE `location_data`.`id` = ?";
-    db.query(sqlSoftDelete, id, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send('Item deleted succesfully!')
-            console.log('softdeleted')
-        }
-    })
-});
-
-//REMOVE FROM EMAIL
 app.post('/remove', (req, res) => {
     const uuid = req.body.uuid;
+    console.log(uuid.length)
 
     const sqlSoftDeleteMail = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`delete_id` = ?";
     db.query(sqlSoftDeleteMail, uuid, (err,result) => {

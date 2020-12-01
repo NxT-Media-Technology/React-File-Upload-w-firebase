@@ -10,7 +10,6 @@ import IconSweep from './../includes/sweep-icon.svg';
 import IconDelete from './../includes/delete-icon.svg';
 import DescIcon from './../includes/desc-icon.svg';
 
-import WarningOverlay from './warningOverlay.js';
 import GeoLocator from './geoLocator.js';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
@@ -23,28 +22,15 @@ class sweepItem extends Component {
 			itemClicked: false,
 			url: this.props.post.img_url,			
 			headerColor:"header-blue",
-			warning:false,
-			warningaction:null,
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.showDetails = this.showDetails.bind(this);
-		this.deleteRecord = this.deleteRecord.bind(this);
 	}
 	
+
 	deleteRecord(record_id) {
 		//DATABASE SOFTDELETE
 		Axios.post("http://localhost:3001/deleteRecord", {id: record_id}).then((response) => {
-			//UPDATE STATUS MSG
-			this.props.updateStatus(response.data);
-
-			//REMOVE FROM LIST
-			const id = record_id
-			$('#' + id).fadeOut(1000)
-		})
-	}
-
-	notFoundRecord(record_id) {
-		Axios.post("http://localhost:3001/notfoundrecord", {id: record_id}).then((response) => {
 			//UPDATE STATUS MSG
 			this.props.updateStatus(response.data);
 
@@ -97,8 +83,8 @@ class sweepItem extends Component {
 								</Map>
 							</div>
 						<div className="item-buttons" >
-							<a href="#"><div className="button button-green">Cleaned</div></a>
-							<a href="#"><div className="button button-red">Not Found</div></a>
+					<a href="#"><div className="button button-green">Cleaned</div></a>
+					<a href="#"><div className="button button-red">Not Found</div></a>
 						</div>
 						<div className="item-shrink" onClick={this.toggleDetails}>
 							<svg xmlns="http://www.w3.org/2000/svg" width="26.637" height="13.318" viewBox="0 0 26.637 13.318">
@@ -115,7 +101,7 @@ class sweepItem extends Component {
 		//DYNAMISCHE SHOW HIDE BTNS
 		const data = this.state.itemData;	
 		return (			
-			<div className="item" id={data.id}>
+			<div className="item">
 						<div className={this.state.headerColor + " item-header"} onClick={this.toggleDetails}>
 							<h3>Id: {data.id}</h3>
 							<h3>{data.created_at}</h3>
@@ -123,9 +109,9 @@ class sweepItem extends Component {
 						<div className="item-details">
 					<div className="item-details-cover" >
 						<img className='item-details-img' src={data.img_url} alt="Sweep picture"/>
-						<div className={this.props.activeNav !== 'Pending' ? "hidden" : "item-details-buttons"}>
-							<a href="#" onClick = {()=> this.deleteRecord(data.id)} ><img src={IconSweep} alt="icon-sweep"></img></a>
-							<a href="#" onClick = {()=> this.notFoundRecord(data.id)}><img src={IconDelete} alt="icon-sweep"></img></a>
+						<div className="item-details-buttons" >
+							<a href="#" ><img src={IconSweep} alt="icon-sweep"></img></a>
+							<a href="#"><img src={IconDelete} alt="icon-sweep"></img></a>
 						</div>
 					</div>
 					<div className="item-details-info">
