@@ -8,6 +8,8 @@ html {
 #admin-panel 
 {
 	$sweep-blue: #00529E;
+	background-color: rgb(245, 245, 245);
+	padding-bottom:5%;
 	font-family: "poppins", sans-serif;
 	height: 100%;
 
@@ -127,7 +129,11 @@ html {
 		.item-details-info{
 			margin: 3% auto;
 			margin-left: 5%;
+
+
 		}
+
+
 		.item-details-cover 
 			{
 				position: relative;

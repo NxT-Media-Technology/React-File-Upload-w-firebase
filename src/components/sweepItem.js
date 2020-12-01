@@ -18,17 +18,18 @@ class sweepItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			
+			itemState: this.props.itemState,
 			itemData: this.props.post,
 			itemClicked: false,
 			url: this.props.post.img_url,			
-			headerColor:"header-blue",
+			headerColor:this.props.itemState,
 			warning:false,
 			warningaction:null,
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.showDetails = this.showDetails.bind(this);
 		this.deleteRecord = this.deleteRecord.bind(this);
+
 	}
 	
 	deleteRecord(record_id) {

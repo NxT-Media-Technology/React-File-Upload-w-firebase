@@ -25,6 +25,7 @@ class Adminpanel extends Component {
 			statusMsg: '',
 			activeNav:'Pending',
 			activeView: 'list',
+			activeHeader: 'header-blue',
 		}
 		this.updateStatus = this.updateStatus.bind(this);
 		this.updateNav = this.updateNav.bind(this);
@@ -115,10 +116,27 @@ class Adminpanel extends Component {
 	}
 
 	updateNav(status) {
-		this.setState({activeNav: status, statusMsg: ''});
-		$('.upper-title').html(status)
+		this.setState({activeNav: status, statusMsg: ''}, () => {
+			
+			$('.upper-title').html(status)
 
+			switch(this.state.activeNav){
+				case 'Pending':
+					this.setState({activeHeader: 'header-blue'});
+				break;
+				case 'Clean':
+					this.setState({activeHeader: 'header-green'});
+				break;
+				case 'Not Found':
+					this.setState({activeHeader: 'header-red'});
+				break;
+				default:
+					this.setState({activeHeader: 'header-blue'});		
+			}
+		});
 	}
+
+
 	
 	updateView(status) {
 		if(status == "block") {
@@ -154,7 +172,6 @@ class Adminpanel extends Component {
 	render() {
 
 
-		console.log(this.state.posts);
 	
 		/* PAGINATION */ 
 	const indexofLastPost = this.state.currentPage * this.state.postsPerPage;
@@ -172,9 +189,6 @@ class Adminpanel extends Component {
 	// End of pagination settings. 
 	};
 
-
-
-	  console.log(this.state.dateFilter);
 
 	
 		return (
@@ -215,7 +229,7 @@ class Adminpanel extends Component {
 				<div className={this.state.activeView == "block" ? "block-view": "list-view"}>
 					{/*   loop door sweepItems:	 */}
 					{this.state.isLoaded ? currentPosts.map((post, index) => (
-						<SweepItem post={post} updateStatus={this.updateStatus} activeNav={this.state.activeNav}key={post.id} />
+						<SweepItem itemState ={this.state.activeHeader} post={post} updateStatus={this.updateStatus} activeNav={this.state.activeNav}key={post.id} />
 					))
 					: <h1 className="center">Loading data...</h1>} 	{/* <-- Als er geen posts zijn  */}
 
