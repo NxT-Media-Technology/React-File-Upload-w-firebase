@@ -50,8 +50,7 @@ class Adminpanel extends Component {
 	}
 
 	updateNav(status) {
-		this.setState({activeNav: status});
-		this.filterData();
+		this.setState({activeNav: status},() => {this.filterData()});
 		console.log(this.state.activeNav);
 	}
 	

@@ -73,37 +73,39 @@ class App extends Component {
 
   render() {
     return (
-      <div className='app'>
-        <div className='logo-section'>
-          <img src={logo} className='logo' alt='Operation Cleansweep logo'/>
-        </div>
-        <div className="infoIcon" onClick= {this.toggleKnop}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="51.214" height="46.895" viewBox="0 0 51.214 46.895">
-            <g id="Group_3" data-name="Group 3" transform="translate(-338 -273)">
-              <path id="Path_5" data-name="Path 5" d="M383.214,0V46.895S333.2,44.479,332,0Z" transform="translate(6 273)" fill="#00529e"/>
-              <path id="iconmonstr-info-6" d="M13.883,2.314A11.569,11.569,0,1,1,2.314,13.883,11.583,11.583,0,0,1,13.883,2.314Zm0-2.314A13.883,13.883,0,1,0,27.767,13.883,13.884,13.884,0,0,0,13.883,0Zm0,6.652A1.446,1.446,0,1,1,12.437,8.1,1.448,1.448,0,0,1,13.882,6.652ZM16.2,20.825H11.569V19.668c.56-.207,1.157-.233,1.157-.85V13.65c0-.618-.6-.715-1.157-.922V11.571H15.04v7.248c0,.619.6.646,1.157.85Z" transform="translate(353.04 277.628)" fill="#fff"/>
-            </g>
-          </svg>
-        </div>
-        {this.state.showOverlay ? (<SentOverlay lat={this.state.latLong} description={this.state.description} url={this.state.url} imgName={this.state.img_name} onClose={this.hideOverlay} />) : null}
-        <div className='sections'>
-          <Information />
-          <section className='section' id='section2'>
-          <h1 className='section-title'>Pin Location</h1>
-          <GeoLocator latLong={this.state.latLong} onLatLongChange={this.coordsChanged} />
-          </section>
-          <section className='section' id='section3'>
-          <h1 className='section-title'>Add Documents</h1>
-            <ImageUpload imageUrl={this.state.url} onUrlChange={this.urlChanged}/>
-            {/* <ImageDescription description ={this.state.description} onDescChange={this.descChanged}/> */}
-            <h1 className='section-title'>Add Description</h1>
-            <textarea class="description" value={this.state.description} onChange={this.handleChange} name="description"></textarea>
-          </section>
-        </div>
-        <div className='sweep-section'>
-            {this.state.url && this.state.latLong ? <button className='sweep-btn' onClick={this.showOverlay}><span className='test'>Send</span></button>: null}
-            <h1 className={this.state.messageType + " " + (this.state.displayMessage ? 'alert' : '')} >{this.state.message.data}</h1>
-        </div>
+        <div className='app'>
+          <div id='OCS'>
+            <div className='logo-section'>
+              <img src={logo} className='logo' alt='Operation Cleansweep logo'/>
+            </div>
+            <div className="infoIcon" onClick= {this.toggleKnop}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="51.214" height="46.895" viewBox="0 0 51.214 46.895">
+                <g id="Group_3" data-name="Group 3" transform="translate(-338 -273)">
+                  <path id="Path_5" data-name="Path 5" d="M383.214,0V46.895S333.2,44.479,332,0Z" transform="translate(6 273)" fill="#00529e"/>
+                  <path id="iconmonstr-info-6" d="M13.883,2.314A11.569,11.569,0,1,1,2.314,13.883,11.583,11.583,0,0,1,13.883,2.314Zm0-2.314A13.883,13.883,0,1,0,27.767,13.883,13.884,13.884,0,0,0,13.883,0Zm0,6.652A1.446,1.446,0,1,1,12.437,8.1,1.448,1.448,0,0,1,13.882,6.652ZM16.2,20.825H11.569V19.668c.56-.207,1.157-.233,1.157-.85V13.65c0-.618-.6-.715-1.157-.922V11.571H15.04v7.248c0,.619.6.646,1.157.85Z" transform="translate(353.04 277.628)" fill="#fff"/>
+                </g>
+              </svg>
+            </div>
+            {this.state.showOverlay ? (<SentOverlay lat={this.state.latLong} description={this.state.description} url={this.state.url} imgName={this.state.img_name} onClose={this.hideOverlay} />) : null}
+            <div className='sections'>
+              <Information />
+              <section className='section' id='section2'>
+              <h1 className='section-title'>Pin Location</h1>
+              <GeoLocator latLong={this.state.latLong} onLatLongChange={this.coordsChanged} />
+              </section>
+              <section className='section' id='section3'>
+              <h1 className='section-title'>Add Documents</h1>
+                <ImageUpload imageUrl={this.state.url} onUrlChange={this.urlChanged}/>
+                {/* <ImageDescription description ={this.state.description} onDescChange={this.descChanged}/> */}
+                <h1 className='section-title'>Add Description</h1>
+                <textarea class="description" value={this.state.description} onChange={this.handleChange} name="description"></textarea>
+              </section>
+            </div>
+            <div className='sweep-section'>
+                {this.state.url && this.state.latLong ? <button className='sweep-btn' onClick={this.showOverlay}><span className='test'>Send</span></button>: null}
+                <h1 className={this.state.messageType + " " + (this.state.displayMessage ? 'alert' : '')} >{this.state.message.data}</h1>
+            </div>
+          </div>
       </div>
     );
   }

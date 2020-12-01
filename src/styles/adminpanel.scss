@@ -4,12 +4,15 @@ $red:#E34747;
 $green:#73C167;
 
 html {
+
 }
 #admin-panel 
 {
+	background-color: rgb(245, 245, 245);
 	$sweep-blue: #00529E;
 	font-family: "poppins", sans-serif;
 	height: 100%;
+	padding-bottom: 2%;
 
 	.overlay {
 		img {
