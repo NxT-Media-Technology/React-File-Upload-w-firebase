@@ -1,20 +1,44 @@
-$bg:#f2f2f8;
+$bg:rgb(245, 245, 245);
+$sweep-blue: #00529E;
 $blue:  #00529E;
 $red:#E34747;
 $green:#73C167;
 
-html {
+html {	
+	overflow-y: scroll;
+}
+
+#whitebg {
+	z-index: -1;
+	background-color: $bg;
+	position: fixed;
+	bottom:0;
+	height: 100vh;
+	width: 100%;
+	margin:0;
+	padding:0;
+
+
 }
 #admin-panel 
 {
-	$sweep-blue: #00529E;
-	background-color: rgb(245, 245, 245);
-	padding-bottom:5%;
+	background-color: $bg;
+	padding-bottom:3%;
 	font-family: "poppins", sans-serif;
-	height: 100%;
-
+	
+	.admin-container {
+		background-color: $bg;
+		z-index: inherit;
+		margin-bottom: auto;
+	}
+	.red {
+		color:red;
+	}
+	.green {
+		color:green;
+	}
 	.overlay {
-
+		
 		.overlay-buttons {
 			display: flex;
 			flex-direction: row;	
@@ -114,7 +138,7 @@ html {
 	}
 
 	//different displays
-
+	
 	.list-view {
 		margin: auto;	
 		display: flex;
@@ -122,6 +146,7 @@ html {
 		flex-wrap: wrap;
 		justify-content: space-around;
 		width: 70vw;
+
 		.item {
 			margin-bottom:4%;
 
@@ -186,7 +211,6 @@ html {
 	.item {
 		box-shadow: 0 1px 3px 0 black, 0 2px 5px 0 rgba(0, 0, 0, 0.19);
 		border-radius: 5px;		
-		position: relative;
 		background-color: rgba(255, 255, 255, 1);
 		margin: 1% 0;
 		z-index: 1;
@@ -334,11 +358,19 @@ html {
 			color:$blue;
 			font-weight: bold;
 			cursor: pointer;
+			width: 50px;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			&:hover {
+				background-color: $blue;
+				color: white;
+			}
 		}
 		li {
 			border: 3px solid $blue;
 			border-radius: 5px;
-			width: 30px;
 			text-align: center;
 			margin: 0 5%;
 		}
@@ -396,9 +428,10 @@ html {
 			display: flex;
 			align-items: center;
 			flex-direction: column;
+			width: 65px;
 			background-color: none;
 			&:nth-child(2) {
-				padding: 0 7vw;
+				padding: 0 0vw;
 			}
 			label {
 				display: none;
@@ -419,8 +452,13 @@ html {
 						display: hidden;
 					}
 	}
-	@media (min-width: 320px) and (max-width: 480px)
+	@media (min-width: 320px) and (max-width: 530px)
 	{
+		.overlay {
+			.button {
+				width: 30vw;
+			}
+		}
 		.admin-filter-views a{
 			display: none;
 		}

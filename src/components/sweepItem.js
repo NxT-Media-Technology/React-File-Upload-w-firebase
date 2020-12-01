@@ -23,44 +23,43 @@ class sweepItem extends Component {
 			itemClicked: false,
 			url: this.props.post.img_url,			
 			headerColor:this.props.itemState,
+			activeNav: this.props.activeNav,
 			warning:false,
-			warningaction:null,
+			warningAction:null,
 		}
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.showDetails = this.showDetails.bind(this);
-		this.deleteRecord = this.deleteRecord.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+		// this.deleteRecord = this.deleteRecord.bind(this);
 
 	}
-	
-	deleteRecord(record_id) {
-		//DATABASE SOFTDELETE
-		Axios.post("http://localhost:3001/deleteRecord", {id: record_id}).then((response) => {
-			//UPDATE STATUS MSG
-			this.props.updateStatus(response.data);
-
-			//REMOVE FROM LIST
-			const id = record_id
-			$('#' + id).fadeOut(1000)
-		})
-	}
-
-	notFoundRecord(record_id) {
-		Axios.post("http://localhost:3001/notfoundrecord", {id: record_id}).then((response) => {
-			//UPDATE STATUS MSG
-			this.props.updateStatus(response.data);
-
-			//REMOVE FROM LIST
-			const id = record_id
-			$('#' + id).fadeOut(1000)
-		})
-	}
-
+	handleClick() {
+        this.setState({
+            warning: !this.state.warning
+        });
+    }
 	toggleDetails() {
 		if (this.state.itemClicked == false) {
 			this.setState({itemClicked: true})
 		} else {
 			this.setState({itemClicked: false})
 		}
+	}
+
+	renderButtons(status) {
+		switch(status){
+			case 'Pending':
+				return(<div className="item-buttons">
+						<a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Cleaned</div></a>
+						<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Not Found</div></a>
+					</div>);
+				case 'Clean':
+					return(<div className="item-buttons">
+					<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Send to Not Found</div></a> </div>);
+					case 'Not Found':
+						return(
+							<div className="item-buttons"><a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Send to Cleaned</div></a></div>);
+	};
 	}
 
 	showDetails() {
@@ -97,10 +96,18 @@ class sweepItem extends Component {
 									<Marker position={{ lat: cordlat, lng: cordlng }} />
 								</Map>
 							</div>
-						<div className="item-buttons" >
-							<a href="#"><div className="button button-green">Cleaned</div></a>
-							<a href="#"><div className="button button-red">Not Found</div></a>
-						</div>
+							{/* {console.log(this.state.activeNav)}
+							 {this.state.activeNav ="Clean"?							 
+							 <a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Send to Not Found</div></a> : null}
+							 
+							 {this.state.activeNav ="Not Found"? <a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Send to Cleaned</div></a> : null}
+							 
+							 {this.state.activeNav ="Pending" ? 
+							 <div>
+								 <a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Cleaned</div></a>
+								 <a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Not Found</div></a>
+							</div>: null} */}
+							 {this.renderButtons(this.state.activeNav)}
 						<div className="item-shrink" onClick={this.toggleDetails}>
 							<svg xmlns="http://www.w3.org/2000/svg" width="26.637" height="13.318" viewBox="0 0 26.637 13.318">
 								<path id="arrow" d="M13.318,13.318,0,0H26.637Z" transform="translate(26.637 13.318) rotate(180)" fill="#bcbec5" />
@@ -111,12 +118,12 @@ class sweepItem extends Component {
 		
 	}
 	
-
 	render() {
 		//DYNAMISCHE SHOW HIDE BTNS
 		const data = this.state.itemData;	
 		return (			
 			<div className="item" id={data.id}>
+			{this.state.warning ? <WarningOverlay handleClick={this.handleClick} statusMsg= {this.props.updateStatus} warningType= {this.state.warningAction} itemId={data.id}/> : null}
 						<div className={this.state.headerColor + " item-header"} onClick={this.toggleDetails}>
 							<h3>Id: {data.id}</h3>
 							<h3>{data.created_at}</h3>
@@ -125,8 +132,10 @@ class sweepItem extends Component {
 					<div className="item-details-cover" >
 						<img className='item-details-img' src={data.img_url} alt="Sweep picture"/>
 						<div className={this.props.activeNav !== 'Pending' ? "hidden" : "item-details-buttons"}>
-							<a href="#" onClick = {()=> this.deleteRecord(data.id)} ><img src={IconSweep} alt="icon-sweep"></img></a>
-							<a href="#" onClick = {()=> this.notFoundRecord(data.id)}><img src={IconDelete} alt="icon-sweep"></img></a>
+							<a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})} ><img src={IconSweep} alt="icon-sweep"></img></a>
+							<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><img src={IconDelete} alt="icon-sweep"></img></a>
+							{/* <a href="#" onClick = {()=> this.deleteRecord(data.id)} ><img src={IconSweep} alt="icon-sweep"></img></a>
+                            <a href="#" onClick = {()=> this.notFoundRecord(data.id)}><img src={IconDelete} alt="icon-sweep"></img></a> */}
 						</div>
 					</div>
 					<div className="item-details-info">

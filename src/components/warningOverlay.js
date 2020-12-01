@@ -9,29 +9,86 @@ class warningOverlay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            send: false,
-            itemAction:"testing",
+            warning: this.props.warning,
+            itemAction: this.props.warningType,
+            itemId: this.props.itemId,            
+            actioncolor:"blue",
+            actionName: null,
+        }
+    }
+    //werkt momenteel niet?
+    updateStatus = (msg, key) => {
+		//UPDATE STATUS BIJ DELETE
+		this.setState({statusMsg: msg})
+	}
+    componentDidMount()  {
+        switch(this.state.itemAction){
+            case "delete":
+                this.setState({
+                    actioncolor: "green",
+                    actionName:"Cleaned"
+                });
+                break;
+            case "notfound":
+                this.setState({
+                    actioncolor: "red",
+                    actionName:"Not Found"
+                });
+                break;
+             default:                
+                this.setState({
+                 actioncolor: "blue",
+                 actionName:"UNKNOWN"
+                });
+                break;
+        }
+    }
+    handleItem(record_id) {
+        switch(this.state.itemAction) {
+            case "delete":
+                //DATABASE SOFTDELETE
+                Axios.post("http://localhost:3001/deleteRecord", {id: record_id}).then((response) => {
+                //UPDATE STATUS MSG
+                this.updateStatus(response.data);
+                //REMOVE FROM LIST
+                const id = record_id
+                $('#' + id).fadeOut(1000)
+                })
+                break;
+            case "notfound":
+                Axios.post("http://localhost:3001/notfoundrecord", {id: record_id}).then((response) => {
+                //UPDATE STATUS MSG
+                this.updateStatus(response.data);
+                //REMOVE FROM LIST
+                const id = record_id
+                $('#' + id).fadeOut(1000)
+                })
+                break;
+            default:                
+                break;
         }
     }
 
-    handleChange = (e) => {
+    handleClick() {
         this.setState({
-            [e.target.name]: e.target.value
-        })
+            warning: !this.state.warning
+
+        });
     }
 
-
     render() {
+        const id = this.state.itemId;
         return (
             <div className="overlay completed-overlay">
+                {this.actioncolor}
                 <div className="overlay-content">
                     <div className="overlay-text">
                         Are you sure that you want to send this report to
-                        <span> {this.state.itemAction}?</span>
+                        <span className= {this.state.actioncolor}> {this.state.actionName}?</span>
                     </div>
                     <div class="overlay-buttons">
-                        <a href='#'><div className="button button-green">Yes</div></a>
-                        <a href='#'><div className="button button-red">No</div></a>
+                        <a href="#" onClick = {()=> this.handleItem(id)} ><div className="button button-green">Yes</div></a>
+                        <a href='#'onClick = {this.props.handleClick}><div className="button button-red">No</div></a>
                     </div>
                 </div>
             </div>

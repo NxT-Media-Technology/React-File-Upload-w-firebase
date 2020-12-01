@@ -6,7 +6,6 @@ import $ from "jquery";
 
 import Information from './components/information.js';
 import SentOverlay from './components/sentOverlay.js';
-// import ImageDescription from './components/imageDescription.js';
 import Adminpanel from './Adminpanel.js';
 
 import './styles/style.css';
@@ -95,7 +94,6 @@ class App extends Component {
           <section className='section' id='section3'>
           <h1 className='section-title'>Add Documents</h1>
             <ImageUpload imageUrl={this.state.url} onUrlChange={this.urlChanged}/>
-            {/* <ImageDescription description ={this.state.description} onDescChange={this.descChanged}/> */}
             <h1 className='section-title'>Add Description</h1>
             <textarea class="description" value={this.state.description} onChange={this.handleChange} name="description"></textarea>
           </section>

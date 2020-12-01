@@ -122,16 +122,24 @@ class Adminpanel extends Component {
 
 			switch(this.state.activeNav){
 				case 'Pending':
-					this.setState({activeHeader: 'header-blue'});
+					this.setState({
+						activeHeader: 'header-blue'
+					});
 				break;
 				case 'Clean':
-					this.setState({activeHeader: 'header-green'});
+					this.setState({
+						activeHeader: 'header-green'
+					});
 				break;
 				case 'Not Found':
-					this.setState({activeHeader: 'header-red'});
+					this.setState({
+						activeHeader: 'header-red'
+					});
 				break;
 				default:
-					this.setState({activeHeader: 'header-blue'});		
+					this.setState({
+						activeHeader: 'header-blue'
+					});		
 			}
 		});
 	}
@@ -192,7 +200,8 @@ class Adminpanel extends Component {
 
 	
 		return (
-			<div id='admin-panel'>
+			<div id='admin-panel'> 
+			<div className="admin-container">
 				<div class="admin-header">
 					<a href="/adminpanel"><img src={LogoIcon} className="logo-icon" /></a>
 					<h1 className='upper-title'>Pending cleanup</h1>
@@ -262,19 +271,21 @@ class Adminpanel extends Component {
 				</div>
 				{/* background of active navitem in navbar */}
 				<div className="navbarbg">
-					<div className={this.state.activeNav == "pending" ? "activenav nav-item" : "nav-item hidden"}>
+					<div className={this.state.activeNav == "Pending" ? "activenav nav-item" : "nav-item hidden"}>
 						<img className="activenav" src={Border}/>
 					</div>
-					<div className={this.state.activeNav == "clean" ? "activenav nav-item" : "nav-item hidden"} >						
+					<div className={this.state.activeNav == "Clean" ? "activenav nav-item" : "nav-item hidden"} >						
 						<img className="activenav" src={Border}/>
 					</div>
-					<div className={this.state.activeNav == "notfound" ? "activenav nav-item" : "nav-item hidden"}>						
+					<div className={this.state.activeNav == "Not Found" ? "activenav nav-item" : "nav-item hidden"}>						
 						<img className="activenav" src={Border}/>
 					</div>
 				</div>
 				<div className="pagination">
 				<Pagination postsPerPage={this.state.postsPerPage}  totalPosts={this.state.posts.length} paginate={paginate}    />	 
 				</div>
+				</div>
+				<span id="whitebg"></span>
 			</div>
 		);
 	}

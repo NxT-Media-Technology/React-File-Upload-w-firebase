@@ -7,7 +7,7 @@ import Adminpanel from './Adminpanel.js';
 import DeleteByMail from './components/deleteByMail.js';
 import * as serviceWorker from './serviceWorker';
 
-const loggedIn = false;
+const loggedIn = true;
 
 ReactDOM.render(
   <Router>
