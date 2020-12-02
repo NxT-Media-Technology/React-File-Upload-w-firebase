@@ -13,6 +13,64 @@ body {
   background-repeat: no-repeat;
   background-position: bottom;
 }
+#login {
+	height: 100vh;
+	background:rgb(245, 245, 245);
+}
+#login-container {
+	position: absolute;
+	  top: 40%;
+	  left: 50%;
+	  transform: translate(-50%,-50%);
+	  -ms-transform: translate(-50%,-50%);
+	  font-family: "poppins",sans-serif;
+}
+.login-form {
+	margin:auto;
+	width: 70%;
+}
+.login-form form{
+	display: flex;
+	flex-direction: column;	
+
+}
+
+.login-form form input {
+	padding: 1% 5%;
+	font-family: "poppins",sans-serif;
+	border-radius: 5px;
+}
+.login-form form button {
+	border-radius: 5px;
+	padding:1% ;	
+	text-align: center;	
+	margin: auto;
+	margin-top: 5%;
+	width: 15vw;
+	background-color: #00539F;
+	color: white;
+	font-size: 18px;
+	border-radius: 5px;
+}
+#login img {
+	width: 30vw;
+	margin: auto;
+	text-align: center;
+	display: block;
+}
+
+.login-form form label {
+	margin-left: 5%;
+	margin-top: 2%;
+	margin-bottom: 1%;
+}
+
+#login h1 {
+	font-family: "poppins",sans-serif;
+	font-size: 2rem;
+	text-align: center;
+	
+}
 
 .overlay {
 	position: fixed; /* Sit on top of the page content */
@@ -568,5 +626,74 @@ progress {
 		border-radius: 5px;
 		margin-top: 7%;
 		padding:10% 20%;
+	}
+
+}
+
+
+@media (min-width: 320px) and (max-width: 700px)
+	{
+	#login {
+		height: 100vh;
+		background:rgb(245, 245, 245);
+	}
+	#login-container {
+		position: absolute;
+		top: 40%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		-ms-transform: translate(-50%,-50%);
+		font-family: "poppins",sans-serif;
+	}
+	.login-form {
+		margin:auto;
+		width: 90vw;
+	}
+	.login-form form{
+		display: flex;
+		flex-direction: column;	
+
+	}
+
+	.login-form form input {
+		padding: 1% 5%;
+		font-family: "poppins",sans-serif;
+		border-radius: 5px;
+		font-size: 1.5rem;
+	}
+	.login-form form button {
+		border-radius: 5px;
+		padding:1% ;	
+		text-align: center;	
+		margin: auto;
+		margin-top: 5%;
+		width: 15vw;
+		background-color: #00539F;
+		color: white;
+		font-size: 18px;
+		border-radius: 5px;
+		width: 80vw;
+		height: 8vh;
+	}
+	#login img {
+		width: 80vw;
+		margin: auto;
+		text-align: center;
+		display: block;
+	}
+
+	.login-form form label {
+		margin-left: 5%;
+		margin-top: 2%;
+		margin-bottom: 1%;
+		font-size: 1.3rem;
+	}
+
+	#login h1 {
+		font-family: "poppins",sans-serif;
+		font-size: 1.8rem;
+		text-align: center;
+		margin: 3% 0;
+		
 	}
 }

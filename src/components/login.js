@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import logo from '../images/logo.png';
 
 class Login extends Component {
 	constructor(props) {
@@ -37,8 +38,10 @@ class Login extends Component {
 
 	render() {
 		return (
-			<div id='login-component'>
+			<div id='login'>
+				<div id="login-container">
 				<div className="login-header">
+					<img src={logo} ></img>
 					<h1>Login to gain acces to the Adminpanel</h1>
 				</div>
 				<div className="login-form">
@@ -48,15 +51,15 @@ class Login extends Component {
 						<input type ="text" id='username' onChange={this.handleUsername} name="username" placeholder="Username" required />
 
 						<label>Password</label>
-						<input type="password" id="password" onChange={this.handlePassword} name="password" required />
+						<input type="password" id="password" onChange={this.handlePassword} placeholder="Password" name="password" required />
 
-						<button type="submit">Submit</button>
+						<button type="submit">Login</button>
 
-						{this.state.statusMsg ? this.state.statusMsg : ''}
+						{this.state.statusMsg ? <p align="center">{this.state.statusMsg}</p>: null}
 
 				    </form>
 				</div>
-				
+				</div>
 			</div>
 		);
 	}

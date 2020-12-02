@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { getNodeText } = require('@testing-library/react');
 const crypto = require('crypto');
+const passport = require('passport')
+, LocalStrategy = require('passport-local').Strategy;;
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -98,35 +100,76 @@ app.post("/post", (req,res)=> {
     });
 });
 
-app.post("/login", (req, res) => {
-    let user_name = req.body.username;
-    let user_password = req.body.password;
-
+app.post("/login", (req, res) => { 
+        let user_name = req.body.username;
+        let user_password = req.body.password;
     if (user_name && user_password){
-        const sqlGetUser = "SELECT id, username, password FROM users WHERE username = ?";
-        //CHECK OF USER BESTAAT
-        db.query(sqlGetUser, user_name, (err,result) => {
-            if (err) {
-                console.log(err)
-                res.send('Invalid credentials: user not found')
-            } else {
-                console.log(result)
-                if (result.length > 0) {
-                    if (user_name == result[0].username && user_password == result[0].password) {
-                        res.send('Login succes! Redirecting...')
-                        req.session.username = result[0].username;
-                        console.log(req.session.username)
-                        //res.render('adminpage');
+                const sqlGetUser = "SELECT userId, userName, userPassword FROM users WHERE userName = ?";
+                //CHECK OF USER BESTAAT
+                db.query(sqlGetUser, user_name, (err,result) => {
+                    if (err) {
+                        //login false
+                        console.log(err);
+                        res.send('Invalid credentials: user not found');
                     } else {
-                        res.send('Invalid credentials: Invalid password')
+                        console.log(result)
+                        if (result.length > 0) {
+                            if (user_name == result[0]['userName'] && user_password == result[0]['userPassword']) {
+                                //login correct
+                                res.send('Login succes! Redirecting...')
+                                req.session.username = result[0]['userName'];
+                                console.log("session of " +req.session.username); 
+                                //http://www.passportjs.org/docs/login/
+                                return app.redirect('/adminpanel');
+                                // req.login(user_name, function(err) {
+                                //     if (err) { return next(err); }
+                                //     return app.get('/adminpanel');
+                                // });                                  
+                                
+                            } else {
+                                //login false
+                                res.send('Invalid credentials: Invalid password')
+                            }
+                        } else {
+                            res.send('Invalid credentials: Username not found')
+                        }
                     }
-                } else {
-                    res.send('Invalid credentials: Username not found')
-                }
+                });
             }
-        });
-    }
-});
+}
+    // successRedirect:'/adminpanel',
+    // failureRedirect='/login'
+);
+
+// app.post("/login", (req, res) => {
+//     let user_name = req.body.username;
+//     let user_password = req.body.password;
+
+//     if (user_name && user_password){
+//         const sqlGetUser = "SELECT id, username, password FROM users WHERE username = ?";
+//         //CHECK OF USER BESTAAT
+//         db.query(sqlGetUser, user_name, (err,result) => {
+//             if (err) {
+//                 console.log(err)
+//                 res.send('Invalid credentials: user not found')
+//             } else {
+//                 console.log(result)
+//                 if (result.length > 0) {
+//                     if (user_name == result[0].username && user_password == result[0].password) {
+//                         res.send('Login succes! Redirecting...')
+//                         req.session.username = result[0].username;
+//                         console.log(req.session.username)
+//                         //res.render('adminpage');
+//                     } else {
+//                         res.send('Invalid credentials: Invalid password')
+//                     }
+//                 } else {
+//                     res.send('Invalid credentials: Username not found')
+//                 }
+//             }
+//         });
+//     }
+// });
 
 app.post("/getdata", (req, res) => {
     console.log('getpendingdata')
