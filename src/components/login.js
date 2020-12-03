@@ -25,6 +25,8 @@ class Login extends Component {
 			password: this.state.password})
 		.then((response) => {
 			this.setState({statusMsg: response.data})
+			const token = true;
+			this.props.pass(token);
 		})
 	}
 
@@ -42,7 +44,7 @@ class Login extends Component {
 				<div id="login-container">
 				<div className="login-header">
 					<img src={logo} ></img>
-					<h1>Login to gain acces to the Adminpanel</h1>
+					<h1>Login to gain access to the Adminpanel</h1>
 				</div>
 				<div className="login-form">
 					<form onSubmit={this.handleLogin}>

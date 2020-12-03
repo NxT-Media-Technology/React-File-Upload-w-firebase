@@ -1,16 +1,16 @@
 import React, { Component, useState, useEffect } from 'react';
 import Axios from 'axios';
-import SweepItem from './components/sweepItem.js';
-import Pagination from './components/pagination.js';
+import SweepItem from './sweepItem.js';
+import Pagination from './pagination.js';
 import $ from "jquery";
 
-import PersonImg from './images/person.png';
-import LogoIcon from './images/OCS-Icon.png';
-import Border from './includes/border-header.svg';
+import PersonImg from '../images/person.png';
+import LogoIcon from '../images/OCS-Icon.png';
+import Border from '../includes/border-header.svg';
 
 
 
-import './styles/adminpanel.scss';
+import '../styles/adminpanel.scss';
 
 class Adminpanel extends Component {
 	constructor(props) {

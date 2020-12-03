@@ -6,7 +6,6 @@ import $ from "jquery";
 
 import Information from './components/information.js';
 import SentOverlay from './components/sentOverlay.js';
-import Adminpanel from './Adminpanel.js';
 
 import './styles/style.css';
 import logo from './images/logo.png';

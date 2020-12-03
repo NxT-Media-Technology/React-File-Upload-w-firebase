@@ -12,18 +12,30 @@ const passport = require('passport')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { param } = require('jquery');
-
-app.use(cookieParser());
-app.use(session({
-    secret: 'test',
-    resave: false,
-    saveUninitialized: false
-}));
+const path = require('path')
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({ origin: true }));
 
+
+//SESSION SETUP
+//NORMAAL WORDEN DEZE PARAM AFGESCHERMD IN EEN HIDDEN ENV
+/*const TWO_HOURS = 1000 * 60 * 60 * 2
+const SESS_NAME = 'sesid'
+const SESS_SECRET = 'randomsecret'
+
+app.use(session({
+    name: SESS_NAME,
+    resave: false,
+    saveUninitialized: false,
+    secret: SESS_SECRET,
+    cookie: {
+        maxAge: TWO_HOURS,
+        sameSite: true,
+        secure: false
+    }
+}))*/
 
 // Zorg dat deze gegevens kloppen! 
 const db = mysql.createPool({
@@ -100,7 +112,7 @@ app.post("/post", (req,res)=> {
     });
 });
 
-app.post("/login", (req, res) => { 
+/*app.post("/login", (req, res) => { 
         let user_name = req.body.username;
         let user_password = req.body.password;
     if (user_name && user_password){
@@ -139,40 +151,43 @@ app.post("/login", (req, res) => {
 }
     // successRedirect:'/adminpanel',
     // failureRedirect='/login'
-);
+);*/
 
-// app.post("/login", (req, res) => {
-//     let user_name = req.body.username;
-//     let user_password = req.body.password;
+app.post("/login", (req, res, next) => {
+    let user_name = req.body.username;
+    let user_password = req.body.password;
+    console.log('Login route')
+    //console.log(req.session.userId)
 
-//     if (user_name && user_password){
-//         const sqlGetUser = "SELECT id, username, password FROM users WHERE username = ?";
-//         //CHECK OF USER BESTAAT
-//         db.query(sqlGetUser, user_name, (err,result) => {
-//             if (err) {
-//                 console.log(err)
-//                 res.send('Invalid credentials: user not found')
-//             } else {
-//                 console.log(result)
-//                 if (result.length > 0) {
-//                     if (user_name == result[0].username && user_password == result[0].password) {
-//                         res.send('Login succes! Redirecting...')
-//                         req.session.username = result[0].username;
-//                         console.log(req.session.username)
-//                         //res.render('adminpage');
-//                     } else {
-//                         res.send('Invalid credentials: Invalid password')
-//                     }
-//                 } else {
-//                     res.send('Invalid credentials: Username not found')
-//                 }
-//             }
-//         });
-//     }
-// });
+    if (user_name && user_password){
+        const sqlGetUser = "SELECT id, username, password FROM users WHERE username = ?";
+        //CHECK OF USER BESTAAT
+        db.query(sqlGetUser, user_name, (err,result) => {
+            if (err) {
+                console.log(err)
+                res.send('Invalid credentials: user not found')
+            } else {
+                console.log(result)
+                if (result.length > 0) {
+                    if (user_name == result[0].username && user_password == result[0].password) {
+                        res.send('Login succes! Redirecting...')
+                        //req.session.userId = result[0].username;
+                        //console.log(req.session.userId)                  
+                        
+                    } else {
+                        res.send('Invalid credentials: Invalid password')
+                    }
+                } else {
+                    res.send('Invalid credentials: Username not found')
+                }
+            }
+        });
+    }
+});
 
 app.post("/getdata", (req, res) => {
-    console.log('getpendingdata')
+    console.log('Get pending data')
+
     const sqlSelectAllPending = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
     db.query(sqlSelectAllPending, (err,result) => {
         if (err) {
