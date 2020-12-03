@@ -7,6 +7,7 @@ import $ from "jquery";
 import PersonImg from '../images/person.png';
 import LogoIcon from '../images/OCS-Icon.png';
 import Border from '../includes/border-header.svg';
+import Register from './register.js';
 
 
 
@@ -26,13 +27,15 @@ class Adminpanel extends Component {
 			activeNav:'Pending',
 			activeView: 'list',
 			activeHeader: 'header-blue',
-			activeName: this.props.username
+			activeName: this.props.username,
+			showRegister: false,
 		}
 		this.updateStatus = this.updateStatus.bind(this);
 		this.updateNav = this.updateNav.bind(this);
 		this.updateView = this.updateView.bind(this);
 		this.updateFilter = this.updateFilter.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
+		this.toggleRegisterForm = this.toggleRegisterForm.bind(this);
 
 	}
 
@@ -184,6 +187,19 @@ class Adminpanel extends Component {
 		console.log("logout");
 	}
 
+	 /*function() { $('.admin-container').addClass('hidden')}
+	  { $('.admin-container').removeClass('hidden')})*/
+
+	toggleRegisterForm() {
+		this.setState({showRegister: !this.state.showRegister})
+
+		if (this.state.showRegister = true) {
+			this.setState({showRegister: false}, () => $('.admin-container').addClass('hidden'))	
+		} else {
+			this.setState({showRegister: true}, () => $('.admin-container').removeClass('hidden'))
+		}
+	}
+
 	render() {
 
 
@@ -204,12 +220,9 @@ class Adminpanel extends Component {
 	// End of pagination settings. 
 	};
 
-
-	
 		return (
 			<div id='admin-panel'> 
-			<div className="admin-container">
-				<div className="admin-header">
+			<div className="admin-header">
 					<a href="/adminpanel"><img src={LogoIcon} className="logo-icon" /></a>
 					<h1 className='upper-title'>Pending cleanup</h1>
 					<div className="header-account">
@@ -217,9 +230,16 @@ class Adminpanel extends Component {
 						<div>
 							<span>{this.state.activeName}</span>
 							<a onClick={this.handleLogout}>Logout</a>
+							<a onClick={this.toggleRegisterForm}>Register</a>
 						</div>
 					</div>
-				</div>
+			</div>
+
+			<div className="register">
+				{this.state.showRegister = true ? <Register /> : null}
+			</div>
+				
+			<div className="admin-container">
 				<div class="admin-filters">
 					<div class="admin-filter-views">
 						<a onClick={()=>this.updateView("block")} href="#">
@@ -235,7 +255,6 @@ class Adminpanel extends Component {
 					</div>
 					<div class="admin-filter-options">
 						<label>Sort by:</label>
-
 
 						<select onChange={this.updateFilter} value={this.state.dateFilter}>
 							<option onChange={this.updateFilter} value="Latest">Latest</option>

@@ -6,6 +6,7 @@ import LoginPage from './components/login.js';
 import Dashboard from './dashboard.js';
 import DeleteByMail from './components/deleteByMail.js';
 import * as serviceWorker from './serviceWorker';
+import Register from './components/register.js';
 
 ReactDOM.render(
   <Router>
@@ -17,6 +18,9 @@ ReactDOM.render(
     	<Route path="/remove">
     		<DeleteByMail />
     	</Route>
+      <Route path="/register">
+        <Register />
+      </Route>
 		<Route>
 
 		</Route>

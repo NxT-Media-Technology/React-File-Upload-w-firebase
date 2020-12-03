@@ -8,6 +8,10 @@ html {
 	overflow-y: scroll;
 }
 
+.hidden {
+	display:none;
+}
+
 #whitebg {
 	z-index: -1;
 	background-color: $bg;

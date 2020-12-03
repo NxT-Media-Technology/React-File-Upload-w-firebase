@@ -112,6 +112,44 @@ app.post("/post", (req,res)=> {
     });
 });
 
+app.post("/register", (req, res) => {
+    let user_name = req.body.username;
+    let user_password1 = req.body.password1;
+    let user_password2 = req.body.password2;
+    console.log('Register route' + user_name + user_password1 + user_password2)
+
+    //console.log(req.session.userId)
+
+    if (user_name && user_password1 == user_password2) {
+        const sqlGetUser = "SELECT * FROM users WHERE username = ?";
+        //CHECK OF USER AL BESTAAT IN DE DATABASE
+        db.query(sqlGetUser, user_name, (err,result) => {
+            if (err) {
+                console.log(err)
+            } 
+            if (result.length > 0) {
+                res.send('Username is already taken!')
+                console.log('Username is already taken!')
+            } else {
+                const userToken = crypto.randomBytes(16).toString("hex");
+                const sqlRegisterUser = "INSERT INTO users (username, password, token) VALUES (?,?,?)";
+                console.log('Making query')
+
+                db.query(sqlRegisterUser, [user_name, user_password1, userToken], (err,result) => {
+                if (err) {
+                    console.log(result)
+                    res.send('Oops something went wrong...')
+                } else {
+                    res.send('New user created successfully!')
+                }
+            })   
+        };
+    })} 
+    else {
+        res.send('Passwords do not match!')
+    }
+});
+
 app.post("/login", (req, res, next) => {
     let user_name = req.body.username;
     let user_password = req.body.password;
