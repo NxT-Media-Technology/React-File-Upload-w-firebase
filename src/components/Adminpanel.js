@@ -26,11 +26,13 @@ class Adminpanel extends Component {
 			activeNav:'Pending',
 			activeView: 'list',
 			activeHeader: 'header-blue',
+			activeName: this.props.username
 		}
 		this.updateStatus = this.updateStatus.bind(this);
 		this.updateNav = this.updateNav.bind(this);
 		this.updateView = this.updateView.bind(this);
 		this.updateFilter = this.updateFilter.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
 
 	}
 
@@ -177,6 +179,11 @@ class Adminpanel extends Component {
 
 	};
 
+	handleLogout() {
+		this.props.pass(false);
+		console.log("logout");
+	}
+
 	render() {
 
 
@@ -202,10 +209,16 @@ class Adminpanel extends Component {
 		return (
 			<div id='admin-panel'> 
 			<div className="admin-container">
-				<div class="admin-header">
+				<div className="admin-header">
 					<a href="/adminpanel"><img src={LogoIcon} className="logo-icon" /></a>
 					<h1 className='upper-title'>Pending cleanup</h1>
-					<img src={PersonImg} className='small-icon' />
+					<div className="header-account">
+						<img src={PersonImg} className='small-icon' />
+						<div>
+							<span>{this.state.activeName}</span>
+							<a onClick={this.handleLogout}>Logout</a>
+						</div>
+					</div>
 				</div>
 				<div class="admin-filters">
 					<div class="admin-filter-views">

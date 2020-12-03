@@ -8,21 +8,27 @@ class dashboard extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			isAuthorised: false,
+			token: null,
+			username: null
 		}
 		this.changeAuth = this.changeAuth.bind(this);
 	}
 
 	//onChange={this.handleChange}
 	changeAuth = (token) => {
-		console.log(token)
-		this.setState({isAuthorised: token})
+		console.log(token);
+		if(token != null) {
+			this.setState({
+				token: token.token,
+				username: token.username
+			});	
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.isAuthorised ? <Adminpanel /> : <Login pass={this.changeAuth} />}
+				{this.state.token ? <Adminpanel username={this.state.username} pass={this.changeAuth} /> : <Login pass={this.changeAuth} />}
 			</div>
 		);
 	}

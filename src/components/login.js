@@ -9,6 +9,7 @@ class Login extends Component {
 			loggedIn: false,
 			username: '',
 			password: '',
+			token:false,
 			statusMsg: false,
 
 		}
@@ -22,11 +23,18 @@ class Login extends Component {
 		event.preventDefault();
 		Axios.post("http://localhost:3001/login", {
 			username: this.state.username,
-			password: this.state.password})
+			password: this.state.password,
+		})
 		.then((response) => {
-			this.setState({statusMsg: response.data})
-			const token = true;
-			this.props.pass(token);
+			if(response.status === 200 && typeof response.data === 'object'){
+				this.props.pass(response.data);
+				console.log(response.data);
+			}
+			else {
+				this.setState({statusMsg: response.data});				
+			}
+			// const token = true;
+			// this.props.pass(token);
 		})
 	}
 
