@@ -187,16 +187,20 @@ class Adminpanel extends Component {
 		console.log("logout");
 	}
 
-	 /*function() { $('.admin-container').addClass('hidden')}
-	  { $('.admin-container').removeClass('hidden')})*/
 
 	toggleRegisterForm() {
-		this.setState({showRegister: !this.state.showRegister})
 
-		if (this.state.showRegister = true) {
-			this.setState({showRegister: false}, () => $('.admin-container').addClass('hidden'))	
+		if (this.state.showRegister == true) {
+			this.setState({showRegister: false}) 
+			setTimeout(function(){
+			 	$('.admin-container').removeClass('hidden')
+			}, 1);
+
 		} else {
-			this.setState({showRegister: true}, () => $('.admin-container').removeClass('hidden'))
+			this.setState({showRegister: true}) 
+			setTimeout(function(){
+			 	$('.admin-container').addClass('hidden')
+			}, 1);
 		}
 	}
 
@@ -236,7 +240,7 @@ class Adminpanel extends Component {
 			</div>
 
 			<div className="register">
-				{this.state.showRegister = true ? <Register /> : null}
+				{this.state.showRegister ? <Register /> : ""}
 			</div>
 				
 			<div className="admin-container">

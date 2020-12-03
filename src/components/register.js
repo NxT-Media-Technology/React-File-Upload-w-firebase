@@ -51,7 +51,7 @@ class Register extends Component {
 							<label>Confirm Password</label>
 							<input type="password" id="password" onChange={this.handleChange} placeholder="Password" name="password2" required />
 
-							<button type="submit">Login</button>
+							<button type="submit">Register new user</button>
 
 							{this.state.statusMsg ? <p align="center">{this.state.statusMsg}</p>: null}
 
