@@ -10,6 +10,8 @@ class Register extends Component {
 			password1: '',
 			password2: '',
 			statusMsg: false,
+			showRegister: this.props.toggleRegister,
+			registerShow:true,
 		}
 
 		this.handleRegister = this.handleRegister.bind(this);
@@ -29,15 +31,14 @@ class Register extends Component {
 
 	handleChange = (e) => {this.setState({[e.target.name]: e.target.value});}
 
-
 	render() {
 		return (
 			<div>
 				<div id='login'>
 					<div id="login-container">
 					<div className="login-header">
-						<img src={logo} ></img>
-						<h1>Create new user with acces to Adminpanel</h1>
+						<img src={logo} />
+						<h1>Create new login user</h1>
 					</div>
 					<div className="login-form">
 						<form onSubmit={this.handleRegister}>
@@ -52,6 +53,8 @@ class Register extends Component {
 							<input type="password" id="password" onChange={this.handleChange} placeholder="Password" name="password2" required />
 
 							<button type="submit">Register new user</button>
+							<div className="back-button" onClick={this.props.toggleRegister}>Back</div>
+							
 
 							{this.state.statusMsg ? <p align="center">{this.state.statusMsg}</p>: null}
 

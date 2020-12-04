@@ -51,8 +51,8 @@ class Login extends Component {
 			<div id='login'>
 				<div id="login-container">
 				<div className="login-header">
-					<img src={logo} ></img>
-					<h1>Login to gain access to the Adminpanel</h1>
+					<img src={logo} />
+					<h1>Dashboard login</h1>
 				</div>
 				<div className="login-form">
 					<form onSubmit={this.handleLogin}>

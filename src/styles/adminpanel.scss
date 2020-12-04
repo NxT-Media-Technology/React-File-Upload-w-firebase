@@ -33,6 +33,11 @@ html {
 		z-index: inherit;
 		margin-bottom: auto;
 	}
+	.account-options {
+		a {
+			cursor: pointer;
+		}
+	}
 	.red {
 		color:red;
 	}
@@ -80,12 +85,14 @@ html {
 		.header-account {
 			display: flex;
 			flex-direction: row;
+			justify-content: center;
+			align-items: center;
 			width: 10vw;
 			img {
 			margin-right: 20%;
 
 			}
-			div {
+			.account-options {
 				display: flex;
 				flex-direction: column;
 				align-items: flex-start;
@@ -473,11 +480,66 @@ html {
 	}
 	@media (min-width: 320px) and (max-width: 530px)
 	{
+		
+		.back-button {
+			border-radius: 5px;
+			padding:1% ;	
+			text-align: center;	
+			margin: auto;
+			margin-top: 5%;
+			width: 77vw;
+			padding: 5vw 0;
+			border: 3px solid #00539F;
+			color: #00539F;
+			font-size: 18px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.overlay-component-accountoptions {
+			background-color: rgba(255,255,255,0.9);
+			width: 100%;
+			h1 {
+				text-transform: capitalize;
+				text-align: center;
+				font-size: 2.2rem;
+			}
+			
+		}
+		#login-container {
+			margin-top: 15%;
+			img {
+				display: none;
+			}
+		}
+		.header-account{
+			.butwhy{
+				display: none;
+					
+			}
+		}
 		.overlay {
 			.button {
 				width: 30vw;
 			}
+			.overlay-accountoptions {
+				display: flex;
+				flex-direction: column;
+				position: absolute;
+				justify-content: space-around;
+				right:30%;
+				top:30%;
+				
+				a{
+					font-size:2rem;
+					color:black;
+					margin:15% 0;
+
+				}
+
+				
+			}
 		}
+		
 		.admin-filter-views a{
 			display: none;
 		}

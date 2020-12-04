@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import Axios from 'axios';
 import SweepItem from './sweepItem.js';
+import AccountOverlay from './accountOptions.js';
 import Pagination from './pagination.js';
 import $ from "jquery";
 
@@ -9,7 +10,9 @@ import LogoIcon from '../images/OCS-Icon.png';
 import Border from '../includes/border-header.svg';
 import Register from './register.js';
 
-
+import {
+	isMobile,
+  } from "react-device-detect";
 
 import '../styles/adminpanel.scss';
 
@@ -29,6 +32,7 @@ class Adminpanel extends Component {
 			activeHeader: 'header-blue',
 			activeName: this.props.username,
 			showRegister: false,
+			showAccountOverlay: false,
 		}
 		this.updateStatus = this.updateStatus.bind(this);
 		this.updateNav = this.updateNav.bind(this);
@@ -36,6 +40,7 @@ class Adminpanel extends Component {
 		this.updateFilter = this.updateFilter.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
 		this.toggleRegisterForm = this.toggleRegisterForm.bind(this);
+		this.toggleAccount = this.toggleAccount.bind(this);
 
 	}
 
@@ -119,7 +124,6 @@ class Adminpanel extends Component {
 	    	}    	
 		})
 	}
-
 	updateNav(status) {
 		this.setState({activeNav: status, statusMsg: ''}, () => {
 			
@@ -187,20 +191,39 @@ class Adminpanel extends Component {
 		console.log("logout");
 	}
 
-
 	toggleRegisterForm() {
 
-		if (this.state.showRegister == true) {
+		if (this.state.showRegister == true || this.props.showRegister == true) {
 			this.setState({showRegister: false}) 
 			setTimeout(function(){
-			 	$('.admin-container').removeClass('hidden')
+				$('.admin-container').removeClass('hidden')
 			}, 1);
-
+			
 		} else {
-			this.setState({showRegister: true}) 
+			this.setState({showRegister: true,showAccountOverlay: false}) 
 			setTimeout(function(){
-			 	$('.admin-container').addClass('hidden')
+				$('.admin-container').addClass('hidden')
 			}, 1);
+		}
+	}
+	toggleAccount() {
+		console.log(this.state.showAccountOverlay); 
+		if (isMobile)
+		{
+
+			if (this. state.showAccountOverlay == true ) {
+				
+				this.setState({showAccountOverlay: false}); 
+				setTimeout(function(){
+					$('.component-accountoptions').addClass('hidden')
+				}, 1);
+				
+			} else {
+				this.setState({showAccountOverlay: true}) ;
+				setTimeout(function(){
+					$('.component-accountoptions').removeClass('hidden')
+				}, 1);
+			}
 		}
 	}
 
@@ -227,21 +250,24 @@ class Adminpanel extends Component {
 		return (
 			<div id='admin-panel'> 
 			<div className="admin-header">
-					<a href="/adminpanel"><img src={LogoIcon} className="logo-icon" /></a>
+					<a href="#"><img src={LogoIcon} className="logo-icon" /></a>
 					<h1 className='upper-title'>Pending cleanup</h1>
 					<div className="header-account">
-						<img src={PersonImg} className='small-icon' />
-						<div>
+						<img onClick={this.toggleAccount} src={PersonImg} className='small-icon' />
+						<div className="butwhy">
+						<div className="account-options">
 							<span>{this.state.activeName}</span>
 							<a onClick={this.handleLogout}>Logout</a>
 							<a onClick={this.toggleRegisterForm}>Register</a>
+						</div>
 						</div>
 					</div>
 			</div>
 
 			<div className="register">
-				{this.state.showRegister ? <Register /> : ""}
+				{this.state.showRegister ? <Register toggleRegister={this.toggleRegisterForm}/> : null}
 			</div>
+				{this.state.showAccountOverlay ? <AccountOverlay activeName={this.state.activeName} toggleAccount={this.toggleAccount} toggleRegister={this.toggleRegisterForm} handleLogout={this.handleLogout} /> : null}
 				
 			<div className="admin-container">
 				<div class="admin-filters">
@@ -252,7 +278,7 @@ class Adminpanel extends Component {
 							</svg>
 						</a>
 						<a onClick={()=>this.updateView("list")} href="#">
-							<svg id="list" class="activefilter" xmlns="http://www.w3.org/2000/svg" width="27.601" height="24" viewBox="0 0 27.601 24">
+							<svg id="list" className="activefilter" xmlns="http://www.w3.org/2000/svg" width="27.601" height="24" viewBox="0 0 27.601 24">
 								<path id="iconmonstr-menu-2" d="M4.6,26H0V21.2H4.6Zm0-14.4H0v4.8H4.6ZM4.6,2H0V6.8H4.6ZM8.05,2V6.8H27.6V2Zm0,14.4H27.6V11.6H8.05Zm0,9.6H27.6V21.2H8.05Z" transform="translate(0 -2)" fill="gray" />
 							</svg>
 						</a>
