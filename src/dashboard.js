@@ -22,13 +22,18 @@ class dashboard extends Component {
 				token: token.token,
 				username: token.username
 			});	
+		} else {
+			this.setState({
+				token: null,
+				username: null
+			});	
 		}
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.token ? <Adminpanel username={this.state.username} pass={this.changeAuth} /> : <Login pass={this.changeAuth} />}
+				{this.state.token ? <Adminpanel username={this.state.username} pass={this.changeAuth} token={this.state.token}/> : <Login pass={this.changeAuth} />}
 			</div>
 		);
 	}

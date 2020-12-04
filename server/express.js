@@ -6,8 +6,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { getNodeText } = require('@testing-library/react');
 const crypto = require('crypto');
-const passport = require('passport')
-, LocalStrategy = require('passport-local').Strategy;;
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -17,25 +15,6 @@ const path = require('path')
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({ origin: true }));
-
-
-//SESSION SETUP
-//NORMAAL WORDEN DEZE PARAM AFGESCHERMD IN EEN HIDDEN ENV
-/*const TWO_HOURS = 1000 * 60 * 60 * 2
-const SESS_NAME = 'sesid'
-const SESS_SECRET = 'randomsecret'
-
-app.use(session({
-    name: SESS_NAME,
-    resave: false,
-    saveUninitialized: false,
-    secret: SESS_SECRET,
-    cookie: {
-        maxAge: TWO_HOURS,
-        sameSite: true,
-        secure: false
-    }
-}))*/
 
 // Zorg dat deze gegevens kloppen! 
 const db = mysql.createPool({
@@ -65,7 +44,7 @@ app.post("/post", (req,res)=> {
     }
 
     // if url length && coords are defined: 
-    if((url !== null) && (coords !== null)){
+    if(url !== null && coords !== null){
         const sqlInsert = "INSERT INTO location_data (delete_id, name, phonenumber, coordinates, img_url, img_name, img_description, created_at) VALUES (?,?,?,?,?,?,?,?)";
         db.query(sqlInsert, [deleteId, name, phonenumber, coords, url, imgName, img_description, dateTime], (err, result) => {
 
@@ -88,14 +67,14 @@ app.post("/post", (req,res)=> {
     //SEND MAIL
     var nodemailer = require('nodemailer');
     const transporter = nodemailer.createTransport({
-    port: 465,               
-    host: "smtp.gmail.com",
-       auth: {
-            user: 'sweepit.clean51@gmail.com',
-            pass: 'cleansweep123',
-         },
-    secure: true,
-    requireTLS: true,
+        port: 465,               
+        host: "smtp.gmail.com",
+           auth: {
+                user: 'sweepit.clean51@gmail.com',
+                pass: 'cleansweep123',
+             },
+        secure: true,
+        requireTLS: true,
     });
 
     const mailData = {
@@ -117,8 +96,6 @@ app.post("/register", (req, res) => {
     let user_password1 = req.body.password1;
     let user_password2 = req.body.password2;
     console.log('Register route' + user_name + user_password1 + user_password2)
-
-    //console.log(req.session.userId)
 
     if (user_name && user_password1 == user_password2) {
         const sqlGetUser = "SELECT * FROM users WHERE username = ?";
@@ -182,136 +159,203 @@ app.post("/login", (req, res, next) => {
     }
 });
 
-app.post("/getdata", (req, res) => {
-    console.log('Get pending data')
-
-    const sqlSelectAllPending = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
-    db.query(sqlSelectAllPending, (err,result) => {
+function verifyByToken(token, callback) {
+    const verifyToken = token
+    
+    const sqlVerifyToken = "SELECT * FROM users WHERE token = ?";
+    db.query(sqlVerifyToken, verifyToken, function(err,result) {
         if (err) {
-            res.send(err)
+            return callback(false);
         } else {
-            res.send(result)
+            if (result.length == 0) {
+                return callback(false);
+            } else {
+                if (result[0].token == verifyToken) {
+                    return callback(true);
+                } else {
+                    return callback(false);
+                }
+            }
         }
+
+        
     });
+}
+
+app.post("/getdata", (req, res) => {
+    const token = req.body.token
+    let isAuthorised = false;
+
+    verifyByToken(token, function(result){
+        isAuthorised = result
+
+        if (isAuthorised) {
+            const sqlSelectAllPending = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
+            db.query(sqlSelectAllPending, (err,result) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(result)
+                }
+            });
+        } else {res.send('Unauthorised')}
+    })  
 });
 
 
 
 // Get posts by datetime:
 app.post('/getPostsByDate', (req, res) => {
+    const token = req.body.token
+    let isAuthorised = false;
 
-    const dateFilterType = req.body.dateFilter;
-    const currentNavItem = req.body.currentNavItem;
-    let selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
-    let newDate = new Date();
-    let currentYear = newDate.getFullYear();
-    // getMonth() is zero index based: (therefore +1)
-    let currentMonth = newDate.getMonth()+1; 
-    let yearAndMonth = currentYear + "-" + currentMonth;
-    // console.log(currentYear, currentMonth, newDate);
+    verifyByToken(token, function(result) {
+        isAuthorised = result
 
-    let params = [0,0];
-    console.log(currentNavItem)
+        if (isAuthorised) {
 
-    // 0 = pending | 1 = Clean | 2 = Not found
-    switch(currentNavItem){
-            case 0:
-                params = [0,0];
-            break;
-            case 1:
-                params = [1,0];
-            break;
-            case 2:
-                params = [0,1];
-            break;
-            default:
-                params = [0,0];
-      }
+            const dateFilterType = req.body.dateFilter;
+            const currentNavItem = req.body.currentNavItem;
+            let selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
+            let newDate = new Date();
+            let currentYear = newDate.getFullYear();
+            // getMonth() is zero index based: (therefore +1)
+            let currentMonth = newDate.getMonth()+1; 
+            let yearAndMonth = currentYear + "-" + currentMonth;
+            // console.log(currentYear, currentMonth, newDate);
 
-    switch(dateFilterType) {
-        case 'Oldest':
-            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at ASC";
-            break;
-        case 'Latest':
-            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at DESC";
-            break;
-        case 'This-month':
-            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = ' " + params[0] + "' AND `not_found` = '" + params[1] + "' AND created_at LIKE '%" + yearAndMonth + "%'";
-            break;
-        default:
-            selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0' ORDER BY created_at ASC";
-       
-      }
+            let params = [0,0];
+            console.log(currentNavItem)
 
-        console.log(selectStmt)
+            // 0 = pending | 1 = Clean | 2 = Not found
+            switch(currentNavItem){
+                case 0:
+                    params = [0,0];
+                break;
+                case 1:
+                    params = [1,0];
+                break;
+                case 2:
+                    params = [0,1];
+                break;
+                default:
+                    params = [0,0];
+            }
 
-    db.query(selectStmt, (err,result) => {
-        if (err) {
-            res.send("Oops.. Something went wrong!")
-        } else {
-            console.log('success!');
-            res.send(result);
-        }
-    })
+            switch(dateFilterType) {
+                case 'Oldest':
+                    selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at ASC";
+                    break;
+                case 'Latest':
+                    selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at DESC";
+                    break;
+                case 'This-month':
+                    selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = ' " + params[0] + "' AND `not_found` = '" + params[1] + "' AND created_at LIKE '%" + yearAndMonth + "%'";
+                    break;
+                default:
+                    selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0' ORDER BY created_at ASC";
+               
+            }
+
+            db.query(selectStmt, (err,result) => {
+                if (err) {
+                    res.send("Oops.. Something went wrong!")
+                } else {
+                    console.log('success!');
+                    res.send(result);
+                }
+            })
+        } else {res.send('Unauthorised')}    
+    }) 
 });
 
 
 
 app.post("/getcleaneddata", (req, res) => {
-    console.log('getcleaneddata')
-    const sqlSelectCleaned = "SELECT * FROM location_data WHERE `is_deleted` = '1'";
-    db.query(sqlSelectCleaned, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send(result)
-        }
-    });
+    const token = req.body.token
+    let isAuthorised = false;
+
+    verifyByToken(token, function(result){
+        isAuthorised = result
+
+        if (isAuthorised) {
+            const sqlSelectCleaned = "SELECT * FROM location_data WHERE `is_deleted` = '1'";
+            db.query(sqlSelectCleaned, (err,result) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(result)
+                }
+            });
+        } else { res.send('Unauthorised') }
+    })
 });
 
 app.post("/getnotfounddata", (req, res) => {
-    console.log('getnotfounddata')
-    const sqlSelectCleanedNotFound = "SELECT * FROM location_data WHERE `not_found` = '1'";
-    db.query(sqlSelectCleanedNotFound, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send(result)
-        }
-    });
+    const token = req.body.token
+    let isAuthorised = false;
+
+    verifyByToken(token, function(result) {
+        isAuthorised = result
+
+        if (isAuthorised) {
+            const sqlSelectCleanedNotFound = "SELECT * FROM location_data WHERE `not_found` = '1'";
+            db.query(sqlSelectCleanedNotFound, (err,result) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(result)
+                }
+            });
+        } else res.send('Unauthorised')
+    })
 });
 
 //REMOVE FROM ADMINPANEL
 app.post('/deleteRecord', (req, res) => {
-    const id = req.body.id
-    const sqlSoftDelete = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`id` = ?";
-    db.query(sqlSoftDelete, id, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send('Item deleted succesfully!')
-            console.log('softdeleted')
-        }
+    const token = req.body.token
+    let isAuthorised = false;
+
+    verifyByToken(token, function(result) {
+        isAuthorised = result
+
+        if (isAuthorised) {
+            const id = req.body.id
+            const sqlSoftDelete = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`id` = ?";
+            db.query(sqlSoftDelete, id, (err,result) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send('Item deleted succesfully!')
+                    console.log('softdeleted')
+                }
+            })
+        } else { res.send('Unauthorised') }
     })
 });
 
 app.post('/notfoundrecord', (req, res) => {
-    const id = req.body.id
-    const sqlSoftDelete = "UPDATE `location_data` SET `not_found` = '1' WHERE `location_data`.`id` = ?";
-    db.query(sqlSoftDelete, id, (err,result) => {
-        if (err) {
-            res.send(err)
-        } else {
-            res.send('Item deleted succesfully!')
-            console.log('softdeleted')
-        }
+    const token = req.body.token
+    let isAuthorised = false;
+
+    verifyByToken(token, function(result) {
+        isAuthorised = result
+
+        if (isAuthorised) {
+
+            const id = req.body.id
+            const sqlSoftDelete = "UPDATE `location_data` SET `not_found` = '1' WHERE `location_data`.`id` = ?";
+            db.query(sqlSoftDelete, id, (err,result) => {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send('Item deleted succesfully!')
+                    console.log('softdeleted')
+                }
+            })
+        } else { res.send('Unauthorised')}
     })
 });
-
-
-
-
-
 
 //REMOVE FROM EMAIL
 app.post('/remove', (req, res) => {
@@ -327,10 +371,6 @@ app.post('/remove', (req, res) => {
         }
     })
 });
-
-
-
-
 
 
 // Run the server on port 3001 (ONLY listens on 3001)

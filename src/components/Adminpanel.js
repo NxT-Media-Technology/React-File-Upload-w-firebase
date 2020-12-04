@@ -31,6 +31,7 @@ class Adminpanel extends Component {
 			activeView: 'list',
 			activeHeader: 'header-blue',
 			activeName: this.props.username,
+			token: this.props.token,
 			showRegister: false,
 			showAccountOverlay: false,
 		}
@@ -41,60 +42,66 @@ class Adminpanel extends Component {
 		this.handleLogout = this.handleLogout.bind(this);
 		this.toggleRegisterForm = this.toggleRegisterForm.bind(this);
 		this.toggleAccount = this.toggleAccount.bind(this);
-
 	}
 
 	// haalt alle pending data op wanneer component aangeroepen wordt: 
 	componentDidMount() {
 		//VRAAG ALLE DATA IN DB ZONDER DELETED ROWS
-		Axios.post("http://localhost:3001/getdata")
+		Axios.post("http://localhost:3001/getdata", {
+			token: this.state.token,
+		})
 	    .then((response) => {
-	    	if (response.status == 200) {
+	    	if (response.status == 200 && typeof response.data !== 'string') {
 	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
 	    	} else {
-	    		this.setState({statusMsg: response})
+	    		this.props.pass(null)
 	    	}    	
 		})
 	}
 
 	getPendingData() {
-		Axios.post("http://localhost:3001/getdata")
+		Axios.post("http://localhost:3001/getdata", {
+			token: this.state.token,
+		})
 	    .then((response) => {
-	    	if (response.status == 200) {
+	    	if (response.status == 200 && typeof response.data !== 'string') {
 	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
 	    	} else {
-	    		this.setState({statusMsg: response})
+	    		this.props.pass(null)
 	    	}    	
 		})
 	}
 
 	getCleanedData() {
-		Axios.post("http://localhost:3001/getcleaneddata")
+		Axios.post("http://localhost:3001/getcleaneddata", {
+			token: this.state.token,
+		})
+
 	    .then((response) => {
-	    	if (response.status == 200) {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})	
+	    	if (response.status == 200 && typeof response.data !== 'string') {
+	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
 	    	} else {
-	    		this.setState({statusMsg: response})
-	    	}    	
+	    		this.props.pass(null)
+	    	}      	
 		})
 	}
 
 	getNotFoundData() {
-		Axios.post("http://localhost:3001/getnotfounddata")
+		Axios.post("http://localhost:3001/getnotfounddata", {
+			token: this.state.token,
+		})
 	    .then((response) => {
-	    	if (response.status == 200) {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})	
+	    	if (response.status == 200 && typeof response.data !== 'string') {
+	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
 	    	} else {
-	    		this.setState({statusMsg: response})
-	    	}    	
+	    		this.props.pass(null)
+	    	}     	
 		})
 	}
 
 	// @info: Returns posts by given date period. 
 	getPostsByDate(date_filter) {
-
 		let navItem = 0; 
-
 		console.log(this.state.activeNav)
 
 		switch(this.state.activeNav){
@@ -113,15 +120,16 @@ class Adminpanel extends Component {
 
 		Axios.post("http://localhost:3001/getPostsByDate",{
 			dateFilter: date_filter,
-			currentNavItem: navItem
+			currentNavItem: navItem,
+			token: this.state.token,
 		})
 	    .then((response) => {
 			console.log(response.data)
-	    	if (response.status == 200) {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})	
+	    	if (response.status == 200 && typeof response.data !== 'string') {
+	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
 	    	} else {
-	    		this.setState({statusMsg: response})
-	    	}    	
+	    		this.props.pass(null)
+	    	}      	
 		})
 	}
 	updateNav(status) {
@@ -153,8 +161,6 @@ class Adminpanel extends Component {
 		});
 	}
 
-
-	
 	updateView(status) {
 		if(status == "block") {
 			const block = $("#block");
@@ -175,8 +181,6 @@ class Adminpanel extends Component {
 		//UPDATE STATUS BIJ DELETE
 		this.setState({statusMsg: msg})
 	}
-
-
 
 	// update select filter:
 	updateFilter = (event) => {
@@ -206,18 +210,16 @@ class Adminpanel extends Component {
 			}, 1);
 		}
 	}
+
 	toggleAccount() {
 		console.log(this.state.showAccountOverlay); 
-		if (isMobile)
-		{
+		if (isMobile) {
 
 			if (this. state.showAccountOverlay == true ) {
-				
 				this.setState({showAccountOverlay: false}); 
 				setTimeout(function(){
 					$('.component-accountoptions').addClass('hidden')
 				}, 1);
-				
 			} else {
 				this.setState({showAccountOverlay: true}) ;
 				setTimeout(function(){
@@ -228,24 +230,19 @@ class Adminpanel extends Component {
 	}
 
 	render() {
-
-
-	
 		/* PAGINATION */ 
-	const indexofLastPost = this.state.currentPage * this.state.postsPerPage;
-	const indexOfFirstPost = indexofLastPost - this.state.postsPerPage;
-	let currentPosts = '';
+		const indexofLastPost = this.state.currentPage * this.state.postsPerPage;
+		const indexOfFirstPost = indexofLastPost - this.state.postsPerPage;
+		let currentPosts = '';
 
 		if(this.state.posts){
 			currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
 		}
 
-	// change page 
-	const paginate = (pageNumber) => {
-		this.setState({currentPage: pageNumber})
+		const paginate = (pageNumber) => {
+			this.setState({currentPage: pageNumber})
 
-	// End of pagination settings. 
-	};
+		};
 
 		return (
 			<div id='admin-panel'> 
