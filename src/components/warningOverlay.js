@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Switch from "react-switch";
 import $ from "jquery";
 import Axios from 'axios';
-import Logo from './../images/logo.png';
 
 
 class warningOverlay extends Component {
@@ -16,11 +14,11 @@ class warningOverlay extends Component {
             actionName: null,
         }
     }
-    //werkt momenteel niet?
+
     updateStatus = (msg, key) => {
-		//UPDATE STATUS BIJ DELETE
-		this.setState({statusMsg: msg})
-	}
+		this.setState({statusMsg: msg});
+    }
+    
     componentDidMount()  {
         switch(this.state.itemAction){
             case "delete":
@@ -43,23 +41,19 @@ class warningOverlay extends Component {
                 break;
         }
     }
+
     handleItem(record_id) {
         switch(this.state.itemAction) {
             case "delete":
-                //DATABASE SOFTDELETE
                 Axios.post("http://localhost:3001/deleteRecord", {id: record_id}).then((response) => {
-                //UPDATE STATUS MSG
                 this.updateStatus(response.data);
-                //REMOVE FROM LIST
                 const id = record_id
                 $('#' + id).fadeOut(1000)
                 })
                 break;
             case "notfound":
                 Axios.post("http://localhost:3001/notfoundrecord", {id: record_id}).then((response) => {
-                //UPDATE STATUS MSG
                 this.updateStatus(response.data);
-                //REMOVE FROM LIST
                 const id = record_id
                 $('#' + id).fadeOut(1000)
                 })

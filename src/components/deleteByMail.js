@@ -13,21 +13,18 @@ class deleteByMail extends Component {
 	}
 
 	componentDidMount() {
-		let params = queryString.parse(this.props.location.search)
-
-		Axios.post("http://localhost:3001/remove", {
-			uuid: params.uuid 
-		})
+		let params = queryString.parse(this.props.location.search);
+		Axios.post("http://localhost:3001/remove", {uuid: params.uuid})
 	    .then((response) => {
 	    	if (response.status == 200) {
-	    		this.setState({response:true, statusMsg:response.data})
+	    		this.setState({response:true, statusMsg:response.data});
 	      		//console.log(response);
 	    	} else {
-	    		this.setState({statusMsg: response.data})
+	    		this.setState({statusMsg: response.data});
 	    	}    	
 		})
 	}
-
+	
 	render() {
 		return (
 			<div>

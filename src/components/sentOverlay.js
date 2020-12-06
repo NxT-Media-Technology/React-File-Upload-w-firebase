@@ -72,8 +72,6 @@ class SentOverlay extends Component
     })
     .then((response) => {
       this.setState({ displayMessage: true, message: response});
-
-      // toon enkel bij geslaagde queries:
       if(!this.state.message.data.includes('Error'))
       {
         this.setState({ messageType: 'success'});

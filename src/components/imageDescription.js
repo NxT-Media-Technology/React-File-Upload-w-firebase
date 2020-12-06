@@ -10,6 +10,7 @@ class ImageDescription extends Component {
         const desc = null;
         this.props.onDescChange(desc);
     }
+    
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value

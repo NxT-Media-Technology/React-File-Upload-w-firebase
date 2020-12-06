@@ -1,7 +1,7 @@
 body,html{
     height: 100%;
-     margin:0;
-   }
+    margin:0;
+}
 
 body {
 	margin: 0 auto;
@@ -10,29 +10,31 @@ body {
 	background-image: url("../images/wave.png");
 	background-size:cover;
 	background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-position: bottom;
+	background-repeat: no-repeat;
+	background-position: bottom;
 }
+
 #login {
 	height: 100vh;
 	background:rgb(245, 245, 245);
 }
 #login-container {
 	position: absolute;
-	  top: 40%;
-	  left: 50%;
-	  transform: translate(-50%,-50%);
-	  -ms-transform: translate(-50%,-50%);
-	  font-family: "poppins",sans-serif;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	font-family: "poppins",sans-serif;
 }
+
 .login-form {
 	margin:auto;
 	width: 70%;
 }
+
 .login-form form{
 	display: flex;
 	flex-direction: column;	
-	
 }
 
 .login-form form input {
@@ -40,6 +42,7 @@ body {
 	font-family: "poppins",sans-serif;
 	border-radius: 5px;
 }
+
 .back-button {
 	border-radius: 5px;
 	padding:1% ;	
@@ -67,6 +70,7 @@ body {
 	font-size: 18px;
 	border:none;
 }
+
 #login img {
 	width: 30vw;
 	margin: auto;
@@ -83,36 +87,37 @@ body {
 #login h1 {
 	font-family: "poppins",sans-serif;
 	font-size: 2rem;
-	text-align: center;
-	
+	text-align: center;	
 }
 
 .overlay {
 	position: fixed; /* Sit on top of the page content */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+	width: 100%; /* Full width (cover the whole page) */
+	height: 100%; /* Full height (cover the whole page) */
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+	z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+	cursor: pointer; /* Add a pointer on hover */
 }
+
 .overlay-content {
 	position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 50px;
-  color: white;
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
+	top: 50%;
+	left: 50%;
+	font-size: 50px;
+	color: white;
+	transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
 	background-color: white;
 	color: #0b54a0;
 	padding: 2% 1%;
 	border-radius: 20px;
 	text-align: center;
 }
+
 .overlay img {
 	max-width: 40%;
 }
@@ -128,7 +133,7 @@ body {
 	padding: 15px;
 	font-size: 1.2rem;
 	font-weight: bold;
-  margin: 10% 0;
+	margin: 10% 0;
 }
 
 .closeBtn {
@@ -144,28 +149,28 @@ body {
 
 .overlay-text {
 	font-size:1.8rem;
-  text-align: center;
-  margin: 0;
-  margin-top: 5%;
-  margin-bottom: 5%;
+	text-align: center;
+	margin: 0;
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 .overlay-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  font-size: 1.2rem;
-  text-align: left;
-  width: 80%;
-  margin: auto;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	font-size: 1.2rem;
+	text-align: left;
+	width: 80%;
+	margin: auto;
+	height: 100%;
 }
 
 .overlay-form input{
-  border: 1px solid #707070;
-  border-radius: 5px;
-  padding:10px 20px;
-  margin:5% 0;
+	border: 1px solid #707070;
+	border-radius: 5px;
+	padding:10px 20px;
+	margin:5% 0;
 }
 
 .disabled {
@@ -176,6 +181,7 @@ body {
 .logo {
 	width: 90%;
 }
+
 .app {
 	font-family: 'Poppins', sans-serif;
 }
@@ -205,6 +211,7 @@ body {
 a {
 	text-decoration: none;
 }
+
 a:hover {
 	text-decoration: underline;
 }
@@ -258,24 +265,18 @@ a:hover {
 	display: none;
 }
 .uploadfile>input {
-  display: none;
+	display: none;
 }
 
 progress {
-
   margin: 50% auto;
   height: 30px;
   text-align: center;
 }
 
-
-
-
-
 /*
   ##Device = Laptops, Desktops
 */
-
 @media (min-width: 1025px) {
 	.app {
 		padding: 1px 5%;
@@ -295,16 +296,15 @@ progress {
 	#turtle-img {
 		width: 120%;
 		transform: translate(-10%, 5%);
-    position: absolute;
-    bottom: 0;
-    height: 23vh;
-
+    	position: absolute;
+    	bottom: 0;
+    	height: 23vh;
 	}
 
-  #section1 {
-    position: relative;
-    padding-bottom: 25vh;
-  }
+	#section1 {
+    	position: relative;
+    	padding-bottom: 25vh;
+	}
 
 	.section-title {
 		margin: 0;
@@ -331,7 +331,7 @@ progress {
 		border-radius: 5px;
 		margin-top: 7%;
 		padding:15% 20%;
-    cursor: pointer;
+    	cursor: pointer;
 	}
 	
 	.description {
@@ -344,7 +344,6 @@ progress {
 		padding: 3% 5%;
 		resize: none;
 	}
-
 
     .preview-img {
   		width: 400px;
@@ -378,7 +377,7 @@ progress {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-    position: relative;
+    	position: relative;
 	}
 	.img-component :nth-child(2) {
 		order:4;
@@ -387,26 +386,21 @@ progress {
 	}
 }
 
-
-
-
-
 /*
   ##Device = Tablets, Ipads (portrait)
 */
-
 @media (min-width: 481px) and (max-width: 1024px)  {
-
 	* {
 		margin:0;
 		padding: 0;
 	}
+
 	#root  {
 		overflow: hidden;
 		width: 100%;
 	}
-	.description {
-		
+
+	.description {		
 		border-radius: 5px;
 		line-height: 1.2em;
 		color: black;
@@ -421,17 +415,18 @@ progress {
 	.overlay img {
 		max-width: 30%;
 	}
+
 	.infoIcon {
-	 display: block;
+		display: block;
 	}
 
 	.overlay-content {
-	  width: 80%;
+		width: 80%;
 	}
 
 	.map {
-	 padding-bottom: 50vh;
-	 position: relative;
+		padding-bottom: 50vh;
+		position: relative;
 	}
 
 	.app {
@@ -443,24 +438,26 @@ progress {
 	}
 
 	.logo {
-		 width: 90%;
-		 margin: 7% 0;
-	 }
+		width: 90%;
+		margin: 7% 0;
+	}
 
 	 .sections {
-		 display: flex;
-		 flex-wrap: wrap;
-		 justify-content: center;
-		 flex-direction: column;
-	 }
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+	}
+
 	.sections :nth-child(2) {
 		order:1;
 	}
+
 	 .section {
-		 margin-bottom: 5%;
-		 padding: 5% 7%;
-		 border-radius: 5px;
-	 }
+		margin-bottom: 5%;
+		padding: 5% 7%;
+		border-radius: 5px;
+	}
 
 	#section2 {
 		padding-bottom: 10%;
@@ -469,93 +466,92 @@ progress {
 	#section1 {
 	   max-width: 85%;
 	}
+
 	#section1 img {
-		 max-width: 85%;
+		max-width: 85%;
 	}
 
 	 p {
-		 padding:3% 0;
-	 }
+		padding:3% 0;
+	}
 
 	 .sweep-btn {
-		 text-align: center;
-		 color:#0b54a0;
-		 background-color: rgba(255,255,255,1);
-		 border: none;
-		 border-radius: 5px;
-		 padding: 15px;
-		 font-size: 1.2rem;
-		 width: 65%;
-		 font-weight: bold;
+		text-align: center;
+		color:#0b54a0;
+		background-color: rgba(255,255,255,1);
+		border: none;
+		border-radius: 5px;
+		padding: 15px;
+		font-size: 1.2rem;
+		width: 65%;
+		font-weight: bold;
  	}
 
  	.sweep-section {
-		 text-align: center;
-		 max-width: 100%;
-		 margin-bottom: 25%;
+		text-align: center;
+		max-width: 100%;
+		margin-bottom: 25%;
  	}
 
   progress {
-    margin: 20vh auto;
+    	margin: 20vh auto;
 		height: 30px;
 		text-align: center;
 	}
+
 	 .img-component {
-		 display: flex;
-		 flex-direction: column;
-		 justify-content: space-between;
-		 padding-bottom: 2%;
-     position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding-bottom: 2%;
+     	position: relative;
 	 }
+	 
 	 .img-component :nth-child(2) {
-		 order:3;
-		 opacity: 0.5;
-		 font-size: 14px;
+		order:3;
+		opacity: 0.5;
+		font-size: 14px;
 	 }
+
 	 .open-img {
-		 max-width: 60%;
-		 height: 30vh;
-		 border: 2px dashed rgba(1,1,1,0.2);
-		 border-radius: 5px;
-		 margin-top: 3%;
-		 padding:10% 20%;
+		max-width: 60%;
+		height: 30vh;
+		border: 2px dashed rgba(1,1,1,0.2);
+		border-radius: 5px;
+		margin-top: 3%;
+		padding:10% 20%;
 	 }
 }
-
-
-
-
 
 /*
   ##Device = Most of the Smartphones Mobiles (Portrait)
   ##Screen = B/w 320px to 479px
 */
-
 @media (min-width: 320px) and (max-width: 480px)
 {
-	 * {
-		 margin:0;
-		 padding: 0;
-	 }
-	 #root  {
-		 overflow: hidden;
-		 width: 100%;
-	 }
-	 .infoIcon {
+	* {
+		margin:0;
+		padding: 0;
+	}
+	#root  {
+		overflow: hidden;
+		width: 100%;
+	}
+	.infoIcon {
 	 	display: block;
-	 }
+	}
 
-	 	.overlay-content {
-	 	  width: 80%;
-			padding:10% 5%;
-	 	}
+	.overlay-content {
+	 	width: 80%;
+		padding:10% 5%;
+	}
 
-	 .map {
+	.map {
 	 	padding-bottom: 50vh;
 		position: relative;
-	 }
-	 .description {
-		 
+	}
+
+	.description {		 
 		border-radius: 5px;
 		line-height: 1.2em;
 		color: black;
@@ -564,47 +560,52 @@ progress {
 		margin: 5% 0;
 		padding: 3% 5%;
 		resize: none;
-	 }
-    .app {
-			position: relative;
-			padding:0 10%;
-		}
-		.logo {
-			width: 90%;
-			margin: 7% 0;
-		}
+	}
 
-		.sections {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			flex-direction: column;
-		}
-		.sections :nth-child(2) {
-				order:1;
-			}
-		.section {
-			margin-bottom: 10%;
-			padding: 5% 7%;
-			border-radius: 5px;
-		}
+    .app {
+		position: relative;
+		padding:0 10%;
+	}
+		
+	.logo {
+		width: 90%;
+		margin: 7% 0;
+	}
+
+	.sections {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	.sections :nth-child(2) {
+		order:1;
+	}
+
+	.section {
+		margin-bottom: 10%;
+		padding: 5% 7%;
+		border-radius: 5px;
+	}
 
  	 #section2 {
- 		 padding-bottom: 10%;
+ 		padding-bottom: 10%;
  	 }
 
 	 #section1 {
-		 max-width: 85%;
+		max-width: 85%;
 	 }
+
 	 #section1 img {
-		 display: none;
+		display: none;
 	 }
 
-		p {
-			padding:3% 0;
-		}
+	p {
+		padding:3% 0;
+	}
 
-		.sweep-btn {
+	.sweep-btn {
 		text-align: center;
 		color:#0b54a0;
 		background-color: rgba(255,255,255,1);
@@ -615,6 +616,7 @@ progress {
 		width: 65%;
 		font-weight: bold;
 	}
+
 	.sweep-section {
 		text-align: center;
 		max-width: 100%;
@@ -625,7 +627,7 @@ progress {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-    position: relative;
+    	position: relative;
 	}
 
 	.img-component :nth-child(2) {
@@ -642,74 +644,74 @@ progress {
 		margin-top: 7%;
 		padding:10% 20%;
 	}
-
 }
 
 
 @media (min-width: 320px) and (max-width: 700px)
 	{
-	#login {
-		height: 100vh;
-		background:rgb(245, 245, 245);
-	}
-	#login-container {
-		position: absolute;
-		top: 40%;
-		left: 50%;
-		transform: translate(-50%,-50%);
-		-ms-transform: translate(-50%,-50%);
-		font-family: "poppins",sans-serif;
-	}
-	.login-form {
-		margin:auto;
-		width: 90vw;
-	}
-	.login-form form{
-		display: flex;
-		flex-direction: column;	
+		#login {
+			height: 100vh;
+			background:rgb(245, 245, 245);
+		}
 
-	}
-	
+		#login-container {
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			-ms-transform: translate(-50%,-50%);
+			font-family: "poppins",sans-serif;
+		}
 
-	.login-form form input {
-		padding: 1% 5%;
-		font-family: "poppins",sans-serif;
-		border-radius: 5px;
-		font-size: 1.5rem;
-	}
-	.login-form form button {
-		border-radius: 5px;
-		padding:1% ;	
-		text-align: center;	
-		margin: auto;
-		margin-top: 5%;
-		width: 15vw;
-		background-color: #00539F;
-		color: white;
-		font-size: 18px;
-		border-radius: 5px;
-		width: 80vw;
-		height: 8vh;
-	}
-	#login img {
-		width: 80vw;
-		margin: auto;
-		text-align: center;
-		display: block;
-	}
+		.login-form {
+			margin:auto;
+			width: 90vw;
+		}
+		.login-form form{
+			display: flex;
+			flex-direction: column;	
+		}
 
-	.login-form form label {
-		margin-left: 5%;
-		margin-top: 2%;
-		margin-bottom: 1%;
-		font-size: 1.3rem;
-	}
+		.login-form form input {
+			padding: 1% 5%;
+			font-family: "poppins",sans-serif;
+			border-radius: 5px;
+			font-size: 1.5rem;
+		}
 
-	#login h1 {
-		font-family: "poppins",sans-serif;
-		font-size: 1.8rem;
-		text-align: center;
-		margin: 3% 0;
-		
-	}
+		.login-form form button {
+			border-radius: 5px;
+			padding:1% ;	
+			text-align: center;	
+			margin: auto;
+			margin-top: 5%;
+			width: 15vw;
+			background-color: #00539F;
+			color: white;
+			font-size: 18px;
+			border-radius: 5px;
+			width: 80vw;
+			height: 8vh;
+		}
+
+		#login img {
+			width: 80vw;
+			margin: auto;
+			text-align: center;
+			display: block;
+		}
+
+		.login-form form label {
+			margin-left: 5%;
+			margin-top: 2%;
+			margin-bottom: 1%;
+			font-size: 1.3rem;
+		}
+
+		#login h1 {
+			font-family: "poppins",sans-serif;
+			font-size: 1.8rem;
+			text-align: center;
+			margin: 3% 0;
+		}
 }

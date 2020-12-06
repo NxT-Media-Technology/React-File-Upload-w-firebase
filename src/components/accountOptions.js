@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class accountOptions extends Component {
-
     render() {
         return (
             <div className="component-accountoptions overlay overlay-component-accountoptions">
@@ -16,5 +15,4 @@ class accountOptions extends Component {
         );
     }
 }
-
 export default accountOptions;

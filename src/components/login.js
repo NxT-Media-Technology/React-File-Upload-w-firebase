@@ -33,8 +33,6 @@ class Login extends Component {
 			else {
 				this.setState({statusMsg: response.data});				
 			}
-			// const token = true;
-			// this.props.pass(token);
 		})
 	}
 
@@ -55,18 +53,13 @@ class Login extends Component {
 					<h1>Dashboard login</h1>
 				</div>
 				<div className="login-form">
-					<form onSubmit={this.handleLogin}>
-								
+					<form onSubmit={this.handleLogin}>								
 						<label>Username</label>
 						<input type ="text" id='username' onChange={this.handleUsername} name="username" placeholder="Username" required />
-
 						<label>Password</label>
 						<input type="password" id="password" onChange={this.handlePassword} placeholder="Password" name="password" required />
-
 						<button type="submit">Login</button>
-
 						{this.state.statusMsg ? <p align="center">{this.state.statusMsg}</p>: null}
-
 				    </form>
 				</div>
 				</div>

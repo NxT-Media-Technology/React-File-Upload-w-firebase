@@ -13,7 +13,6 @@ class Register extends Component {
 			showRegister: this.props.toggleRegister,
 			registerShow:true,
 		}
-
 		this.handleRegister = this.handleRegister.bind(this);
 	}
 
@@ -25,44 +24,38 @@ class Register extends Component {
 			password2: this.state.password2,
 		})
 		.then((response) => {
-			this.setState({statusMsg: response.data})
+			this.setState({statusMsg: response.data});
 		})
 	}
 
-	handleChange = (e) => {this.setState({[e.target.name]: e.target.value});}
+	handleChange = (e) => {
+		this.setState({[e.target.name]: e.target.value});
+	}
 
 	render() {
 		return (
 			<div>
 				<div id='login'>
 					<div id="login-container">
-					<div className="login-header">
-						<img src={logo} />
-						<h1>Create new login user</h1>
-					</div>
-					<div className="login-form">
-						<form onSubmit={this.handleRegister}>
-									
-							<label>Username</label>
-							<input type ="text" id='username' onChange={this.handleChange} name="username" placeholder="username" required />
-
-							<label>Password</label>
-							<input type="password" id="password" onChange={this.handleChange} placeholder="Password" name="password1" required />
-
-							<label>Confirm Password</label>
-							<input type="password" id="password" onChange={this.handleChange} placeholder="Password" name="password2" required />
-
-							<button type="submit">Register new user</button>
-							<div className="back-button" onClick={this.props.toggleRegister}>Back</div>
-							
-
-							{this.state.statusMsg ? <p align="center">{this.state.statusMsg}</p>: null}
-
-					    </form>
+						<div className="login-header">
+							<img src={logo} />
+							<h1>Create new login user</h1>
+						</div>
+						<div className="login-form">
+							<form onSubmit={this.handleRegister}>									
+								<label>Username</label>
+								<input type ="text" id='username' onChange={this.handleChange} name="username" placeholder="username" required />
+								<label>Password</label>
+								<input type="password" id="password" onChange={this.handleChange} placeholder="Password" name="password1" required />
+								<label>Confirm Password</label>
+								<input type="password" id="password" onChange={this.handleChange} placeholder="Password" name="password2" required />
+								<button type="submit">Register new user</button>
+								<div className="back-button" onClick={this.props.toggleRegister}>Back</div>	
+								{this.state.statusMsg ? <p align="center">{this.state.statusMsg}</p>: null}
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
-
 			</div>
 		);
 	}

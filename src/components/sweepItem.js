@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
-import {storage} from '../firebase';
-import $, { data } from "jquery";
 
 import PhoneImg from './../images/phone.png';
-import LocImg from './../images/pin.png';
 import PersonImg from './../images/person.png';
 import IconSweep from './../includes/sweep-icon.svg';
 import IconDelete from './../includes/delete-icon.svg';
 import DescIcon from './../includes/desc-icon.svg';
-
 import WarningOverlay from './warningOverlay.js';
-import GeoLocator from './geoLocator.js';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 class sweepItem extends Component {	
@@ -30,9 +24,8 @@ class sweepItem extends Component {
 		this.toggleDetails = this.toggleDetails.bind(this);
 		this.showDetails = this.showDetails.bind(this);
         this.handleClick = this.handleClick.bind(this);
-		// this.deleteRecord = this.deleteRecord.bind(this);
-
 	}
+
 	handleClick() {
         this.setState({
             warning: !this.state.warning
@@ -40,9 +33,9 @@ class sweepItem extends Component {
     }
 	toggleDetails() {
 		if (this.state.itemClicked == false) {
-			this.setState({itemClicked: true})
+			this.setState({itemClicked: true});
 		} else {
-			this.setState({itemClicked: false})
+			this.setState({itemClicked: false});
 		}
 	}
 
@@ -50,20 +43,22 @@ class sweepItem extends Component {
 		switch(status){
 			case 'Pending':
 				return(<div className="item-buttons">
-						<a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Cleaned</div></a>
-						<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Not Found</div></a>
+					<a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Cleaned</div></a>
+					<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Not Found</div></a>
 					</div>);
-				case 'Clean':
-					return(<div className="item-buttons">
-					<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Send to Not Found</div></a> </div>);
-					case 'Not Found':
-						return(
-							<div className="item-buttons"><a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Send to Cleaned</div></a></div>);
-	};
+			case 'Clean':
+				return(<div className="item-buttons">
+					<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Send to Not Found</div></a> 
+					</div>);
+			case 'Not Found':
+				return(
+					<div className="item-buttons"><a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}>
+					<div className="button button-green">Send to Cleaned</div>
+					</a></div>);
+		};
 	}
 
 	showDetails() {
-
 		const data = this.state.itemData;
 		var cord = (data.coordinates).split(",");
 		var cordlat= cord[0];
@@ -82,7 +77,7 @@ class sweepItem extends Component {
 						<div className="item-details-info-sec-desc">
 							<img src={DescIcon} className='small-icon' />
 							{/* show the full description when you show details, else show part of desc */}
-					<div>{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 10) + "..." : "No description")}</div>
+							<div>{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 10) + "..." : "No description")}</div>
 						</div>
 					</div>
 					<div className="item-location">
@@ -95,18 +90,7 @@ class sweepItem extends Component {
 								}}>
 									<Marker position={{ lat: cordlat, lng: cordlng }} />
 								</Map>
-							</div>
-							{/* {console.log(this.state.activeNav)}
-							 {this.state.activeNav ="Clean"?							 
-							 <a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Send to Not Found</div></a> : null}
-							 
-							 {this.state.activeNav ="Not Found"? <a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Send to Cleaned</div></a> : null}
-							 
-							 {this.state.activeNav ="Pending" ? 
-							 <div>
-								 <a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})}><div className="button button-green">Cleaned</div></a>
-								 <a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><div className="button button-red">Not Found</div></a>
-							</div>: null} */}
+							</div>							
 							 {this.renderButtons(this.state.activeNav)}
 						<div className="item-shrink" onClick={this.toggleDetails}>
 							<svg xmlns="http://www.w3.org/2000/svg" width="26.637" height="13.318" viewBox="0 0 26.637 13.318">
@@ -114,12 +98,10 @@ class sweepItem extends Component {
 							</svg>
 						</div>
 					</div>
-				</div>
-		
-	}
-	
+				</div>					
+	}	
+
 	render() {
-		//DYNAMISCHE SHOW HIDE BTNS
 		const data = this.state.itemData;	
 		return (			
 			<div className="item" id={data.id}>
@@ -134,8 +116,6 @@ class sweepItem extends Component {
 						<div className={this.props.activeNav !== 'Pending' ? "hidden" : "item-details-buttons"}>
 							<a href="#" onClick = {()=>this.setState({warningAction: "delete",warning: true})} ><img src={IconSweep} alt="icon-sweep"></img></a>
 							<a href="#" onClick = {()=>this.setState({warningAction: "notfound",warning: true})}><img src={IconDelete} alt="icon-sweep"></img></a>
-							{/* <a href="#" onClick = {()=> this.deleteRecord(data.id)} ><img src={IconSweep} alt="icon-sweep"></img></a>
-                            <a href="#" onClick = {()=> this.notFoundRecord(data.id)}><img src={IconDelete} alt="icon-sweep"></img></a> */}
 						</div>
 					</div>
 					<div className="item-details-info">
@@ -150,7 +130,6 @@ class sweepItem extends Component {
 						</div>
 							<div className="item-details-info-sec">
 							<img src={DescIcon} className='small-icon'/>
-							{/* show the full description when you show details, else show part of desc */}
 							<div>{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 25) + "..." : "No description")}</div>
 						</div>
 					</div>

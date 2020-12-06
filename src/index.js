@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router,Route,Link,Switch,Redirect } from "react-router-dom";
 import App from './App';
-import LoginPage from './components/login.js';
 import Dashboard from './dashboard.js';
 import DeleteByMail from './components/deleteByMail.js';
 import * as serviceWorker from './serviceWorker';

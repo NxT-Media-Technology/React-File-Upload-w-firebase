@@ -1,20 +1,19 @@
 import React, { Component, useState, useEffect } from 'react';
 import Axios from 'axios';
+import $ from "jquery";
 import SweepItem from './sweepItem.js';
 import AccountOverlay from './accountOptions.js';
 import Pagination from './pagination.js';
-import $ from "jquery";
-
-import PersonImg from '../images/person.png';
-import LogoIcon from '../images/OCS-Icon.png';
-import Border from '../includes/border-header.svg';
 import Register from './register.js';
-
+import '../styles/adminpanel.scss';
 import {
 	isMobile,
   } from "react-device-detect";
 
-import '../styles/adminpanel.scss';
+//images/includes
+import PersonImg from '../images/person.png';
+import LogoIcon from '../images/OCS-Icon.png';
+import Border from '../includes/border-header.svg';
 
 class Adminpanel extends Component {
 	constructor(props) {
@@ -44,65 +43,54 @@ class Adminpanel extends Component {
 		this.toggleAccount = this.toggleAccount.bind(this);
 	}
 
-	// haalt alle pending data op wanneer component aangeroepen wordt: 
-	componentDidMount() {
-		//VRAAG ALLE DATA IN DB ZONDER DELETED ROWS
-		Axios.post("http://localhost:3001/getdata", {
-			token: this.state.token,
-		})
-	    .then((response) => {
-	    	if (response.status == 200 && typeof response.data !== 'string') {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
-	    	} else {
-	    		this.props.pass(null)
-	    	}    	
-		})
+	componentDidMount() 
+	{
+		Axios.post("http://localhost:3001/getdata", {token: this.state.token})
+			.then((response) => {
+				if (response.status == 200 && typeof response.data !== 'string') {
+					this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length});
+				} else {
+					this.props.pass(null);
+				}    	
+			})
 	}
 
 	getPendingData() {
-		Axios.post("http://localhost:3001/getdata", {
-			token: this.state.token,
-		})
-	    .then((response) => {
-	    	if (response.status == 200 && typeof response.data !== 'string') {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
-	    	} else {
-	    		this.props.pass(null)
-	    	}    	
-		})
+		Axios.post("http://localhost:3001/getdata", {token: this.state.token,})
+			.then((response) => {
+				if (response.status == 200 && typeof response.data !== 'string') {
+					this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length});
+				} else {
+					this.props.pass(null);
+				}    	
+			})
 	}
 
 	getCleanedData() {
-		Axios.post("http://localhost:3001/getcleaneddata", {
-			token: this.state.token,
-		})
-
-	    .then((response) => {
-	    	if (response.status == 200 && typeof response.data !== 'string') {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
-	    	} else {
-	    		this.props.pass(null)
-	    	}      	
-		})
+		Axios.post("http://localhost:3001/getcleaneddata", {token: this.state.token,})
+			.then((response) => {
+				if (response.status == 200 && typeof response.data !== 'string') {
+					this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length});
+				} else {
+					this.props.pass(null);
+				}      	
+			})
 	}
 
 	getNotFoundData() {
-		Axios.post("http://localhost:3001/getnotfounddata", {
-			token: this.state.token,
-		})
-	    .then((response) => {
-	    	if (response.status == 200 && typeof response.data !== 'string') {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
-	    	} else {
-	    		this.props.pass(null)
-	    	}     	
-		})
+		Axios.post("http://localhost:3001/getnotfounddata", {token: this.state.token,})
+			.then((response) => {
+				if (response.status == 200 && typeof response.data !== 'string') {
+					this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length});
+				} else {
+					this.props.pass(null);
+				}     	
+			})
 	}
 
-	// @info: Returns posts by given date period. 
 	getPostsByDate(date_filter) {
 		let navItem = 0; 
-		console.log(this.state.activeNav)
+		console.log(this.state.activeNav);
 
 		switch(this.state.activeNav){
 			case 'Pending':
@@ -126,17 +114,16 @@ class Adminpanel extends Component {
 	    .then((response) => {
 			console.log(response.data)
 	    	if (response.status == 200 && typeof response.data !== 'string') {
-	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length})
+	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length});
 	    	} else {
-	    		this.props.pass(null)
+	    		this.props.pass(null);
 	    	}      	
 		})
 	}
-	updateNav(status) {
-		this.setState({activeNav: status, statusMsg: ''}, () => {
-			
-			$('.upper-title').html(status)
 
+	updateNav(status) {
+		this.setState({activeNav: status, statusMsg: ''}, () => {			
+			$('.upper-title').html(status)
 			switch(this.state.activeNav){
 				case 'Pending':
 					this.setState({
@@ -178,11 +165,9 @@ class Adminpanel extends Component {
 	}
 
 	updateStatus = (msg, key) => {
-		//UPDATE STATUS BIJ DELETE
-		this.setState({statusMsg: msg})
+		this.setState({statusMsg: msg});
 	}
 
-	// update select filter:
 	updateFilter = (event) => {
 		console.log(event.target.value);
 		this.setState({dateFilter: event.target.value});
@@ -200,13 +185,13 @@ class Adminpanel extends Component {
 		if (this.state.showRegister == true || this.props.showRegister == true) {
 			this.setState({showRegister: false}) 
 			setTimeout(function(){
-				$('.admin-container').removeClass('hidden')
+				$('.admin-container').removeClass('hidden');
 			}, 1);
 			
 		} else {
 			this.setState({showRegister: true,showAccountOverlay: false}) 
 			setTimeout(function(){
-				$('.admin-container').addClass('hidden')
+				$('.admin-container').addClass('hidden');
 			}, 1);
 		}
 	}
@@ -221,7 +206,7 @@ class Adminpanel extends Component {
 					$('.component-accountoptions').addClass('hidden')
 				}, 1);
 			} else {
-				this.setState({showAccountOverlay: true}) ;
+				this.setState({showAccountOverlay: true});
 				setTimeout(function(){
 					$('.component-accountoptions').removeClass('hidden')
 				}, 1);
@@ -230,20 +215,15 @@ class Adminpanel extends Component {
 	}
 
 	render() {
-		/* PAGINATION */ 
 		const indexofLastPost = this.state.currentPage * this.state.postsPerPage;
 		const indexOfFirstPost = indexofLastPost - this.state.postsPerPage;
 		let currentPosts = '';
-
 		if(this.state.posts){
 			currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
 		}
-
 		const paginate = (pageNumber) => {
-			this.setState({currentPage: pageNumber})
-
+			this.setState({currentPage: pageNumber});
 		};
-
 		return (
 			<div id='admin-panel'> 
 			<div className="admin-header">
@@ -260,12 +240,10 @@ class Adminpanel extends Component {
 						</div>
 					</div>
 			</div>
-
 			<div className="register">
 				{this.state.showRegister ? <Register toggleRegister={this.toggleRegisterForm}/> : null}
 			</div>
-				{this.state.showAccountOverlay ? <AccountOverlay activeName={this.state.activeName} toggleAccount={this.toggleAccount} toggleRegister={this.toggleRegisterForm} handleLogout={this.handleLogout} /> : null}
-				
+			{this.state.showAccountOverlay ? <AccountOverlay activeName={this.state.activeName} toggleAccount={this.toggleAccount} toggleRegister={this.toggleRegisterForm} handleLogout={this.handleLogout} /> : null}
 			<div className="admin-container">
 				<div class="admin-filters">
 					<div class="admin-filter-views">
@@ -282,7 +260,6 @@ class Adminpanel extends Component {
 					</div>
 					<div class="admin-filter-options">
 						<label>Sort by:</label>
-
 						<select onChange={this.updateFilter} value={this.state.dateFilter}>
 							<option onChange={this.updateFilter} value="Latest">Latest</option>
 							<option onChange={this.updateFilter} value="Oldest">Oldest</option>
@@ -291,18 +268,14 @@ class Adminpanel extends Component {
 					</div>
 				</div>
 				<p className='status-msg'>{this.state.statusMsg}</p>
-
 				{this.state.posts.length == 0 ? <p className='status-msg'>No data records</p> : ''}
-
 				<div className={this.state.activeView == "block" ? "block-view": "list-view"}>
 					{/*   loop door sweepItems:	 */}
 					{this.state.isLoaded ? currentPosts.map((post, index) => (
 						<SweepItem itemState ={this.state.activeHeader} post={post} updateStatus={this.updateStatus} activeNav={this.state.activeNav}key={post.id} />
 					))
 					: <h1 className="center">Loading data...</h1>} 	{/* <-- Als er geen posts zijn  */}
-
-				</div>
-							
+				</div>							
 				<div className="navbar">
 					<div className={this.state.activeNav== "Pending" ? "activenav nav-item" :"nav-item"} onClick= {()=> {this.updateNav("Pending"); this.getPendingData()}}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24.715" height="37.073" viewBox="0 0 24.715 37.073">
@@ -328,7 +301,6 @@ class Adminpanel extends Component {
 						<label>Not found</label>
 					</div>
 				</div>
-				{/* background of active navitem in navbar */}
 				<div className="navbarbg">
 					<div className={this.state.activeNav == "Pending" ? "activenav nav-item" : "nav-item hidden"}>
 						<img className="activenav" src={Border}/>
@@ -349,5 +321,4 @@ class Adminpanel extends Component {
 		);
 	}
 }
-
-export default Adminpanel
+export default Adminpanel;

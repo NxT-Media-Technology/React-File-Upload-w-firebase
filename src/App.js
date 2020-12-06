@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import ImageUpload from './components/imageUpload.js';
-import GeoLocator from './components/geoLocator.js';
-import Axios from 'axios';
 import $ from "jquery";
 
+import ImageUpload from './components/imageUpload.js';
+import GeoLocator from './components/geoLocator.js';
 import Information from './components/information.js';
 import SentOverlay from './components/sentOverlay.js';
-
 import './styles/style.css';
 import logo from './images/logo.png';
-import turtle from './images/turtle.png';
+
 
 class App extends Component {
   constructor(props) {
@@ -23,8 +21,7 @@ class App extends Component {
       showOverlay: false,
       message: '',
       messageType: ''
-    };
-    
+    };    
     this.showOverlay = this.showOverlay.bind(this);
     this.toggleKnop = this.toggleKnop.bind(this);
   }
@@ -50,24 +47,25 @@ class App extends Component {
   coordsChanged = (value) => {
 	 this.setState({latLong: value});
   }
+  
   descChanged = (value) => {
     this.setState({description: value});
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     });
     console.log(this.state.description);
   }
+
   showOverlay() {
     this.setState({showOverlay: true});
   }
 
   hideOverlay() {
-    // zet state terug naar initial via initialstate object:
     this.setState({showOverlay: false});
   }
-
 
   render() {
     return (

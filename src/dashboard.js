@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
-
 import Adminpanel from './components/Adminpanel.js';
 import Login from './components/login.js';
 
@@ -14,7 +12,6 @@ class dashboard extends Component {
 		this.changeAuth = this.changeAuth.bind(this);
 	}
 
-	//onChange={this.handleChange}
 	changeAuth = (token) => {
 		console.log(token);
 		if(token != null) {

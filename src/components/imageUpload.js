@@ -18,7 +18,7 @@ class ImageUpload extends Component {
 
   handleUpload = (e) => {
       const image = e.target.files[0];
-      this.setState({image: image, progress: 0})
+      this.setState({image: image, progress: 0});
 
       if(typeof(image) !== 'undefined'){
           // voeg image aan firebase storage toe:
@@ -46,7 +46,6 @@ class ImageUpload extends Component {
       else
       {
         const placeholderImg = document.querySelector(".open-img");
-        // verander src terug naar placeholder img:
         placeholderImg.src = open;
         this.setState({isCanceled: true })
       }
@@ -62,15 +61,15 @@ class ImageUpload extends Component {
 
   render() {
     const showRemoveBtn = this.state.showRemoveBtn;
+    const showTxtColor = (this.state.image !== null && !this.state.isCanceled) ? 'green-text' : 'red-text';
     let button;
+    
     if (showRemoveBtn) {
       button = <button onClick={this.removeUpload}>Remove</button>
     }
     else {
       button = <button onClick={this.removeUpload} style={{display:"none"}}>Remove</button>
-    }
-
-    const showTxtColor = (this.state.image !== null && !this.state.isCanceled) ? 'green-text' : 'red-text';
+    }    
 
     return (
       <div className='img-component'>

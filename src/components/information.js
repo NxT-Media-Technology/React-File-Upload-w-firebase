@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import turtle from '../images/turtle.png';
 import {
-  BrowserView,
-  MobileView,
-  TabletView,
   isBrowser,
   isMobile,
   isTablet
@@ -34,7 +31,6 @@ class Information extends Component {
   }
 
   render() {
-
     return(
       <section className={'section '+ ((this.state.hide) ? "hidden" : "")} id="section1" >
         <h1 className='section-title'>Info</h1>

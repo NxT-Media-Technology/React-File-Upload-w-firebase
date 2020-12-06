@@ -16,7 +16,6 @@ class GeoLocator extends Component {
       disabled: false,
       width: 0, height: 0
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.renderMap = this.renderMap.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
@@ -26,9 +25,9 @@ class GeoLocator extends Component {
   componentDidMount() {
     //Check of browser de geolocation ondersteunt
     if (navigator.geolocation) {
-      this.setState({status: 'Browser supports geolocation'})
+      this.setState({status: 'Browser supports geolocation'});
     } else {
-      this.setState({status: 'Browser does not support geolocation'})
+      this.setState({status: 'Browser does not support geolocation'});
     }
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
@@ -50,7 +49,7 @@ class GeoLocator extends Component {
         latitude: null,
         longitude: null,
         checked
-      })
+      });
       const latLong = null;
       this.props.onLatLongChange(latLong);
     }
@@ -73,7 +72,6 @@ class GeoLocator extends Component {
       longitude: position.coords.longitude,
       geoAvailable: true
     });
-
     if (this.state.latitude == null) {
       this.setState({error:'Could not get location'});
     }
@@ -94,12 +92,12 @@ class GeoLocator extends Component {
       let height
 
       //LANDSCAPE
-      //console.log(windowWidth + ' ' + windowHeight)
       if (window.matchMedia("(orientation: landscape)").match) {
         inLandscapeMode = true;
       } else {
         inLandscapeMode = false;
       }
+
       //MOBILE
       if (windowWidth > 320 && windowWidth <= 480) {
         if (inLandscapeMode) {
@@ -113,6 +111,7 @@ class GeoLocator extends Component {
         width = '80%';
         height = '17%';
       }
+
       //TABLET
       if (windowWidth > 768 && windowWidth <= 1024) {
         if (inLandscapeMode) {
@@ -126,6 +125,7 @@ class GeoLocator extends Component {
         width = '100%';
         height = '100%';
       }
+      
       //DESKTOP
       if (windowWidth > 1025) {
         width = '100%';
