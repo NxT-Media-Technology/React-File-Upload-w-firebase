@@ -290,44 +290,31 @@ app.post("/getnotfounddata", (req, res) => {
 
 //REMOVE FROM ADMINPANEL
 app.post('/deleteRecord', (req, res) => {
-    const token = req.body.token;
-    let isAuthorised = false;
 
-    verifyByToken(token, function(result) {
-        isAuthorised = result;
-        if (isAuthorised) {
-            const id = req.body.id;
-            const sqlSoftDelete = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`id` = ?";
-            db.query(sqlSoftDelete, id, (err,result) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.send('Item deleted succesfully!');
-                    console.log('softdeleted');
-                }
-            })
-        } else { res.send('Unauthorised'); }
+    console.log('delete record')
+
+    const id = req.body.id;
+    const sqlSoftDelete = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`id` = ?";
+     db.query(sqlSoftDelete, id, (err,result) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send('Item deleted succesfully!');
+            console.log('softdeleted');
+        }
     })
 });
 
 app.post('/notfoundrecord', (req, res) => {
-    const token = req.body.token;
-    let isAuthorised = false;
-
-    verifyByToken(token, function(result) {
-        isAuthorised = result;
-        if (isAuthorised) {
-            const id = req.body.id;
-            const sqlSoftDelete = "UPDATE `location_data` SET `not_found` = '1' WHERE `location_data`.`id` = ?";
-            db.query(sqlSoftDelete, id, (err,result) => {
-                if (err) {
-                    res.send(err)
-                } else {
-                    res.send('Item deleted succesfully!');
-                    console.log('softdeleted');
-                }
-            })
-        } else { res.send('Unauthorised');}
+    const id = req.body.id;
+    const sqlSoftDelete = "UPDATE `location_data` SET `not_found` = '1' WHERE `location_data`.`id` = ?";
+    db.query(sqlSoftDelete, id, (err,result) => {
+        if (err) {
+             res.send(err)
+        } else {
+             res.send('Item deleted succesfully!');
+             console.log('softdeleted');
+        }
     })
 });
 
