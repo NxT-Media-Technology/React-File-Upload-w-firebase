@@ -74,10 +74,10 @@ class sweepItem extends Component {
 							<img src={PhoneImg} className='small-icon' />
 							<span>{data.phonenumber == '' ? 'Anonymous' : data.phonenumber}</span>
 						</div>
-						<div className="item-details-info-sec-desc">
+						<div className="item-details-info-sec">
 							<img src={DescIcon} className='small-icon' />
 							{/* show the full description when you show details, else show part of desc */}
-							<div>{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 10) + "..." : "No description")}</div>
+							<div className="item-details-info-sec-desc">{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 10) + "..." : "No description")}</div>
 						</div>
 					</div>
 					<div className="item-location">
@@ -130,7 +130,7 @@ class sweepItem extends Component {
 						</div>
 							<div className="item-details-info-sec">
 							<img src={DescIcon} className='small-icon'/>
-							<div>{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 25) + "..." : "No description")}</div>
+							<div className="item-details-info-sec-desc">{this.state.itemClicked ? (data.img_description ? (data.img_description) : "No description") : (data.img_description ? (data.img_description).substring(0, 25) + "..." : "No description")}</div>
 						</div>
 					</div>
 		       	</div>	   	 

@@ -270,10 +270,14 @@ html {
 			}
 		}
 		
+		.item-details-info-sec-desc {
+			word-wrap:break-word;
+			width: 30vw;
+		}
+		
 		.item-expand {
 			margin:5%;
 			z-index: 2;
-
 			.item-details-info-mobile {
 				display: none;
 				margin: 15% 0;
@@ -583,6 +587,9 @@ html {
 		}
 
 		.item {
+			.item-details-info-sec-desc {
+				width: 80vw;
+			}
 			.item-expand {
 				.item-details-info-mobile {
 					display: block;
