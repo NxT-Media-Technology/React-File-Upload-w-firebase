@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from "jquery";
+import Axios from 'axios';
 
 import ImageUpload from './components/imageUpload.js';
 import GeoLocator from './components/geoLocator.js';
@@ -23,7 +24,8 @@ class App extends Component {
       messageType: ''
     };    
     this.showOverlay = this.showOverlay.bind(this);
-    this.toggleKnop = this.toggleKnop.bind(this);
+    this.toggleKnop = this.toggleKnop.bind(this);    
+    this.submitData = this.submitData.bind(this);
   }
 
   toggleKnop() {
@@ -61,11 +63,45 @@ class App extends Component {
 
   showOverlay() {
     this.setState({showOverlay: true});
+    this.submitData();
   }
 
   hideOverlay() {
     this.setState({showOverlay: false});
   }
+
+  
+  submitData () {
+    console.log(this);
+    Axios.post("http://localhost:3001/post", {
+    img_url: this.state.url,
+    img_description:this.state.description,
+    imgName: this.state.img_name,
+    coordinates: this.state.latLong,
+
+    
+    // anonymous: this.state.checked,
+    // name: this.state.name,
+    // number: this.state.number,
+
+
+
+  })
+  .then((response) => {
+    this.setState({ displayMessage: true, message: response});
+    if(!this.state.message.data.includes('Error'))
+    {
+      this.setState({ messageType: 'success'});
+      $(".overlay").removeClass('hidden');
+      $(".overlay-form").addClass('hidden');
+      $(".closeBtn").removeClass('hidden');
+    }
+    else
+    {
+      this.setState({ messageType: 'error'});
+    }
+  });
+}
 
   render() {
     return (

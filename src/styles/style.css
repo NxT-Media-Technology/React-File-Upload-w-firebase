@@ -14,6 +14,8 @@ body {
 	background-position: bottom;
 }
 
+
+
 #login {
 	height: 100vh;
 	background:rgb(245, 245, 245);
@@ -37,6 +39,14 @@ body {
 	flex-direction: column;	
 }
 
+
+#info-img {
+	transform: translate(-10%, 5%);
+	position: absolute;
+	bottom: 0;
+	height: 23vh;
+	width: 110%;
+}
 .login-form form input {
 	padding: 1% 5%;
 	font-family: "poppins",sans-serif;
@@ -277,11 +287,17 @@ progress {
 /*
   ##Device = Laptops, Desktops
 */
-@media (min-width: 1025px) {
+@media (min-width: 1125px) {
 	.app {
 		padding: 1px 5%;
 	}
-
+	#info-img {
+		transform: translate(-10%, 5%);
+		position: absolute;
+		bottom: 0;
+		height: 23vh;
+		width: 110%;
+	}
 	.logo {
 		width: 20%;
 		padding: 20px;
@@ -291,14 +307,6 @@ progress {
 		display: flex;
 		justify-content: space-around;
 
-	}
-
-	#turtle-img {
-		width: 120%;
-		transform: translate(-10%, 5%);
-    	position: absolute;
-    	bottom: 0;
-    	height: 23vh;
 	}
 
 	#section1 {
@@ -312,7 +320,7 @@ progress {
 	}
 
 	p {
-		font-size: 1.1rem;
+		font-size: 1rem;
 	}
 
   	.section {
@@ -389,7 +397,7 @@ progress {
 /*
   ##Device = Tablets, Ipads (portrait)
 */
-@media (min-width: 481px) and (max-width: 1024px)  {
+@media (min-width: 481px) and (max-width: 1125px)  {
 	* {
 		margin:0;
 		padding: 0;
@@ -468,7 +476,7 @@ progress {
 	}
 
 	#section1 img {
-		max-width: 85%;
+		display: none;
 	}
 
 	 p {
@@ -662,7 +670,9 @@ progress {
 			-ms-transform: translate(-50%,-50%);
 			font-family: "poppins",sans-serif;
 		}
-
+		.info-img {
+			display: none;
+		}
 		.login-form {
 			margin:auto;
 			width: 90vw;

@@ -24,7 +24,7 @@ class SentOverlay extends Component
     }
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.submitData = this.submitData.bind(this);
+    // this.submitData = this.submitData.bind(this);
   }
 
   handleChange = (checked) => {
@@ -59,50 +59,58 @@ class SentOverlay extends Component
     }
   }
 
-  submitData () {
-      console.log(this);
-      Axios.post("http://localhost:3001/post", {
-      img_url: this.state.url,
-      img_description:this.state.description,
-      coordinates: this.state.latLong,
-      anonymous: this.state.checked,
-      name: this.state.name,
-      number: this.state.number,
-      imgName: this.state.img_name
-    })
-    .then((response) => {
-      this.setState({ displayMessage: true, message: response});
-      if(!this.state.message.data.includes('Error'))
-      {
-        this.setState({ messageType: 'success'});
-        $(".overlay").removeClass('hidden');
-        $(".overlay-form").addClass('hidden');
-        $(".closeBtn").removeClass('hidden');
-      }
-      else
-      {
-        this.setState({ messageType: 'error'});
-      }
-    });
-  }
+  // submitData () {
+  //     console.log(this);
+  //     Axios.post("http://localhost:3001/post", {
+  //     img_url: this.state.url,
+  //     img_description:this.state.description,
+  //     imgName: this.state.img_name,
+  //     coordinates: this.state.latLong,
+
+      
+  //     // anonymous: this.state.checked,
+  //     // name: this.state.name,
+  //     // number: this.state.number,
+
+
+
+  //   })
+  //   .then((response) => {
+  //     this.setState({ displayMessage: true, message: response});
+  //     if(!this.state.message.data.includes('Error'))
+  //     {
+  //       this.setState({ messageType: 'success'});
+  //       $(".overlay").removeClass('hidden');
+  //       $(".overlay-form").addClass('hidden');
+  //       $(".closeBtn").removeClass('hidden');
+  //     }
+  //     else
+  //     {
+  //       this.setState({ messageType: 'error'});
+  //     }
+  //   });
+  // }
 
   render() {
     return (
       <div className="overlay completed-overlay">        
         <div className="overlay-content">
         <p className="overlay-text">Thank you for helping this cause.</p>
-        {console.log("the description is " + this.state.description)}
-          <form class="overlay-form">
-            <label>Name</label>
-            <input onChange={this.handleChange} className={(this.state.disabled) ? "disabled" : ""}  type="text" name="name" value={this.state.name}/>
-            <label>Telephone number</label>
-            <input onChange={this.handleChange} className={(this.state.disabled) ? "disabled" : ""} type="text" name="number" value={this.state.number}/>
-            <label name="switch">I would like to stay anonymous</label>
-            <Switch className="overlay-switch" onChange={this.handleCheckboxChange} checked={this.state.checked} />
-            <a><div onClick={this.submitData} className="overlay-button">Continue</div></a>
-            <span className={this.state.messageType + " " + (this.state.displayMessage ? 'alert' : '')}>{this.state.message.data}</span>
-          </form>
-          <a href='.'><div className="hidden closeBtn overlay-button">Close</div></a>
+
+
+        
+        {/* <form class="overlay-form">
+          <label>Name</label>
+          <input onChange={this.handleChange} className={(this.state.disabled) ? "disabled" : ""}  type="text" name="name" value={this.state.name}/>
+          <label>Telephone number</label>
+          <input onChange={this.handleChange} className={(this.state.disabled) ? "disabled" : ""} type="text" name="number" value={this.state.number}/>
+          <label name="switch">I would like to stay anonymous</label>
+          <Switch className="overlay-switch" onChange={this.handleCheckboxChange} checked={this.state.checked} />
+          <span className={this.state.messageType + " " + (this.state.displayMessage ? 'alert' : '')}>{this.state.message.data}</span>
+        </form> */}
+        {/* <a><div onClick={this.submitData} className="overlay-button">Continue</div></a> */}
+
+          <a href='.'><div className="closeBtn overlay-button">Close</div></a>
         </div>
       </div>
     )

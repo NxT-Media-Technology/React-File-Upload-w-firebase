@@ -42,8 +42,8 @@ app.post("/post", (req,res)=> {
 
     // if url length && coords are defined: 
     if(url !== null && coords !== null){
-        const sqlInsert = "INSERT INTO location_data (delete_id, name, phonenumber, coordinates, img_url, img_name, img_description, created_at) VALUES (?,?,?,?,?,?,?,?)";
-        db.query(sqlInsert, [deleteId, name, phonenumber, coords, url, imgName, img_description, dateTime], (err, result) => {
+        const sqlInsert = "INSERT INTO location_data (delete_id, name, phonenumber, coordinates, img_url, img_name, img_description, created_at,not_found) VALUES (?,?,?,?,?,?,?,?,?)";
+        db.query(sqlInsert, [deleteId, name, phonenumber, coords, url, imgName, img_description, dateTime,'0'], (err, result) => {
             if(err){
                 console.log(err);
                 // if there are any connection issues: 
