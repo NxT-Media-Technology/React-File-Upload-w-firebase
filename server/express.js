@@ -174,23 +174,6 @@ function verifyByToken(token, callback) {
     });
 }
 
-app.post("/getdata", (req, res) => {
-    const token = req.body.token;
-    let isAuthorised = false;
-    verifyByToken(token, function(result){
-        isAuthorised = result;
-        if (isAuthorised) {
-            const sqlSelectAllPending = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0'";
-            db.query(sqlSelectAllPending, (err,result) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.send(result);
-                }
-            });
-        } else {res.send('Unauthorised')}
-    })  
-});
 
 // Get posts by datetime:
 app.post('/getPostsByDate', (req, res) => {
@@ -224,6 +207,8 @@ app.post('/getPostsByDate', (req, res) => {
                     params = [0,0];
             }
 
+            console.log(currentNavItem);
+
             switch(dateFilterType) {
                 case 'Oldest':
                     selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at ASC";
@@ -232,7 +217,7 @@ app.post('/getPostsByDate', (req, res) => {
                     selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at DESC";
                     break;
                 case 'This-month':
-                    selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = ' " + params[0] + "' AND `not_found` = '" + params[1] + "' AND created_at LIKE '%" + yearAndMonth + "%'";
+                    selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' AND created_at LIKE '%" + yearAndMonth + "%'";
                     break;
                 default:
                     selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0' ORDER BY created_at ASC"; 
@@ -243,6 +228,7 @@ app.post('/getPostsByDate', (req, res) => {
                 if (err) {
                     res.send("Oops.. Something went wrong!");
                 } else {
+                    console.log(selectStmt);
                     res.send(result);
                 }
             })
@@ -250,43 +236,7 @@ app.post('/getPostsByDate', (req, res) => {
     }) 
 });
 
-app.post("/getcleaneddata", (req, res) => {
-    const token = req.body.token;
-    let isAuthorised = false;
 
-    verifyByToken(token, function(result){
-        isAuthorised = result;
-        if (isAuthorised) {
-            const sqlSelectCleaned = "SELECT * FROM location_data WHERE `is_deleted` = '1'";
-            db.query(sqlSelectCleaned, (err,result) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.send(result);
-                }
-            });
-        } else { res.send('Unauthorised'); }
-    })
-});
-
-app.post("/getnotfounddata", (req, res) => {
-    const token = req.body.token;
-    let isAuthorised = false;
-
-    verifyByToken(token, function(result) {
-        isAuthorised = result;
-        if (isAuthorised) {
-            const sqlSelectCleanedNotFound = "SELECT * FROM location_data WHERE `not_found` = '1'";
-            db.query(sqlSelectCleanedNotFound, (err,result) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.send(result);
-                }
-            });
-        } else res.send('Unauthorised');
-    })
-});
 
 //REMOVE FROM ADMINPANEL
 app.post('/deleteRecord', (req, res) => {
