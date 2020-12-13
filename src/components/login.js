@@ -28,7 +28,6 @@ class Login extends Component {
 		.then((response) => {
 			if(response.status === 200 && typeof response.data === 'object'){
 				this.props.pass(response.data);
-				console.log(response.data);
 			}
 			else {
 				this.setState({statusMsg: response.data});				

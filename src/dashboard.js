@@ -13,7 +13,6 @@ class dashboard extends Component {
 	}
 
 	changeAuth = (token) => {
-		console.log(token);
 		if(token != null) {
 			this.setState({
 				token: token.token,

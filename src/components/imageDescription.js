@@ -17,7 +17,6 @@ class ImageDescription extends Component {
         });
         const desc = this.state.description;
         this.props.onDescChange(desc);
-        console.log("imgdesc handle change");
     }
 
     render() {

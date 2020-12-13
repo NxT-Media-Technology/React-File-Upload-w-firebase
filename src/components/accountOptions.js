@@ -9,7 +9,6 @@ class accountOptions extends Component {
                     <a onClick={this.props.toggleAccount}>Close X</a>
                     <a onClick={this.props.handleLogout}>Logout</a>
                     <a onClick={this.props.toggleRegister }>Register</a>
-                    {/* <a onClick={this.props.toggleRegister }>Register</a> */}
                 </div>
             </div>
         );

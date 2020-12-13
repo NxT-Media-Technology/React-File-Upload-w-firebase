@@ -59,8 +59,8 @@ class SentOverlay extends Component
     }
   }
 
+  // FORM ADD POSSIBLY FOR LATER
   // submitData () {
-  //     console.log(this);
   //     Axios.post("http://localhost:3001/post", {
   //     img_url: this.state.url,
   //     img_description:this.state.description,
@@ -97,8 +97,7 @@ class SentOverlay extends Component
         <div className="overlay-content">
         <p className="overlay-text">Thank you for helping this cause.</p>
 
-
-        
+        {/* FORM ADD POSSIBLY FOR LATER */}
         {/* <form class="overlay-form">
           <label>Name</label>
           <input onChange={this.handleChange} className={(this.state.disabled) ? "disabled" : ""}  type="text" name="name" value={this.state.name}/>

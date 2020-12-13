@@ -50,7 +50,6 @@ app.post("/post", (req,res)=> {
                 res.send('Error connecting to the database - data could not be send!');
                 return;
             }
-            console.log('Record has been stored succesfully!');
             res.send('Your submission has been added to the database!');
         });
     }
@@ -99,14 +98,11 @@ app.post("/register", (req, res) => {
             } 
             if (result.length > 0) {
                 res.send('Username is already taken!');
-                console.log('Username is already taken!');
             } else {
                 const userToken = crypto.randomBytes(16).toString("hex");
                 const sqlRegisterUser = "INSERT INTO users (username, password, token) VALUES (?,?,?)";
-                console.log('Making query');
                 db.query(sqlRegisterUser, [user_name, user_password1, userToken], (err,result) => {
                 if (err) {
-                    console.log(result);
                     res.send('Oops something went wrong...');
                 } else {
                     res.send('New user created successfully!');
@@ -131,12 +127,8 @@ app.post("/login", (req, res, next) => {
                 console.log(err);
                 res.send('Invalid credentials: user not found');
             } else {
-                console.log(result)
                 if (result.length > 0) {
                     if (user_name == result[0]['username'] && user_password == result[0]['password']) {
-                        const token = true;
-                        console.log("name: "+ result[0]['username'] +" pass: " +result[0]['password']);
-                        console.log(result[0]);
                         res.send(result[0]);                                 
                     } else {
                         res.send('Invalid credentials: Invalid password');
@@ -179,7 +171,6 @@ function verifyByToken(token, callback) {
 app.post('/getPostsByDate', (req, res) => {
     const token = req.body.token;
     let isAuthorised = false;
-
     verifyByToken(token, function(result) {
         isAuthorised = result;
         if (isAuthorised) {
@@ -207,7 +198,6 @@ app.post('/getPostsByDate', (req, res) => {
                     params = [0,0];
             }
 
-            console.log(currentNavItem);
 
             switch(dateFilterType) {
                 case 'Oldest':
@@ -226,9 +216,10 @@ app.post('/getPostsByDate', (req, res) => {
 
             db.query(selectStmt, (err,result) => {
                 if (err) {
+
+                    console.log(err);
                     res.send("Oops.. Something went wrong!");
                 } else {
-                    console.log(selectStmt);
                     res.send(result);
                 }
             })
@@ -241,8 +232,6 @@ app.post('/getPostsByDate', (req, res) => {
 //REMOVE FROM ADMINPANEL
 app.post('/deleteRecord', (req, res) => {
 
-    console.log('delete record')
-
     const id = req.body.id;
     const sqlSoftDelete = "UPDATE `location_data` SET `is_deleted` = '1' WHERE `location_data`.`id` = ?";
      db.query(sqlSoftDelete, id, (err,result) => {
@@ -250,7 +239,6 @@ app.post('/deleteRecord', (req, res) => {
             res.send(err);
         } else {
             res.send('Item deleted succesfully!');
-            console.log('softdeleted');
         }
     })
 });
@@ -263,7 +251,6 @@ app.post('/notfoundrecord', (req, res) => {
              res.send(err)
         } else {
              res.send('Item deleted succesfully!');
-             console.log('softdeleted');
         }
     })
 });
@@ -277,7 +264,6 @@ app.post('/remove', (req, res) => {
             res.send("Oops.. Something went wrong!");
         } else {
             res.send('Item deleted succesfully!');
-            console.log('softdeleted');
         }
     })
 });

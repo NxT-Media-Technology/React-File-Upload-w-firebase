@@ -18,7 +18,6 @@ class deleteByMail extends Component {
 	    .then((response) => {
 	    	if (response.status == 200) {
 	    		this.setState({response:true, statusMsg:response.data});
-	      		//console.log(response);
 	    	} else {
 	    		this.setState({statusMsg: response.data});
 	    	}    	

@@ -47,15 +47,11 @@ class Adminpanel extends Component {
 
 	componentDidMount() 
 	{
-		console.log(this.state.dateFilter);
-		console.log(this.state.posts);
 		this.updateDateFilter(this.state.dateFilter);
 	}
 
 	getPostsByDate(date_filter) {
-		let navItem = 0; 
-		console.log(this.state.activeNav);
-
+		let navItem = 0; 	
 		switch(this.state.activeNav){
 			case 'Pending':
 				navItem = 0;
@@ -70,15 +66,12 @@ class Adminpanel extends Component {
 				navItem = 0;
 		}
 
-		console.log(navItem);
-
 		Axios.post("http://localhost:3001/getPostsByDate",{
 			dateFilter: date_filter,
 			currentNavItem: navItem,
 			token: this.state.token,
 		})
 	    .then((response) => {
-			console.log(response.data)
 	    	if (response.status == 200 && typeof response.data !== 'string') {
 	    		this.setState({posts:response.data, isLoaded:true, totalItems: response.data.length});
 	    	} else {
@@ -143,9 +136,6 @@ class Adminpanel extends Component {
 	}
 
 	updateDateFilter = (event) => {
-
-		console.log(event);
-
 		// if filtered by sort by: 
 		if(typeof event === 'object'){
 			this.setState({
@@ -166,7 +156,6 @@ class Adminpanel extends Component {
 
 	handleLogout() {
 		this.props.pass(false);
-		console.log("logout");
 	}
 
 	toggleRegisterForm() {
@@ -186,7 +175,6 @@ class Adminpanel extends Component {
 	}
 
 	toggleAccount() {
-		console.log(this.state.showAccountOverlay); 
 		if (isMobile) {
 
 			if (this. state.showAccountOverlay == true ) {
@@ -210,10 +198,6 @@ class Adminpanel extends Component {
 		if(this.state.posts){
 			currentPosts = this.state.posts.slice(indexOfFirstPost, indexofLastPost);
 		}
-
-		console.log(currentPosts)
-
-
 		const paginate = (pageNumber) => {
 			this.setState({currentPage: pageNumber});
 		};
