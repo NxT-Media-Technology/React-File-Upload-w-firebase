@@ -19,7 +19,7 @@ app.use(cors({ origin: true }));
 const db = mysql.createPool({
     host: 'localhost',
     user:  'root',
-    password: '',
+    password: 'root',
     database: 'react_crud',
 });
 
