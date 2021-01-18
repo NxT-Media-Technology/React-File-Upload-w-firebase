@@ -181,7 +181,17 @@ app.post('/getPostsByDate', (req, res) => {
             let currentYear = newDate.getFullYear();
             // getMonth() is zero index based: (therefore +1)
             let currentMonth = newDate.getMonth()+1; 
+
+            // add zero before 1 to 9:
+            if(currentMonth < 10){
+                // add zero to make compatible with date format
+                // 2021-01
+                currentMonth = '0' + currentMonth;
+            }
+
+            // else just keep the current number in tact: 
             let yearAndMonth = currentYear + "-" + currentMonth;
+
             let params = [0,0];
             // 0 = pending | 1 = Clean | 2 = Not found
             switch(currentNavItem){
@@ -198,7 +208,6 @@ app.post('/getPostsByDate', (req, res) => {
                     params = [0,0];
             }
 
-
             switch(dateFilterType) {
                 case 'Oldest':
                     selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' ORDER BY created_at ASC";
@@ -208,6 +217,7 @@ app.post('/getPostsByDate', (req, res) => {
                     break;
                 case 'This-month':
                     selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '" + params[0] + "' AND `not_found` = '" + params[1] + "' AND created_at LIKE '%" + yearAndMonth + "%'";
+                    console.log(selectStmt);
                     break;
                 default:
                     selectStmt = "SELECT * FROM location_data WHERE `is_deleted` = '0' AND `not_found` = '0' ORDER BY created_at ASC"; 
@@ -220,6 +230,7 @@ app.post('/getPostsByDate', (req, res) => {
                     console.log(err);
                     res.send("Oops.. Something went wrong!");
                 } else {
+                    console.log(selectStmt);
                     res.send(result);
                 }
             })
