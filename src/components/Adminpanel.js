@@ -12,7 +12,7 @@ import {
 
 //images/includes
 import PersonImg from '../images/person.png';
-import LogoIcon from '../images/OCS-Icon.png';
+import LogoIcon from '../images/ZPL-Icon.png';
 import Border from '../includes/border-header.svg';
 
 const dateFilterTypes = ["Oldest", "Latest", "This-month"];
