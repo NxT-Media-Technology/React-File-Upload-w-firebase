@@ -180,12 +180,12 @@ class Adminpanel extends Component {
 			if (this. state.showAccountOverlay == true ) {
 				this.setState({showAccountOverlay: false}); 
 				setTimeout(function(){
-					$('.component-accountoptions').addClass('hidden')
+					$('.header-account').addClass('hidden')
 				}, 1);
 			} else {
 				this.setState({showAccountOverlay: true});
 				setTimeout(function(){
-					$('.component-accountoptions').removeClass('hidden')
+					$('.header-account').removeClass('hidden')
 				}, 1);
 			}
 		}

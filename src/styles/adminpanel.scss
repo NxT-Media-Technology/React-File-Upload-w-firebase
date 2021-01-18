@@ -179,7 +179,6 @@ html {
 		.item {
 			margin-bottom:4%;
 			.item-details-info-sec-desc {
-				max-width: 300px;
 				margin:0;
 			}
 		}
@@ -223,7 +222,6 @@ html {
 				margin-left: 3%;
 			}
 			.item-details-info-sec-desc {
-				width: 40%;
 				max-width: 400px;
 				margin:0;
 		
@@ -246,7 +244,6 @@ html {
 		border-radius: 5px;		
 		background-color: rgba(255, 255, 255, 1);
 		margin: 6% 0;
-		z-index: 1;
 		position: relative;
 
 		.header-green{
@@ -283,7 +280,6 @@ html {
 		
 		.item-details-info-sec-desc {
 			word-wrap:break-word;
-			width: 80%;
 			max-width: 500px;
 			margin:0;
 		}
@@ -329,6 +325,7 @@ html {
 				padding:5% 0%;	
 				text-align: center;	
 				margin: auto;	
+				width: 110%;
 			}
 			
 			.button-red {
